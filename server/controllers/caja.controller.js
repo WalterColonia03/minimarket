@@ -1,0 +1,336 @@
+const { Op } = require('sequelize');
+const { sequelize, Turno, MovimientoCaja, Usuario } = require('../models');
+const { presentarTurno, presentarMovimiento } = require('../presenters/caja.presenter');
+const { inicioDiaPeru, finDiaPeruExclusivo } = require('../utils/fechas');
+const { calcularEsperados } = require('../services/caja.service');
+
+// Mínimo exigido para abrir un turno de caja: debe alcanzar para dar vueltos
+// desde la primera venta del día. Mismo valor duplicado (a propósito, no hay
+// mecanismo de config compartida cliente/servidor en este proyecto) en
+// client/src/modules/caja/CajaPage.jsx — si se cambia acá, cambiar también ahí.
+const MONTO_MINIMO_APERTURA_CAJA = 500;
+
+// Techo para movimientos manuales de caja chica (refuerzos/correcciones de un
+// turno) — duplicado a propósito en client/src/modules/caja/CajaPage.jsx.
+const MONTO_MAXIMO_MOVIMIENTO = 5000;
+
+const INCLUDE_TURNO = [
+  { association: 'cajero',    attributes: ['id', 'nombre'] },
+  { association: 'aprobador', attributes: ['id', 'nombre'] },
+  { association: 'cerrador',  attributes: ['id', 'nombre'] },
+  {
+    association: 'movimientos',
+    include: [{ association: 'usuario', attributes: ['id', 'nombre'] }],
+    order: [['createdAt', 'ASC']],
+  },
+];
+
+// ─── Abrir turno ───────────────────────────────────────────────────────────────
+const abrir = async (req, res) => {
+  try {
+    const { monto_apertura } = req.body;
+    const montoAperturaNum = parseFloat(monto_apertura);
+
+    if (!monto_apertura || isNaN(montoAperturaNum) || montoAperturaNum < MONTO_MINIMO_APERTURA_CAJA) {
+      return res.status(400).json({
+        mensaje: `El monto mínimo de apertura es S/ ${MONTO_MINIMO_APERTURA_CAJA.toFixed(2)}, para poder dar vueltos durante el turno.`,
+      });
+    }
+
+    const turnoAbierto = await Turno.findOne({
+      where: { usuario_id: req.usuario.id, estado: 'Abierto' },
+    });
+    if (turnoAbierto) {
+      return res.status(400).json({ mensaje: 'Ya tienes un turno abierto. Ciérralo antes de abrir uno nuevo.' });
+    }
+
+    let turno;
+    try {
+      turno = await sequelize.transaction(async (t) => {
+        const nuevoTurno = await Turno.create({
+          usuario_id:     req.usuario.id,
+          monto_apertura: montoAperturaNum,
+          estado:         'Abierto',
+          fecha_apertura: new Date(),
+        }, { transaction: t });
+
+        await MovimientoCaja.create({
+          turno_id:    nuevoTurno.id,
+          tipo:        'Apertura',
+          descripcion: 'Apertura de turno',
+          metodo:      'Efectivo',
+          monto:       montoAperturaNum,
+          usuario_id:  req.usuario.id,
+        }, { transaction: t });
+
+        return nuevoTurno;
+      });
+    } catch (err) {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        return res.status(400).json({ mensaje: 'Ya tienes un turno abierto. Ciérralo antes de abrir uno nuevo.' });
+      }
+      throw err;
+    }
+
+    const turnoCompleto = await Turno.findByPk(turno.id, { include: INCLUDE_TURNO });
+    return res.status(201).json(presentarTurno(turnoCompleto));
+  } catch (err) {
+    console.error('Error al abrir turno:', err);
+    return res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
+// Valida los montos contados y aplica el cálculo de cierre (esperado,
+// contado, diferencia) sobre una instancia de Turno ya cargada con sus
+// movimientos — no guarda ni valida nada más allá de eso, lo comparten
+// `cerrar` (el propio cajero) y `cerrarForzado` (Administrador/Gerente).
+const aplicarCierre = (turno, { monto_contado_efectivo, monto_contado_yape, observaciones }) => {
+  const efectivoNum = parseFloat(monto_contado_efectivo);
+  const yapeNum = parseFloat(monto_contado_yape);
+  if (!Number.isFinite(efectivoNum) || efectivoNum < 0 || !Number.isFinite(yapeNum) || yapeNum < 0) {
+    return 'Los montos contados deben ser números válidos mayores o iguales a 0';
+  }
+
+  const { monto_esperado_efectivo, monto_esperado_yape } = calcularEsperados(turno.movimientos);
+
+  turno.estado                  = 'Cerrado';
+  turno.fecha_cierre            = new Date();
+  turno.monto_esperado_efectivo = monto_esperado_efectivo;
+  turno.monto_esperado_yape     = monto_esperado_yape;
+  turno.monto_contado_efectivo  = efectivoNum;
+  turno.monto_contado_yape      = yapeNum;
+  turno.diferencia_efectivo     = parseFloat((efectivoNum - monto_esperado_efectivo).toFixed(2));
+  turno.diferencia_yape         = parseFloat((yapeNum     - monto_esperado_yape).toFixed(2));
+  turno.observaciones           = observaciones || null;
+
+  return null;
+};
+
+// ─── Cerrar turno ──────────────────────────────────────────────────────────────
+const cerrar = async (req, res) => {
+  try {
+    const { monto_contado_efectivo, monto_contado_yape, observaciones } = req.body;
+
+    if (monto_contado_efectivo === undefined || monto_contado_yape === undefined) {
+      return res.status(400).json({ mensaje: 'Debes ingresar el monto contado de efectivo y Yape' });
+    }
+
+    const turno = await Turno.findOne({
+      where: { usuario_id: req.usuario.id, estado: 'Abierto' },
+      include: [{ association: 'movimientos' }],
+    });
+    if (!turno) {
+      return res.status(404).json({ mensaje: 'No tienes un turno abierto' });
+    }
+
+    const errorMontos = aplicarCierre(turno, { monto_contado_efectivo, monto_contado_yape, observaciones });
+    if (errorMontos) {
+      return res.status(400).json({ mensaje: errorMontos });
+    }
+    await turno.save();
+
+    const turnoCompleto = await Turno.findByPk(turno.id, { include: INCLUDE_TURNO });
+    return res.status(200).json(presentarTurno(turnoCompleto));
+  } catch (err) {
+    console.error('Error al cerrar turno:', err);
+    return res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
+// ─── Cerrar turno de otro usuario (Administrador/Gerente) ─────────────────────
+// Para cuando un cajero se olvida de cerrar su turno (o ya no está
+// disponible) y por eso queda "Abierto" indefinidamente, bloqueando que
+// vuelva a abrir uno nuevo. Exige el mismo conteo físico real que un cierre
+// normal — nunca se cierra "a ciegas" con montos en blanco — más un motivo
+// obligatorio que deja rastro de quién y por qué lo forzó.
+const cerrarForzado = async (req, res) => {
+  try {
+    const { monto_contado_efectivo, monto_contado_yape, motivo, observaciones } = req.body;
+
+    if (!motivo || !motivo.trim()) {
+      return res.status(400).json({ mensaje: 'El motivo del cierre forzado es obligatorio' });
+    }
+    if (monto_contado_efectivo === undefined || monto_contado_yape === undefined) {
+      return res.status(400).json({ mensaje: 'Debes ingresar el monto contado de efectivo y Yape' });
+    }
+
+    // Lock de fila: dos administradores forzando el cierre del mismo turno
+    // olvidado casi al mismo tiempo (o un doble clic que se coló antes de
+    // que el botón se deshabilitara) no deben poder pisarse los montos —
+    // el segundo, tras esperar el lock, encuentra el turno ya cerrado y
+    // sale con el mismo error que un intento normal fuera de tiempo.
+    const turnoCompleto = await sequelize.transaction(async (t) => {
+      const turno = await Turno.findByPk(req.params.id, {
+        include: [{ association: 'movimientos' }],
+        transaction: t,
+        lock: t.LOCK.UPDATE,
+      });
+      if (!turno) {
+        throw { status: 404, mensaje: 'Turno no encontrado' };
+      }
+      if (turno.estado !== 'Abierto') {
+        throw { status: 400, mensaje: 'Solo se pueden forzar cierres de turnos abiertos' };
+      }
+
+      const errorMontos = aplicarCierre(turno, { monto_contado_efectivo, monto_contado_yape, observaciones });
+      if (errorMontos) {
+        throw { status: 400, mensaje: errorMontos };
+      }
+      turno.cerrado_por = req.usuario.id;
+      turno.motivo_cierre_forzado = motivo.trim();
+      await turno.save({ transaction: t });
+
+      return Turno.findByPk(turno.id, { include: INCLUDE_TURNO, transaction: t });
+    });
+
+    return res.status(200).json(presentarTurno(turnoCompleto));
+  } catch (err) {
+    if (err.status && err.mensaje) {
+      return res.status(err.status).json({ mensaje: err.mensaje });
+    }
+    console.error('Error al forzar cierre de turno:', err);
+    return res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
+// ─── Obtener turno activo del usuario ─────────────────────────────────────────
+const obtenerActivo = async (req, res) => {
+  try {
+    const turno = await Turno.findOne({
+      where: { usuario_id: req.usuario.id, estado: 'Abierto' },
+      include: INCLUDE_TURNO,
+    });
+
+    if (!turno) {
+      return res.status(200).json(null);
+    }
+
+    return res.status(200).json(presentarTurno(turno));
+  } catch (err) {
+    console.error('Error al obtener turno activo:', err);
+    return res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
+// ─── Registrar movimiento manual (Ingreso / Egreso) ───────────────────────────
+const registrarMovimiento = async (req, res) => {
+  try {
+    const { tipo, descripcion, monto } = req.body;
+
+    if (!['Ingreso', 'Egreso'].includes(tipo)) {
+      return res.status(400).json({ mensaje: 'Tipo de movimiento inválido. Use Ingreso o Egreso' });
+    }
+    if (!monto || isNaN(monto) || parseFloat(monto) <= 0) {
+      return res.status(400).json({ mensaje: 'El monto debe ser mayor a 0' });
+    }
+    if (parseFloat(monto) > MONTO_MAXIMO_MOVIMIENTO) {
+      return res.status(400).json({ mensaje: `El monto de un movimiento no puede superar S/ ${MONTO_MAXIMO_MOVIMIENTO.toFixed(2)}` });
+    }
+    if (!descripcion || !descripcion.trim()) {
+      return res.status(400).json({ mensaje: 'La descripción es obligatoria' });
+    }
+
+    const turno = await Turno.findOne({
+      where: { usuario_id: req.usuario.id, estado: 'Abierto' },
+    });
+    if (!turno) {
+      return res.status(404).json({ mensaje: 'No tienes un turno abierto' });
+    }
+
+    const movimiento = await MovimientoCaja.create({
+      turno_id:    turno.id,
+      tipo,
+      descripcion: descripcion.trim(),
+      // Un movimiento manual siempre es efectivo físico (reforzar/retirar de
+      // la caja chica) — Yape solo se registra automáticamente desde las
+      // ventas (venta.controller.js), nunca por esta vía manual.
+      metodo:      'Efectivo',
+      monto:       parseFloat(monto),
+      usuario_id:  req.usuario.id,
+    });
+
+    const movConUsuario = await MovimientoCaja.findByPk(movimiento.id, {
+      include: [{ association: 'usuario', attributes: ['id', 'nombre'] }],
+    });
+
+    return res.status(201).json(presentarMovimiento(movConUsuario));
+  } catch (err) {
+    console.error('Error al registrar movimiento:', err);
+    return res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
+// ─── Historial de turnos (Admin / Gerente) ────────────────────────────────────
+const historial = async (req, res) => {
+  try {
+    const { fecha_inicio, fecha_hasta, usuario_id, estado } = req.query;
+    const where = {};
+
+    if (fecha_inicio && fecha_hasta && new Date(fecha_inicio) > new Date(fecha_hasta)) {
+      return res.status(400).json({ mensaje: 'La fecha de inicio no puede ser posterior a la fecha final' });
+    }
+
+    if (fecha_inicio && fecha_hasta) {
+      where.fecha_apertura = { [Op.between]: [inicioDiaPeru(fecha_inicio), finDiaPeruExclusivo(fecha_hasta)] };
+    } else if (fecha_inicio) {
+      where.fecha_apertura = { [Op.gte]: inicioDiaPeru(fecha_inicio) };
+    } else if (fecha_hasta) {
+      where.fecha_apertura = { [Op.lt]: finDiaPeruExclusivo(fecha_hasta) };
+    }
+
+    if (usuario_id) where.usuario_id = usuario_id;
+    if (estado)     where.estado = estado;
+
+    const turnos = await Turno.findAll({
+      where,
+      include: [
+        { association: 'cajero',    attributes: ['id', 'nombre'] },
+        { association: 'aprobador', attributes: ['id', 'nombre'] },
+      ],
+      order: [['fecha_apertura', 'DESC']],
+    });
+
+    return res.status(200).json(turnos.map(presentarTurno));
+  } catch (err) {
+    console.error('Error al listar turnos:', err);
+    return res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
+// ─── Obtener turno con movimientos (Admin / Gerente) ──────────────────────────
+const obtenerTurno = async (req, res) => {
+  try {
+    const turno = await Turno.findByPk(req.params.id, { include: INCLUDE_TURNO });
+    if (!turno) return res.status(404).json({ mensaje: 'Turno no encontrado' });
+    return res.status(200).json(presentarTurno(turno));
+  } catch (err) {
+    console.error('Error al obtener turno:', err);
+    return res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
+// ─── Aprobar cierre de turno ──────────────────────────────────────────────────
+const aprobar = async (req, res) => {
+  try {
+    const turno = await Turno.findByPk(req.params.id);
+    if (!turno) return res.status(404).json({ mensaje: 'Turno no encontrado' });
+
+    if (turno.estado !== 'Cerrado') {
+      return res.status(400).json({ mensaje: 'Solo se pueden aprobar turnos cerrados' });
+    }
+    if (turno.aprobado_por) {
+      return res.status(400).json({ mensaje: 'Este turno ya fue aprobado' });
+    }
+
+    turno.aprobado_por = req.usuario.id;
+    await turno.save();
+
+    const turnoCompleto = await Turno.findByPk(turno.id, { include: INCLUDE_TURNO });
+    return res.status(200).json(presentarTurno(turnoCompleto));
+  } catch (err) {
+    console.error('Error al aprobar turno:', err);
+    return res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
+module.exports = { abrir, cerrar, cerrarForzado, obtenerActivo, registrarMovimiento, historial, obtenerTurno, aprobar };

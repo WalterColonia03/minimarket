@@ -1,0 +1,487 @@
+import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { CheckCircle, ChevronDown, ChevronUp, AlertCircle, AlertTriangle, Loader, X } from 'lucide-react';
+import api from '../../utils/axios';
+import { useAuth } from '../../context/AuthContext';
+import { rolSatisface } from '../../utils/roles';
+import { sanitizarMonto } from '../../utils/format';
+
+const fmt = (n) => (n == null ? '—' : `S/ ${parseFloat(n).toFixed(2)}`);
+const fmtFecha = (d) => d ? new Date(d).toLocaleString('es-PE', { dateStyle: 'short', timeStyle: 'short' }) : '—';
+
+// Umbral para marcar un turno "Abierto" como sospechoso de haber sido
+// olvidado por el cajero — mismo valor documentado en DashboardPage.jsx
+// (no hay config compartida cliente/servidor en este proyecto).
+const HORAS_ALERTA_TURNO_ABIERTO = 16;
+
+const horasAbierto = (turno) => (Date.now() - new Date(turno.fecha_apertura).getTime()) / 3_600_000;
+
+// Props comunes para los inputs de dinero del modal de cierre forzado,
+// mismo criterio que propsMonto() en CajaPage.jsx.
+function propsMonto(value, setValue) {
+  return {
+    type: 'text',
+    inputMode: 'decimal',
+    value,
+    onChange: (e) => setValue(sanitizarMonto(e.target.value)),
+    onKeyDown: (e) => {
+      if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault();
+    },
+    onPaste: (e) => {
+      e.preventDefault();
+      const texto = e.clipboardData.getData('text');
+      setValue(sanitizarMonto(value + texto));
+    },
+  };
+}
+
+// ── Modal: cierre forzado de un turno ajeno (Administrador/Gerente) ────────────
+function ModalCerrarForzado({ turno, onClose, onCerrado }) {
+  const [contadoEfectivo, setContadoEfectivo] = useState('');
+  const [contadoYape, setContadoYape]         = useState('');
+  const [motivo, setMotivo]                   = useState('');
+  const [observaciones, setObservaciones]     = useState('');
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError]       = useState('');
+  const enviandoRef = useRef(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (enviandoRef.current) return;
+    if (!motivo.trim()) {
+      setError('El motivo del cierre forzado es obligatorio');
+      return;
+    }
+    enviandoRef.current = true;
+    setEnviando(true);
+    setError('');
+    try {
+      const { data } = await api.patch(`/caja/${turno.id}/cerrar-forzado`, {
+        monto_contado_efectivo: parseFloat(contadoEfectivo || 0),
+        monto_contado_yape:     parseFloat(contadoYape || 0),
+        motivo,
+        observaciones,
+      });
+      onCerrado(data);
+      onClose();
+    } catch (err) {
+      setError(err.response?.data?.mensaje || 'Error al forzar el cierre del turno');
+    } finally {
+      enviandoRef.current = false;
+      setEnviando(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="w-full max-w-md rounded-xl bg-white shadow-xl">
+        <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+          <h3 className="font-semibold text-gray-800">Cerrar turno de {turno.cajero?.nombre ?? 'otro cajero'}</h3>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="p-5">
+          <div className="mb-4 flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-800">
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+            <span>
+              El cajero no cerró este turno. Cuenta el efectivo y Yape físicos de esa caja antes de continuar —
+              este cierre queda registrado con tu usuario y el motivo.
+            </span>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700">Efectivo contado (S/)</label>
+                <input
+                  {...propsMonto(contadoEfectivo, setContadoEfectivo)}
+                  required
+                  autoFocus
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  placeholder="0.00"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700">Yape contado (S/)</label>
+                <input
+                  {...propsMonto(contadoYape, setContadoYape)}
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  placeholder="0.00"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-700">
+                Motivo del cierre forzado <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={motivo}
+                onChange={(e) => setMotivo(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                placeholder="Ej: cajero no marcó salida, turno olvidado desde ayer"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Observaciones (opcional)</label>
+              <textarea rows={2} value={observaciones} onChange={(e) => setObservaciones(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                placeholder="Ej: faltaron 5 soles, billetes mojados, etc."
+              />
+            </div>
+            {error && (
+              <div className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>
+            )}
+            <div className="flex justify-end gap-2">
+              <button type="button" onClick={onClose}
+                className="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50">
+                Cancelar
+              </button>
+              <button type="submit" disabled={enviando}
+                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50">
+                {enviando ? 'Cerrando...' : 'Forzar cierre'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BadgeDiff({ valor }) {
+  if (valor == null) return <span className="text-gray-400">—</span>;
+  const v = parseFloat(valor);
+  if (v > 0) return <span className="font-semibold text-green-600">+{fmt(v)}</span>;
+  if (v < 0) return <span className="font-semibold text-red-600">{fmt(v)}</span>;
+  return <span className="font-semibold text-gray-500">S/ 0.00</span>;
+}
+
+function FilaTurno({ turno, puedeAprobar, onActualizado, onAbrirCierreForzado }) {
+  const [expandido, setExpandido] = useState(false);
+  const [detalle, setDetalle]     = useState(null);
+  const [aprobando, setAprobando] = useState(false);
+  const aprobandoRef = useRef(false);
+  const horasAbiertoTurno = turno.estado === 'Abierto' ? horasAbierto(turno) : 0;
+
+  const cargarDetalle = async () => {
+    if (detalle) { setExpandido(!expandido); return; }
+    try {
+      const { data } = await api.get(`/caja/${turno.id}`);
+      setDetalle(data);
+      setExpandido(true);
+    } catch {
+      setExpandido(!expandido);
+    }
+  };
+
+  const handleAprobar = async () => {
+    if (aprobandoRef.current) return;
+    aprobandoRef.current = true;
+    setAprobando(true);
+    try {
+      const { data } = await api.patch(`/caja/${turno.id}/aprobar`);
+      onActualizado(data);
+    } catch {
+      // silencioso — el padre recargará
+    } finally {
+      aprobandoRef.current = false;
+      setAprobando(false);
+    }
+  };
+
+  // El padre reemplaza el objeto `turno` de esta fila (nueva referencia)
+  // cada vez que aprueba o fuerza el cierre desde el modal — se limpia el
+  // detalle cacheado para que la próxima vez que se expanda la fila se
+  // vuelva a pedir con los datos ya actualizados (ej. "Cerrado por").
+  useEffect(() => {
+    setDetalle(null);
+  }, [turno]);
+
+  return (
+    <>
+      <tr className="hover:bg-gray-50 cursor-pointer" onClick={cargarDetalle}>
+        <td className="px-4 py-3 text-sm text-gray-600">{fmtFecha(turno.fecha_apertura)}</td>
+        <td className="px-4 py-3 text-sm font-medium text-gray-800">{turno.cajero?.nombre ?? '—'}</td>
+        <td className="px-4 py-3 text-sm text-right">{fmt(turno.monto_apertura)}</td>
+        <td className="px-4 py-3 text-sm text-right">{fmt(turno.monto_esperado_efectivo)}</td>
+        <td className="px-4 py-3 text-sm text-right"><BadgeDiff valor={turno.diferencia_efectivo} /></td>
+        <td className="px-4 py-3 text-sm text-right">{fmt(turno.monto_esperado_yape)}</td>
+        <td className="px-4 py-3 text-sm text-right"><BadgeDiff valor={turno.diferencia_yape} /></td>
+        <td className="px-4 py-3 text-sm">
+          {turno.estado === 'Abierto'
+            ? <div className="flex flex-col items-start gap-1">
+                <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">Abierto</span>
+                {horasAbiertoTurno > HORAS_ALERTA_TURNO_ABIERTO && (
+                  <span className="flex items-center gap-1 text-xs font-medium text-amber-600" title="El cajero podría haberse olvidado de cerrarlo">
+                    <AlertTriangle className="h-3 w-3" /> {Math.floor(horasAbiertoTurno)}h abierto
+                  </span>
+                )}
+              </div>
+            : <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">Cerrado</span>
+          }
+        </td>
+        <td className="px-4 py-3 text-sm" onClick={(e) => e.stopPropagation()}>
+          {turno.estado === 'Abierto'
+            ? puedeAprobar
+              ? <button
+                  onClick={() => onAbrirCierreForzado(turno)}
+                  className="rounded-lg bg-red-600 px-3 py-1 text-xs font-medium text-white hover:bg-red-700"
+                >
+                  Cerrar turno
+                </button>
+              : <span className="text-gray-400 text-xs">—</span>
+            : turno.aprobador
+              ? <span className="flex items-center gap-1 text-green-600 text-xs">
+                  <CheckCircle className="h-3.5 w-3.5" /> {turno.aprobador.nombre}
+                </span>
+              : puedeAprobar
+                ? <button
+                    onClick={handleAprobar}
+                    disabled={aprobando}
+                    className="rounded-lg bg-indigo-600 px-3 py-1 text-xs font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+                  >
+                    {aprobando ? '...' : 'Aprobar'}
+                  </button>
+                : <span className="text-gray-400 text-xs">Pendiente</span>
+          }
+        </td>
+        <td className="px-4 py-3 text-gray-400">
+          {expandido ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </td>
+      </tr>
+
+      {expandido && detalle && (
+        <tr>
+          <td colSpan={10} className="bg-gray-50 px-8 py-4">
+            <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Movimientos del turno</p>
+            {!detalle.movimientos?.length
+              ? <p className="text-sm text-gray-400">Sin movimientos.</p>
+              : (
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-xs text-gray-400 uppercase border-b border-gray-200">
+                      <th className="py-1 text-left">Tipo</th>
+                      <th className="py-1 text-left">Descripción</th>
+                      <th className="py-1 text-left">Método</th>
+                      <th className="py-1 text-right">Monto</th>
+                      <th className="py-1 text-right">Hora</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {detalle.movimientos.map((m) => (
+                      <tr key={m.id}>
+                        <td className="py-1.5">
+                          <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                            m.tipo === 'Egreso' || m.tipo === 'Anulacion' ? 'bg-red-100 text-red-700' :
+                            m.tipo === 'Venta'  ? 'bg-green-100 text-green-700' :
+                            m.tipo === 'Ingreso'? 'bg-emerald-100 text-emerald-700' :
+                                                  'bg-blue-100 text-blue-700'
+                          }`}>{m.tipo}</span>
+                        </td>
+                        <td className="py-1.5 text-gray-700">{m.descripcion}</td>
+                        <td className="py-1.5 text-gray-500">{m.metodo}</td>
+                        <td className={`py-1.5 text-right font-medium ${m.tipo === 'Egreso' || m.tipo === 'Anulacion' ? 'text-red-600' : 'text-gray-800'}`}>
+                          {m.tipo === 'Egreso' || m.tipo === 'Anulacion' ? '-' : '+'}{fmt(m.monto)}
+                        </td>
+                        <td className="py-1.5 text-right text-gray-400">
+                          {new Date(m.createdAt).toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )
+            }
+            {detalle.observaciones && (
+              <p className="mt-3 text-sm text-gray-600">
+                <span className="font-medium">Observaciones:</span> {detalle.observaciones}
+              </p>
+            )}
+            {detalle.cerrado_por && (
+              <p className="mt-2 flex items-start gap-1.5 text-sm text-amber-700">
+                <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                <span>
+                  <span className="font-medium">Cerrado forzosamente por {detalle.cerrado_por.nombre}</span>
+                  {detalle.motivo_cierre_forzado && <> — Motivo: {detalle.motivo_cierre_forzado}</>}
+                </span>
+              </p>
+            )}
+          </td>
+        </tr>
+      )}
+    </>
+  );
+}
+
+export default function HistorialCajaPage() {
+  const { usuario }         = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [turnos, setTurnos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError]   = useState('');
+  const [turnoCerrando, setTurnoCerrando] = useState(null);
+
+  const [filtroFechaInicio, setFiltroFechaInicio] = useState('');
+  const [filtroFechaFin, setFiltroFechaFin]       = useState('');
+  // Lazy init: si se llega desde el Dashboard con ?estado=Abierto (turnos
+  // olvidados), arranca ya filtrado — mismo patrón que ALERTA_POR_QUERY en
+  // ProductosPage.jsx.
+  const [filtroEstado, setFiltroEstado] = useState(() => searchParams.get('estado') || '');
+
+  // Una vez consumido, se limpia de la URL — un refresh posterior no debe
+  // volver a forzar el mismo filtro si el usuario ya lo cambió a mano.
+  useEffect(() => {
+    if (searchParams.toString()) {
+      setSearchParams({}, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // rolSatisface (no una comparación cruda contra el array): así SuperAdmin
+  // también puede aprobar, igual que ya lo permite el backend
+  // (verificarRol('Administrador', 'Gerente') deja pasar a SuperAdmin).
+  const puedeAprobar = rolSatisface(usuario?.rol, ['Administrador', 'Gerente']);
+
+  const cargar = async () => {
+    if (filtroFechaInicio && filtroFechaFin && filtroFechaInicio > filtroFechaFin) {
+      setError('La fecha "Desde" no puede ser posterior a la fecha "Hasta".');
+      return;
+    }
+    setCargando(true);
+    try {
+      const params = {};
+      if (filtroFechaInicio) params.fecha_inicio = filtroFechaInicio;
+      if (filtroFechaFin)    params.fecha_hasta  = filtroFechaFin;
+      if (filtroEstado)      params.estado       = filtroEstado;
+      const { data } = await api.get('/caja/historial', { params });
+      setTurnos(data);
+      setError('');
+    } catch {
+      setError('No se pudo cargar el historial.');
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  useEffect(() => { cargar(); }, []);
+
+  const limpiarFiltros = () => {
+    setFiltroFechaInicio('');
+    setFiltroFechaFin('');
+    setFiltroEstado('');
+    setCargando(true);
+    setError('');
+    api.get('/caja/historial')
+      .then(({ data }) => setTurnos(data))
+      .catch(() => setError('No se pudo cargar el historial.'))
+      .finally(() => setCargando(false));
+  };
+
+  const hayFiltrosActivos = filtroFechaInicio || filtroFechaFin || filtroEstado;
+
+  const handleTurnoActualizado = (turnoActualizado) => {
+    setTurnos((prev) => prev.map((t) => (t.id === turnoActualizado.id ? turnoActualizado : t)));
+  };
+
+  return (
+    <div className="space-y-5">
+      {/* Filtros */}
+      <div className="flex flex-wrap items-end gap-3 rounded-xl bg-white p-4 shadow-sm border border-gray-100">
+        <div>
+          <label className="block text-xs font-medium text-gray-500 mb-1">Desde</label>
+          <input type="date" value={filtroFechaInicio} onChange={(e) => setFiltroFechaInicio(e.target.value)}
+            max={filtroFechaFin || undefined}
+            className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:border-indigo-500 focus:outline-none" />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-gray-500 mb-1">Hasta</label>
+          <input type="date" value={filtroFechaFin} onChange={(e) => setFiltroFechaFin(e.target.value)}
+            min={filtroFechaInicio || undefined}
+            className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:border-indigo-500 focus:outline-none" />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-gray-500 mb-1">Estado</label>
+          <select value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}
+            className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:border-indigo-500 focus:outline-none">
+            <option value="">Todos</option>
+            <option value="Abierto">Abierto</option>
+            <option value="Cerrado">Cerrado</option>
+          </select>
+        </div>
+        <button onClick={cargar}
+          className="rounded-lg bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700">
+          Buscar
+        </button>
+        {hayFiltrosActivos && (
+          <button
+            onClick={limpiarFiltros}
+            className="flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-500 transition-colors hover:bg-gray-100"
+          >
+            <X className="h-3.5 w-3.5" />
+            Limpiar filtros
+          </button>
+        )}
+      </div>
+
+      {error && (
+        <div className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+          <AlertCircle className="h-4 w-4" /> {error}
+        </div>
+      )}
+
+      {cargando ? (
+        <div className="flex justify-center py-12">
+          <Loader className="h-8 w-8 animate-spin text-indigo-500" />
+        </div>
+      ) : (
+        <div className="rounded-xl bg-white shadow-sm border border-gray-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-100">
+                <tr className="text-xs font-medium text-gray-500 uppercase">
+                  <th className="px-4 py-3 text-left">Apertura</th>
+                  <th className="px-4 py-3 text-left">Cajero</th>
+                  <th className="px-4 py-3 text-right">Apertura (S/)</th>
+                  <th className="px-4 py-3 text-right">Efec. esperado</th>
+                  <th className="px-4 py-3 text-right">Dif. efec.</th>
+                  <th className="px-4 py-3 text-right">Yape esperado</th>
+                  <th className="px-4 py-3 text-right">Dif. Yape</th>
+                  <th className="px-4 py-3">Estado</th>
+                  <th className="px-4 py-3">Acción</th>
+                  <th className="px-4 py-3"></th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {!turnos.length ? (
+                  <tr>
+                    <td colSpan={10} className="px-4 py-10 text-center text-sm text-gray-400">
+                      No hay turnos para mostrar.
+                    </td>
+                  </tr>
+                ) : turnos.map((t) => (
+                  <FilaTurno
+                    key={t.id}
+                    turno={t}
+                    puedeAprobar={puedeAprobar}
+                    onActualizado={handleTurnoActualizado}
+                    onAbrirCierreForzado={setTurnoCerrando}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {turnoCerrando && (
+        <ModalCerrarForzado
+          turno={turnoCerrando}
+          onClose={() => setTurnoCerrando(null)}
+          onCerrado={handleTurnoActualizado}
+        />
+      )}
+    </div>
+  );
+}

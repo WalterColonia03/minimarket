@@ -1,0 +1,105 @@
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+const express = require('express');
+const cors    = require('cors');
+
+// Importar sequelize y todos los modelos (con sus asociaciones ya definidas)
+const { sequelize } = require('./models');
+
+// ─── Importar rutas ───────────────────────────────────────────────────────────
+const authRoutes       = require('./routes/auth.routes');
+const usuarioRoutes    = require('./routes/usuario.routes');
+const categoriaRoutes   = require('./routes/categoria.routes');
+const productoRoutes    = require('./routes/producto.routes');
+const proveedorRoutes   = require('./routes/proveedor.routes');
+const ventaRoutes       = require('./routes/venta.routes');
+const clienteRoutes     = require('./routes/cliente.routes');
+const inventarioRoutes  = require('./routes/inventario.routes');
+const reporteRoutes          = require('./routes/reporte.routes');
+const configuracionRoutes    = require('./routes/configuracion.routes');
+const cajaRoutes             = require('./routes/caja.routes');
+const consultaRoutes         = require('./routes/consulta.routes');
+const logAccesoRoutes        = require('./routes/logAcceso.routes');
+
+// ─── Importar seeders ─────────────────────────────────────────────────────────
+const seedAdmin = require('./seeders/adminSeed');
+
+const app = express();
+
+// Vercel pone la app detrás de su propio proxy/edge y agrega X-Forwarded-For
+// con la IP real del cliente. Sin esto, Express no confía en ese header y
+// express-rate-limit (usado en /api/auth) lanza ERR_ERL_UNEXPECTED_X_FORWARDED_FOR
+// y tumba la petición. "1" = confiar en exactamente un salto de proxy (el de Vercel).
+if (process.env.VERCEL) {
+  app.set('trust proxy', 1);
+}
+
+// ─── Middlewares globales ─────────────────────────────────────────────────────
+const corsOrigin = process.env.CORS_ORIGIN;
+app.use(cors(corsOrigin ? { origin: corsOrigin, credentials: true } : {}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ─── Sincronizar BD (siempre, para crear tablas/columnas nuevas en prod) ─────
+const dbReady = sequelize
+  .sync({ alter: true })
+  .then(async () => {
+    console.log('✅ Tablas sincronizadas correctamente');
+    await seedAdmin();
+  })
+  .catch((err) => {
+    console.error('❌ Unable to sync database:', err);
+  });
+
+// En serverless (Vercel) cada invocación "fría" puede recibir requests antes
+// de que termine el sync/alter de arriba: sin esperar un poco, una query podía
+// ejecutarse contra columnas que el ALTER TABLE todavía no había creado
+// (ej. "column serie_boleta does not exist") y tumbar el endpoint con 500.
+//
+// OJO: la espera tiene un tope corto. Si se esperara a dbReady sin límite,
+// una sincronización lenta o trabada (ej. contención de conexiones con la BD)
+// colgaría TODAS las rutas —incluso las que no tocan la tabla que cambió,
+// como /api/auth/login— hasta que Vercel corta la función a los 30s (504).
+// Con el tope, en el peor caso una request sigue de largo y, si la columna
+// todavía no existe, el catch del controller responde con un 500 normal y
+// rápido en vez de colgar toda la API.
+const DB_READY_TIMEOUT_MS = 4000;
+const esperarBrevePorDbReady = () => new Promise((resolve) => setTimeout(resolve, DB_READY_TIMEOUT_MS));
+
+app.use(async (req, res, next) => {
+  await Promise.race([dbReady, esperarBrevePorDbReady()]);
+  next();
+});
+
+// ─── Rutas ────────────────────────────────────────────────────────────────────
+app.use('/api/auth',       authRoutes);
+app.use('/api/usuarios',   usuarioRoutes);
+app.use('/api/categorias', categoriaRoutes);
+app.use('/api/productos',   productoRoutes);
+app.use('/api/proveedores', proveedorRoutes);
+app.use('/api/ventas',      ventaRoutes);
+app.use('/api/clientes',    clienteRoutes);
+app.use('/api/inventario',  inventarioRoutes);
+app.use('/api/reportes',       reporteRoutes);
+app.use('/api/configuracion',  configuracionRoutes);
+app.use('/api/caja',           cajaRoutes);
+app.use('/api/consulta',       consultaRoutes);
+app.use('/api/logs-acceso',    logAccesoRoutes);
+
+// ─── Health check ─────────────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Minimarket API running' });
+});
+
+// ─── Arrancar servidor HTTP solo fuera de Vercel ─────────────────────────────
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 3000;
+  dbReady.then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Server listening on port ${PORT}`);
+    });
+  });
+}
+
+module.exports = app;

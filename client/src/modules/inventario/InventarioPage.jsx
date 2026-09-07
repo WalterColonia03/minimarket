@@ -1,0 +1,1270 @@
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { Loader2, Filter, X, AlertTriangle } from 'lucide-react';
+import api from '../../utils/axios';
+import { formatFechaHora, fechaLocalISO } from '../../utils/format';
+import { useStockSync } from '../../context/StockSyncContext';
+import { useAuth } from '../../context/AuthContext';
+import Breadcrumb from '../../components/Breadcrumb';
+import Spinner from '../../components/Spinner';
+import Toast from '../../components/Toast';
+import useToast from '../../hooks/useToast';
+
+const DIAS_ALERTA_VENCIMIENTO_CERCANO = 7;
+const MOTIVOS_BAJA = ['Vencido', 'Dañado', 'Robo o faltante', 'Consumo interno', 'Error de registro', 'Otro'];
+
+// Código de lote legible generado con fecha y hora locales del navegador —
+// obligatorio y no editable por el usuario.
+const generarCodigoLote = () => {
+  const ahora = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const fecha = `${ahora.getFullYear()}${pad(ahora.getMonth() + 1)}${pad(ahora.getDate())}`;
+  const hora = `${pad(ahora.getHours())}${pad(ahora.getMinutes())}${pad(ahora.getSeconds())}`;
+  return `L-${fecha}-${hora}`;
+};
+
+export default function InventarioPage() {
+  const { usuario } = useAuth();
+  const { toast, mostrarExito, mostrarError, cerrar } = useToast();
+  const { stockVersion, notificarCambioStock } = useStockSync();
+  const [tabActiva, setTabActiva] = useState('entradas');
+
+  const [productos, setProductos] = useState([]);
+  const [proveedores, setProveedores] = useState([]);
+  const [entradas, setEntradas] = useState([]);
+  const [bajas, setBajas] = useState([]);
+  const [ajustes, setAjustes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  // Formulario de registro
+  const [productoId, setProductoId] = useState('');
+  const [proveedorId, setProveedorId] = useState('');
+  const [cantidad, setCantidad] = useState('');
+  const [motivo, setMotivo] = useState('Vencido');
+  const [motivoDetalle, setMotivoDetalle] = useState('');
+  const [fechaVencimiento, setFechaVencimiento] = useState('');
+  const [codigoLote, setCodigoLote] = useState(() => generarCodigoLote());
+  const [loteId, setLoteId] = useState('');
+  const [lotesProductoSeleccionado, setLotesProductoSeleccionado] = useState([]);
+  const [cantidadContada, setCantidadContada] = useState('');
+  const [fechaVencimientoAjuste, setFechaVencimientoAjuste] = useState('');
+  const [observaciones, setObservaciones] = useState('');
+  const [enviando, setEnviando] = useState(false);
+
+  const fechaHoy = useMemo(() => fechaLocalISO(new Date()), []);
+
+  // Filtros — Entradas
+  const [filtroEntradaDesde, setFiltroEntradaDesde] = useState('');
+  const [filtroEntradaHasta, setFiltroEntradaHasta] = useState('');
+  const [filtroEntradaProducto, setFiltroEntradaProducto] = useState('');
+  const [cargandoEntradas, setCargandoEntradas] = useState(false);
+
+  // Filtros — Bajas
+  const [filtroBajaDesde, setFiltroBajaDesde] = useState('');
+  const [filtroBajaHasta, setFiltroBajaHasta] = useState('');
+  const [filtroBajaProducto, setFiltroBajaProducto] = useState('');
+  const [cargandoBajas, setCargandoBajas] = useState(false);
+
+  // Filtros — Ajustes
+  const [filtroAjusteDesde, setFiltroAjusteDesde] = useState('');
+  const [filtroAjusteHasta, setFiltroAjusteHasta] = useState('');
+  const [filtroAjusteProducto, setFiltroAjusteProducto] = useState('');
+  const [cargandoAjustes, setCargandoAjustes] = useState(false);
+
+  // ─── Carga inicial ────────────────────────────────────────────────────────
+
+  const cargarDatos = async (silencioso = false) => {
+    if (!silencioso) setLoading(true);
+    setError('');
+    try {
+      const [rP, rProv, rE, rB, rA] = await Promise.all([
+        api.get('/productos/activos'),
+        api.get('/proveedores?soloActivos=true'),
+        api.get('/inventario/entradas'),
+        api.get('/inventario/bajas'),
+        api.get('/inventario/ajustes'),
+      ]);
+      setProductos(Array.isArray(rP.data) ? rP.data : []);
+      setProveedores(Array.isArray(rProv.data) ? rProv.data : []);
+      setEntradas(Array.isArray(rE.data) ? rE.data : []);
+      setBajas(Array.isArray(rB.data) ? rB.data : []);
+      setAjustes(Array.isArray(rA.data) ? rA.data : []);
+    } catch (err) {
+      if (!silencioso) setError(err.response?.data?.mensaje || 'Error al cargar datos');
+    } finally {
+      if (!silencioso) setLoading(false);
+    }
+  };
+
+  const primeraCargaRef = useRef(true);
+  useEffect(() => {
+    cargarDatos(!primeraCargaRef.current);
+    primeraCargaRef.current = false;
+  }, [stockVersion]);
+
+  // Lotes con stock restante del producto elegido en el formulario — se usan
+  // para poder dar de baja un lote específico (en vez de dejar que el
+  // sistema elija automático por FEFO). Se reconsulta cada vez que cambia el
+  // producto seleccionado, y se resetea la selección de lote al cambiar.
+  useEffect(() => {
+    setLoteId('');
+    if (!productoId) {
+      setLotesProductoSeleccionado([]);
+      return;
+    }
+    api.get('/inventario/entradas', { params: { producto_id: productoId } })
+      .then(({ data }) => {
+        const conStock = (Array.isArray(data) ? data : []).filter((l) => l.cantidad_restante > 0);
+        setLotesProductoSeleccionado(conStock);
+      })
+      .catch(() => setLotesProductoSeleccionado([]));
+  }, [productoId]);
+
+  // El lote elegido puede dejar de ser válido para el nuevo motivo (ej. era
+  // un lote sano elegido para "Dañado" y se cambia a "Vencido"): se resetea
+  // para no dejar una selección incompatible colgando.
+  useEffect(() => {
+    setLoteId('');
+  }, [motivo]);
+
+  // ─── Filtrar entradas ─────────────────────────────────────────────────────
+
+  const filtrarEntradas = useCallback(async () => {
+    setCargandoEntradas(true);
+    try {
+      const params = {};
+      if (filtroEntradaDesde) params.fecha_inicio = filtroEntradaDesde;
+      if (filtroEntradaHasta) params.fecha_hasta = filtroEntradaHasta;
+      if (filtroEntradaProducto) params.producto_id = filtroEntradaProducto;
+      const { data } = await api.get('/inventario/entradas', { params });
+      setEntradas(Array.isArray(data) ? data : []);
+    } catch (err) {
+      mostrarError(err.response?.data?.mensaje || 'Error al filtrar entradas');
+    } finally {
+      setCargandoEntradas(false);
+    }
+  }, [filtroEntradaDesde, filtroEntradaHasta, filtroEntradaProducto]);
+
+  const limpiarFiltrosEntradas = () => {
+    setFiltroEntradaDesde('');
+    setFiltroEntradaHasta('');
+    setFiltroEntradaProducto('');
+    api.get('/inventario/entradas').then(({ data }) =>
+      setEntradas(Array.isArray(data) ? data : [])
+    );
+  };
+
+  // ─── Filtrar bajas ────────────────────────────────────────────────────────
+
+  const filtrarBajas = useCallback(async () => {
+    setCargandoBajas(true);
+    try {
+      const params = {};
+      if (filtroBajaDesde) params.fecha_inicio = filtroBajaDesde;
+      if (filtroBajaHasta) params.fecha_hasta = filtroBajaHasta;
+      if (filtroBajaProducto) params.producto_id = filtroBajaProducto;
+      const { data } = await api.get('/inventario/bajas', { params });
+      setBajas(Array.isArray(data) ? data : []);
+    } catch (err) {
+      mostrarError(err.response?.data?.mensaje || 'Error al filtrar bajas');
+    } finally {
+      setCargandoBajas(false);
+    }
+  }, [filtroBajaDesde, filtroBajaHasta, filtroBajaProducto]);
+
+  const limpiarFiltrosBajas = () => {
+    setFiltroBajaDesde('');
+    setFiltroBajaHasta('');
+    setFiltroBajaProducto('');
+    api.get('/inventario/bajas').then(({ data }) =>
+      setBajas(Array.isArray(data) ? data : [])
+    );
+  };
+
+  // ─── Filtrar ajustes ──────────────────────────────────────────────────────
+
+  const filtrarAjustes = useCallback(async () => {
+    setCargandoAjustes(true);
+    try {
+      const params = {};
+      if (filtroAjusteDesde) params.fecha_inicio = filtroAjusteDesde;
+      if (filtroAjusteHasta) params.fecha_hasta = filtroAjusteHasta;
+      if (filtroAjusteProducto) params.producto_id = filtroAjusteProducto;
+      const { data } = await api.get('/inventario/ajustes', { params });
+      setAjustes(Array.isArray(data) ? data : []);
+    } catch (err) {
+      mostrarError(err.response?.data?.mensaje || 'Error al filtrar ajustes');
+    } finally {
+      setCargandoAjustes(false);
+    }
+  }, [filtroAjusteDesde, filtroAjusteHasta, filtroAjusteProducto]);
+
+  const limpiarFiltrosAjustes = () => {
+    setFiltroAjusteDesde('');
+    setFiltroAjusteHasta('');
+    setFiltroAjusteProducto('');
+    api.get('/inventario/ajustes').then(({ data }) =>
+      setAjustes(Array.isArray(data) ? data : [])
+    );
+  };
+
+  // ─── Registro de entrada ──────────────────────────────────────────────────
+
+  const registrarEntrada = async (e) => {
+    e.preventDefault();
+    setError('');
+    const manejaVencimientoEntrada = productoSeleccionado?.maneja_vencimiento !== false;
+    if (manejaVencimientoEntrada) {
+      if (!fechaVencimiento) {
+        setError('La fecha de vencimiento es obligatoria para este producto');
+        return;
+      }
+      if (fechaVencimiento < fechaHoy) {
+        setError('La fecha de vencimiento no puede ser anterior a hoy');
+        return;
+      }
+    }
+    setEnviando(true);
+    try {
+      await api.post('/inventario/entradas', {
+        producto_id: productoId,
+        proveedor_id: proveedorId || null,
+        cantidad: parseInt(cantidad, 10),
+        fecha_vencimiento: manejaVencimientoEntrada ? (fechaVencimiento || null) : null,
+        costo_unitario: null,
+        codigo_lote: codigoLote,
+      });
+      mostrarExito('Entrada registrada correctamente');
+      setProductoId('');
+      setProveedorId('');
+      setCantidad('');
+      setFechaVencimiento('');
+      setCodigoLote(generarCodigoLote());
+      const [rP, rE] = await Promise.all([
+        api.get('/productos/activos'),
+        api.get('/inventario/entradas'),
+      ]);
+      setProductos(Array.isArray(rP.data) ? rP.data : []);
+      setEntradas(Array.isArray(rE.data) ? rE.data : []);
+      notificarCambioStock();
+    } catch (err) {
+      mostrarError(err.response?.data?.mensaje || err.response?.data?.message || 'Error al registrar entrada');
+    } finally {
+      setEnviando(false);
+    }
+  };
+
+  // ─── Registro de baja ─────────────────────────────────────────────────────
+
+  const registrarBaja = async (e) => {
+    e.preventDefault();
+    setError('');
+    if (motivo === 'Dañado' && !loteId) {
+      setError('Para dar de baja un producto dañado debes elegir el lote específico afectado');
+      return;
+    }
+    if (motivo !== 'Vencido' && loteSeleccionado?.vencido) {
+      setError('El lote seleccionado ya está vencido. Usa el motivo "Vencido" para darlo de baja.');
+      return;
+    }
+    // Con motivo "Vencido" no se tipea cantidad: siempre se da de baja TODO
+    // lo vencido (del producto, o del lote elegido si se especificó uno).
+    if (motivo === 'Vencido' && cantidadVencidaEfectiva < 1) {
+      setError('Este producto no tiene stock vencido disponible para dar de baja');
+      return;
+    }
+    const cantidadFinal = motivo === 'Vencido' ? cantidadVencidaEfectiva : parseInt(cantidad, 10);
+    setEnviando(true);
+    try {
+      await api.post('/inventario/bajas', {
+        producto_id: productoId,
+        cantidad: cantidadFinal,
+        motivo,
+        motivo_detalle: motivoDetalle || null,
+        entrada_id: loteId || null,
+      });
+      mostrarExito('Baja registrada correctamente');
+      setProductoId('');
+      setCantidad('');
+      setMotivo('Vencido');
+      setMotivoDetalle('');
+      setLoteId('');
+      const [rP, rB] = await Promise.all([
+        api.get('/productos/activos'),
+        api.get('/inventario/bajas'),
+      ]);
+      setProductos(Array.isArray(rP.data) ? rP.data : []);
+      setBajas(Array.isArray(rB.data) ? rB.data : []);
+      notificarCambioStock();
+    } catch (err) {
+      mostrarError(err.response?.data?.mensaje || err.response?.data?.message || 'Error al registrar baja');
+    } finally {
+      setEnviando(false);
+    }
+  };
+
+  // Un Almacenero solo puede registrar la primera carga de stock de un
+  // producto (nunca tuvo ninguna entrada) desde este formulario libre — a
+  // partir de la segunda entrada, reponer stock requiere una solicitud
+  // aprobada (ver Solicitudes). `entradas` ya trae el histórico completo
+  // (GET /inventario/entradas sin filtros), así que no hace falta pedirle
+  // nada nuevo al backend para calcular esto.
+  const productosConEntradaPrevia = useMemo(
+    () => new Set(entradas.map((e) => e.producto?.id)),
+    [entradas]
+  );
+  const productosElegiblesEntrada = usuario?.rol === 'Almacenero'
+    ? productos.filter((p) => !productosConEntradaPrevia.has(p.id))
+    : productos;
+
+  const productoSeleccionado = productos.find((p) => String(p.id) === String(productoId));
+
+  // Lotes del producto elegido en Bajas, marcando cuáles ya están vencidos
+  // (misma regla que el resto del sistema: vence HOY ya no es vigente) y
+  // mostrando los vencidos primero — así es fácil identificar cuál dar de baja.
+  const lotesConEstado = [...lotesProductoSeleccionado]
+    .map((l) => ({ ...l, vencido: !!l.fecha_vencimiento && l.fecha_vencimiento <= fechaHoy }))
+    .sort((a, b) => {
+      if (a.vencido !== b.vencido) return a.vencido ? -1 : 1;
+      const fa = a.fecha_vencimiento || '9999-99-99';
+      const fb = b.fecha_vencimiento || '9999-99-99';
+      return fa < fb ? -1 : fa > fb ? 1 : 0;
+    });
+
+  // Lote elegido en el formulario de Bajas (si no se elige ninguno, la baja
+  // se descuenta automático por FEFO, como antes).
+  const loteSeleccionado = lotesConEstado.find((l) => String(l.id) === String(loteId));
+
+  // "Vencido" es el único motivo que puede tocar stock vencido: con ese
+  // motivo solo se listan lotes vencidos; con cualquier otro (Dañado, Robo,
+  // etc.) solo se listan los vigentes, para no poder marcar como "Dañado"
+  // algo que en realidad ya venció (el backend valida lo mismo).
+  const lotesOpcionesBaja = motivo === 'Vencido'
+    ? lotesConEstado.filter((l) => l.vencido)
+    : lotesConEstado.filter((l) => !l.vencido);
+
+  // Productos (de los ya cargados) que tienen stock vencido: stock total
+  // menos el vigente (stock_vigente ya excluye vencidos y "vence hoy"). Se
+  // muestra en Bajas para ver de un vistazo qué hay para dar de baja, sin
+  // tener que ir primero a Productos a buscarlo.
+  const productosConVencido = productos
+    .map((p) => ({ ...p, stockVencido: p.stock - (p.stock_vigente ?? p.stock) }))
+    .filter((p) => p.stockVencido > 0);
+
+  // Total vencido del producto elegido en Bajas.
+  const stockVencidoProducto = productoSeleccionado
+    ? productoSeleccionado.stock - (productoSeleccionado.stock_vigente ?? productoSeleccionado.stock)
+    : 0;
+
+  // Con motivo "Vencido" no tiene sentido dar de baja una parte: siempre es
+  // todo lo vencido (del producto entero, o del lote elegido si se
+  // especificó uno). Por eso no se tipea cantidad para este motivo.
+  const cantidadVencidaEfectiva = loteSeleccionado ? loteSeleccionado.cantidad_restante : stockVencidoProducto;
+
+  // Advertencia no bloqueante (no error) cuando la fecha ingresada cae muy
+  // cerca de hoy — para atrapar errores de digitación sin impedir el registro
+  // de productos de vida corta legítimos (pan del día, lácteos, etc.).
+  const diasParaVencerEntrada = fechaVencimiento
+    ? Math.round((new Date(fechaVencimiento + 'T00:00:00') - new Date(fechaHoy + 'T00:00:00')) / 86400000)
+    : null;
+
+  // ─── Registro de ajuste (conteo físico) ───────────────────────────────────
+
+  const diferenciaAjuste = productoSeleccionado && cantidadContada !== ''
+    ? parseInt(cantidadContada, 10) - productoSeleccionado.stock
+    : null;
+
+  const manejaVencimientoAjuste = productoSeleccionado?.maneja_vencimiento !== false;
+
+  const registrarAjuste = async (e) => {
+    e.preventDefault();
+    setError('');
+    // Un sobrante genera un lote nuevo (ver inventario.controller.js), así que
+    // si el producto maneja vencimiento necesita fecha, igual que en Entradas
+    // — de lo contrario queda un lote "fantasma" que el sistema FEFO nunca
+    // trata como vencido.
+    if (diferenciaAjuste > 0 && manejaVencimientoAjuste) {
+      if (!fechaVencimientoAjuste) {
+        setError('La fecha de vencimiento es obligatoria para este producto');
+        return;
+      }
+      if (fechaVencimientoAjuste < fechaHoy) {
+        setError('La fecha de vencimiento no puede ser anterior a hoy');
+        return;
+      }
+    }
+    setEnviando(true);
+    try {
+      await api.post('/inventario/ajustes', {
+        producto_id: productoId,
+        cantidad_contada: parseInt(cantidadContada, 10),
+        fecha_vencimiento: diferenciaAjuste > 0 && manejaVencimientoAjuste ? fechaVencimientoAjuste : null,
+        observaciones: observaciones || null,
+      });
+      mostrarExito('Ajuste registrado correctamente');
+      setProductoId('');
+      setCantidadContada('');
+      setFechaVencimientoAjuste('');
+      setObservaciones('');
+      const [rP, rA] = await Promise.all([
+        api.get('/productos/activos'),
+        api.get('/inventario/ajustes'),
+      ]);
+      setProductos(Array.isArray(rP.data) ? rP.data : []);
+      setAjustes(Array.isArray(rA.data) ? rA.data : []);
+      notificarCambioStock();
+    } catch (err) {
+      mostrarError(err.response?.data?.mensaje || err.response?.data?.message || 'Error al registrar ajuste');
+    } finally {
+      setEnviando(false);
+    }
+  };
+
+  if (loading) {
+    return <Spinner texto="Cargando inventario..." />;
+  }
+
+  return (
+    <div className="space-y-6">
+      <Toast mensaje={toast.mensaje} tipo={toast.tipo} visible={toast.visible} onCerrar={cerrar} />
+      <Breadcrumb items={[{ label: 'Inicio', path: '/dashboard' }, { label: 'Inventario' }]} />
+
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-gray-800">Inventario</h1>
+        <div className="flex gap-2">
+          <button
+            onClick={() => { setTabActiva('entradas'); setProductoId(''); setCantidad(''); }}
+            className={`rounded-lg px-4 py-2 text-sm transition-colors ${
+              tabActiva === 'entradas'
+                ? 'bg-[#6366f1] text-white'
+                : 'border border-gray-200 text-gray-500 bg-transparent'
+            }`}
+          >
+            Entradas
+          </button>
+          <button
+            onClick={() => { setTabActiva('bajas'); setProductoId(''); setCantidad(''); }}
+            className={`rounded-lg px-4 py-2 text-sm transition-colors ${
+              tabActiva === 'bajas'
+                ? 'bg-[#6366f1] text-white'
+                : 'border border-gray-200 text-gray-500 bg-transparent'
+            }`}
+          >
+            Bajas
+          </button>
+          <button
+            onClick={() => { setTabActiva('ajustes'); setProductoId(''); setCantidadContada(''); setFechaVencimientoAjuste(''); setObservaciones(''); }}
+            className={`rounded-lg px-4 py-2 text-sm transition-colors ${
+              tabActiva === 'ajustes'
+                ? 'bg-[#6366f1] text-white'
+                : 'border border-gray-200 text-gray-500 bg-transparent'
+            }`}
+          >
+            Ajustes
+          </button>
+        </div>
+      </div>
+
+      {tabActiva === 'entradas' ? (
+        <>
+          {/* ─── Formulario Entrada ──────────────────────────────────────────── */}
+          <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+            <h2 className="mb-4 font-semibold text-gray-700">Registrar Entrada</h2>
+            <form onSubmit={registrarEntrada} className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Producto</label>
+                  <select
+                    value={productoId}
+                    onChange={(e) => setProductoId(e.target.value)}
+                    required
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  >
+                    <option value="">Seleccionar...</option>
+                    {productosElegiblesEntrada.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.nombre} - {p.marca}
+                      </option>
+                    ))}
+                  </select>
+                  {usuario?.rol === 'Almacenero' && (
+                    <p className="mt-1 text-xs text-gray-400">
+                      {productosElegiblesEntrada.length > 0
+                        ? 'Solo se listan productos sin stock registrado todavía (primera carga). Para reponer un producto existente, crea una solicitud de reposición en el módulo Solicitudes.'
+                        : 'No hay productos nuevos pendientes de primera carga. Para reponer stock, crea una solicitud de reposición en el módulo Solicitudes.'}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Proveedor <span className="text-xs font-normal text-gray-400">(opcional)</span>
+                  </label>
+                  <select
+                    value={proveedorId}
+                    onChange={(e) => setProveedorId(e.target.value)}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  >
+                    <option value="">Sin proveedor registrado</option>
+                    {proveedores.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.nombre} ({p.ruc})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Cantidad
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={cantidad}
+                    onChange={(e) => setCantidad(e.target.value)}
+                    onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }}
+                    required
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Vencimiento {productoSeleccionado?.maneja_vencimiento !== false && <span className="text-red-500">*</span>}
+                  </label>
+                  <input
+                    type="date"
+                    value={fechaVencimiento}
+                    onChange={(e) => setFechaVencimiento(e.target.value)}
+                    min={fechaHoy}
+                    required={productoSeleccionado?.maneja_vencimiento !== false}
+                    disabled={productoSeleccionado?.maneja_vencimiento === false}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:bg-gray-50 disabled:text-gray-400"
+                  />
+                  {productoSeleccionado?.maneja_vencimiento === false && (
+                    <p className="mt-1 text-xs text-gray-400">Este producto no maneja fecha de vencimiento.</p>
+                  )}
+                  {diasParaVencerEntrada !== null && diasParaVencerEntrada >= 0 && diasParaVencerEntrada < DIAS_ALERTA_VENCIMIENTO_CERCANO && (
+                    <p className="mt-1 text-xs text-amber-600">
+                      ⚠ Este producto vence muy pronto (en {diasParaVencerEntrada} día{diasParaVencerEntrada !== 1 ? 's' : ''}). Verifica la fecha.
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Código de lote
+                  </label>
+                  <input
+                    type="text"
+                    value={codigoLote}
+                    readOnly
+                    required
+                    maxLength={100}
+                    className="w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-mono text-gray-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+              {error && (
+                <div className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</div>
+              )}
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  disabled={enviando}
+                  className="flex items-center gap-2 rounded-lg bg-[#10b981] px-4 py-2 text-sm text-white transition-colors hover:bg-emerald-600 disabled:opacity-70"
+                >
+                  {enviando && <Loader2 className="h-4 w-4 animate-spin" />}
+                  Registrar Entrada
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* ─── Historial Entradas ───────────────────────────────────────────── */}
+          <div className="rounded-2xl border border-gray-100 bg-white shadow-sm">
+            <div className="p-5 pb-0">
+              <h2 className="mb-3 font-semibold text-gray-700">Historial de Entradas</h2>
+
+              {/* Filtros de historial */}
+              <div className="mb-4 flex flex-wrap items-end gap-3 rounded-xl bg-gray-50 p-3">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
+                  <Filter className="h-4 w-4" />
+                  Filtrar:
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-gray-500">Desde</label>
+                  <input
+                    type="date"
+                    value={filtroEntradaDesde}
+                    max={filtroEntradaHasta || undefined}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setFiltroEntradaDesde(val);
+                      if (val && filtroEntradaHasta && val > filtroEntradaHasta) {
+                        setFiltroEntradaHasta(val);
+                      }
+                    }}
+                    className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-gray-500">Hasta</label>
+                  <input
+                    type="date"
+                    value={filtroEntradaHasta}
+                    min={filtroEntradaDesde || undefined}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setFiltroEntradaHasta(val && filtroEntradaDesde && val < filtroEntradaDesde ? filtroEntradaDesde : val);
+                    }}
+                    className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-gray-500">Producto</label>
+                  <select
+                    value={filtroEntradaProducto}
+                    onChange={(e) => setFiltroEntradaProducto(e.target.value)}
+                    className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  >
+                    <option value="">Todos</option>
+                    {productos.map((p) => (
+                      <option key={p.id} value={p.id}>{p.nombre} - {p.marca}</option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={filtrarEntradas}
+                  disabled={cargandoEntradas}
+                  className="flex items-center gap-1.5 rounded-lg bg-[#6366f1] px-3 py-1.5 text-sm text-white transition-colors hover:bg-indigo-600 disabled:opacity-70"
+                >
+                  {cargandoEntradas ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Filter className="h-3.5 w-3.5" />}
+                  Aplicar
+                </button>
+                {(filtroEntradaDesde || filtroEntradaHasta || filtroEntradaProducto) && (
+                  <button
+                    onClick={limpiarFiltrosEntradas}
+                    className="flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-500 transition-colors hover:bg-gray-100"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                    Limpiar
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {entradas.length === 0 ? (
+              <div className="flex h-32 items-center justify-center text-sm text-gray-400">
+                No hay entradas registradas
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="bg-[#6366f1] text-white">
+                      <th className="px-4 py-3 font-medium">Producto</th>
+                      <th className="px-4 py-3 font-medium">Lote</th>
+                      <th className="px-4 py-3 font-medium">Proveedor</th>
+                      <th className="px-4 py-3 font-medium">Cantidad</th>
+                      <th className="px-4 py-3 font-medium">Costo Unit.</th>
+                      <th className="px-4 py-3 font-medium">Vencimiento</th>
+                      <th className="px-4 py-3 font-medium">Registrado por</th>
+                      <th className="px-4 py-3 font-medium">Fecha</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {entradas.map((e, i) => (
+                      <tr key={e.id} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                        <td className="px-4 py-3 text-gray-800">
+                          {e.producto?.nombre || e.producto_nombre}
+                          {e.solicitud_id && (
+                            <span className="ml-2 inline-block rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-700">
+                              Solicitud #{e.solicitud_id}
+                            </span>
+                          )}
+                          {e.ajuste_id && (
+                            <span className="ml-2 inline-block rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+                              Ajuste #{e.ajuste_id}
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {e.codigo_lote || <span className="text-gray-300">—</span>}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {e.proveedor?.nombre || e.proveedor_nombre || <span className="text-gray-300">—</span>}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="inline-block rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
+                            +{e.cantidad} und(s)
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {e.costo_unitario != null
+                            ? `S/. ${parseFloat(e.costo_unitario).toFixed(2)}`
+                            : <span className="text-gray-300">—</span>}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {e.fecha_vencimiento || <span className="text-gray-300">—</span>}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {e.usuario?.nombre || e.registrado_por}
+                        </td>
+                        <td className="px-4 py-3 text-gray-400">
+                          {formatFechaHora(e.createdAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </>
+      ) : tabActiva === 'bajas' ? (
+        <>
+          {/* ─── Productos con stock vencido ───────────────────────────────────── */}
+          {productosConVencido.length > 0 && (
+            <div className="rounded-2xl border border-red-100 bg-red-50 p-4">
+              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-red-700">
+                <AlertTriangle className="h-4 w-4" />
+                {productosConVencido.length} producto{productosConVencido.length !== 1 ? 's' : ''} con stock vencido
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {productosConVencido.map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => { setProductoId(String(p.id)); setMotivo('Vencido'); }}
+                    className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                      String(productoId) === String(p.id)
+                        ? 'border-red-400 bg-red-500 text-white'
+                        : 'border-red-200 bg-white text-red-700 hover:bg-red-100'
+                    }`}
+                  >
+                    {p.nombre} - {p.marca} ({p.stockVencido} vencida{p.stockVencido !== 1 ? 's' : ''})
+                  </button>
+                ))}
+              </div>
+              <p className="mt-2 text-xs text-red-600">
+                Haz clic en un producto para seleccionarlo abajo y elegir su lote vencido en "Lote".
+              </p>
+            </div>
+          )}
+
+          {/* ─── Formulario Baja ──────────────────────────────────────────────── */}
+          <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+            <h2 className="mb-4 font-semibold text-gray-700">Registrar Baja</h2>
+            <form onSubmit={registrarBaja} className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Producto</label>
+                  <select
+                    value={productoId}
+                    onChange={(e) => setProductoId(e.target.value)}
+                    required
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  >
+                    <option value="">Seleccionar...</option>
+                    {productos.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.nombre} - {p.marca} (stock: {p.stock})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Lote{' '}
+                    {motivo === 'Dañado' ? (
+                      <span className="text-red-500">*</span>
+                    ) : (
+                      <span className="text-xs font-normal text-gray-400">(opcional)</span>
+                    )}
+                  </label>
+                  <select
+                    value={loteId}
+                    onChange={(e) => setLoteId(e.target.value)}
+                    disabled={!productoId}
+                    required={motivo === 'Dañado'}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:bg-gray-50 disabled:text-gray-400"
+                  >
+                    <option value="">
+                      {motivo === 'Dañado'
+                        ? 'Selecciona el lote dañado...'
+                        : motivo === 'Vencido'
+                        ? 'Automático (solo lotes vencidos)'
+                        : 'Automático (solo stock vigente, el que vence antes primero)'}
+                    </option>
+                    {lotesOpcionesBaja.map((l) => (
+                      <option key={l.id} value={l.id}>
+                        {l.vencido ? '⚠ VENCIDO — ' : ''}
+                        {l.codigo_lote ? `${l.codigo_lote} — ` : ''}
+                        {l.fecha_vencimiento ? `Vence ${l.fecha_vencimiento}` : 'Sin vencimiento'}
+                        {' '}(restante: {l.cantidad_restante})
+                      </option>
+                    ))}
+                  </select>
+                  {loteId ? (
+                    <p className={`mt-1 text-xs ${loteSeleccionado?.vencido ? 'text-red-500 font-medium' : 'text-gray-400'}`}>
+                      {loteSeleccionado?.vencido
+                        ? '⚠ Este lote ya está vencido — la baja se descontará únicamente de él.'
+                        : 'La baja se descontará únicamente de este lote.'}
+                    </p>
+                  ) : motivo === 'Dañado' ? (
+                    <p className="mt-1 text-xs text-red-500">
+                      Un daño afecta un lote puntual: elige cuál, para no descontar por error de uno sano. Los lotes ya vencidos no aparecen acá — esos se dan de baja con el motivo "Vencido".
+                    </p>
+                  ) : motivo === 'Vencido' && productoId ? (
+                    <p className="mt-1 text-xs text-gray-400">
+                      Sin elegir lote, la baja solo puede tomar de lo ya vencido — nunca de stock vigente.
+                    </p>
+                  ) : productoId ? (
+                    <p className="mt-1 text-xs text-gray-400">
+                      Sin elegir lote, la baja solo puede tomar de stock vigente — lo vencido se da de baja aparte con el motivo "Vencido".
+                    </p>
+                  ) : null}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Cantidad</label>
+                  {motivo === 'Vencido' ? (
+                    <>
+                      <div className="flex w-full items-center rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-600">
+                        {productoId ? `${cantidadVencidaEfectiva} unidad(es) — todo lo vencido` : '—'}
+                      </div>
+                      <p className="mt-1 text-xs text-gray-400">
+                        Con este motivo se da de baja todo lo vencido{loteSeleccionado ? ' de este lote' : ''}, no una parte.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <input
+                        type="number"
+                        min="1"
+                        max={loteSeleccionado ? loteSeleccionado.cantidad_restante : undefined}
+                        value={cantidad}
+                        onChange={(e) => setCantidad(e.target.value)}
+                        onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }}
+                        required
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                      />
+                      {loteSeleccionado && (
+                        <p className="mt-1 text-xs text-gray-400">Máximo en este lote: {loteSeleccionado.cantidad_restante}</p>
+                      )}
+                    </>
+                  )}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Motivo</label>
+                  <select
+                    value={motivo}
+                    onChange={(e) => setMotivo(e.target.value)}
+                    required
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  >
+                    {MOTIVOS_BAJA.map((m) => (
+                      <option key={m} value={m}>{m}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Detalle <span className="text-xs font-normal text-gray-400">(opcional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={motivoDetalle}
+                    onChange={(e) => setMotivoDetalle(e.target.value)}
+                    placeholder="Ej: Lote vencido el 15/06"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+              </div>
+              {error && (
+                <div className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</div>
+              )}
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  disabled={enviando}
+                  className="flex items-center gap-2 rounded-lg bg-[#ef4444] px-4 py-2 text-sm text-white transition-colors hover:bg-red-600 disabled:opacity-70"
+                >
+                  {enviando && <Loader2 className="h-4 w-4 animate-spin" />}
+                  Registrar Baja
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* ─── Historial Bajas ──────────────────────────────────────────────── */}
+          <div className="rounded-2xl border border-gray-100 bg-white shadow-sm">
+            <div className="p-5 pb-0">
+              <h2 className="mb-3 font-semibold text-gray-700">Historial de Bajas</h2>
+
+              {/* Filtros de historial */}
+              <div className="mb-4 flex flex-wrap items-end gap-3 rounded-xl bg-gray-50 p-3">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
+                  <Filter className="h-4 w-4" />
+                  Filtrar:
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-gray-500">Desde</label>
+                  <input
+                    type="date"
+                    value={filtroBajaDesde}
+                    max={filtroBajaHasta || undefined}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setFiltroBajaDesde(val);
+                      if (val && filtroBajaHasta && val > filtroBajaHasta) {
+                        setFiltroBajaHasta(val);
+                      }
+                    }}
+                    className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-gray-500">Hasta</label>
+                  <input
+                    type="date"
+                    value={filtroBajaHasta}
+                    min={filtroBajaDesde || undefined}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setFiltroBajaHasta(val && filtroBajaDesde && val < filtroBajaDesde ? filtroBajaDesde : val);
+                    }}
+                    className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-gray-500">Producto</label>
+                  <select
+                    value={filtroBajaProducto}
+                    onChange={(e) => setFiltroBajaProducto(e.target.value)}
+                    className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  >
+                    <option value="">Todos</option>
+                    {productos.map((p) => (
+                      <option key={p.id} value={p.id}>{p.nombre} - {p.marca}</option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={filtrarBajas}
+                  disabled={cargandoBajas}
+                  className="flex items-center gap-1.5 rounded-lg bg-[#6366f1] px-3 py-1.5 text-sm text-white transition-colors hover:bg-indigo-600 disabled:opacity-70"
+                >
+                  {cargandoBajas ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Filter className="h-3.5 w-3.5" />}
+                  Aplicar
+                </button>
+                {(filtroBajaDesde || filtroBajaHasta || filtroBajaProducto) && (
+                  <button
+                    onClick={limpiarFiltrosBajas}
+                    className="flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-500 transition-colors hover:bg-gray-100"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                    Limpiar
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {bajas.length === 0 ? (
+              <div className="flex h-32 items-center justify-center text-sm text-gray-400">
+                No hay bajas registradas
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="bg-[#6366f1] text-white">
+                      <th className="px-4 py-3 font-medium">Producto</th>
+                      <th className="px-4 py-3 font-medium">Lote(s)</th>
+                      <th className="px-4 py-3 font-medium">Cantidad</th>
+                      <th className="px-4 py-3 font-medium">Motivo</th>
+                      <th className="px-4 py-3 font-medium">Registrado por</th>
+                      <th className="px-4 py-3 font-medium">Fecha</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bajas.map((b, i) => (
+                      <tr key={b.id} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                        <td className="px-4 py-3 text-gray-800">
+                          {b.producto?.nombre || b.producto_nombre}
+                          {b.venta_id && (
+                            <span className="ml-2 inline-block rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-700">
+                              Devolución venta #{b.venta_id}
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {b.lotes && b.lotes.length > 0 ? (
+                            <div className="flex flex-col gap-0.5">
+                              {b.lotes.map((l, idx) => (
+                                <span key={l.id ?? idx} className="text-xs">
+                                  {l.codigo_lote || (l.fecha_vencimiento ? `Vence ${l.fecha_vencimiento}` : 'Sin código')}
+                                  <span className="text-gray-400"> ({l.cantidad})</span>
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className="text-gray-300">—</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="inline-block rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">
+                            -{b.cantidad} und(s)
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {b.motivo}
+                          {b.motivo_detalle && (
+                            <div className="text-xs text-gray-400">{b.motivo_detalle}</div>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {b.usuario?.nombre || b.registrado_por}
+                        </td>
+                        <td className="px-4 py-3 text-gray-400">
+                          {formatFechaHora(b.createdAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </>
+      ) : tabActiva === 'ajustes' ? (
+        <>
+          {/* ─── Formulario Ajuste (Conteo Físico) ─────────────────────────────── */}
+          <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+            <h2 className="mb-4 font-semibold text-gray-700">Registrar Ajuste (Conteo Físico)</h2>
+            <form onSubmit={registrarAjuste} className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Producto</label>
+                  <select
+                    value={productoId}
+                    onChange={(e) => setProductoId(e.target.value)}
+                    required
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  >
+                    <option value="">Seleccionar...</option>
+                    {productos.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.nombre} - {p.marca} (stock: {p.stock})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Stock actual del sistema</label>
+                  <input
+                    type="text"
+                    disabled
+                    value={productoSeleccionado ? `${productoSeleccionado.stock} und(s)` : '—'}
+                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-500"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Cantidad Contada</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={cantidadContada}
+                    onChange={(e) => setCantidadContada(e.target.value)}
+                    onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }}
+                    required
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+                {diferenciaAjuste > 0 && (
+                  <div>
+                    <label className="mb-1 block text-sm font-medium text-gray-700">
+                      Vencimiento del sobrante {manejaVencimientoAjuste && <span className="text-red-500">*</span>}
+                    </label>
+                    <input
+                      type="date"
+                      value={fechaVencimientoAjuste}
+                      onChange={(e) => setFechaVencimientoAjuste(e.target.value)}
+                      min={fechaHoy}
+                      required={manejaVencimientoAjuste}
+                      disabled={!manejaVencimientoAjuste}
+                      className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:bg-gray-50 disabled:text-gray-400"
+                    />
+                    {!manejaVencimientoAjuste && (
+                      <p className="mt-1 text-xs text-gray-400">Este producto no maneja fecha de vencimiento.</p>
+                    )}
+                  </div>
+                )}
+                <div className="md:col-span-2">
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Observaciones <span className="text-xs font-normal text-gray-400">(opcional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={observaciones}
+                    onChange={(e) => setObservaciones(e.target.value)}
+                    placeholder="Ej: Conteo mensual de anaquel"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+                <div className="flex items-end">
+                  {diferenciaAjuste != null && (
+                    diferenciaAjuste === 0 ? (
+                      <span className="text-sm text-gray-400">Sin diferencia — no se requiere ajuste</span>
+                    ) : diferenciaAjuste > 0 ? (
+                      <span className="inline-block rounded-full bg-green-100 px-3 py-1.5 text-sm font-medium text-green-700">
+                        Sobrante: +{diferenciaAjuste} und(s)
+                      </span>
+                    ) : (
+                      <span className="inline-block rounded-full bg-red-100 px-3 py-1.5 text-sm font-medium text-red-700">
+                        Faltante: {diferenciaAjuste} und(s)
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+              {error && (
+                <div className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</div>
+              )}
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  disabled={enviando || diferenciaAjuste === 0}
+                  className="flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-sm text-white transition-colors hover:bg-amber-600 disabled:opacity-70"
+                >
+                  {enviando && <Loader2 className="h-4 w-4 animate-spin" />}
+                  Registrar Ajuste
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* ─── Historial Ajustes ──────────────────────────────────────────────── */}
+          <div className="rounded-2xl border border-gray-100 bg-white shadow-sm">
+            <div className="p-5 pb-0">
+              <h2 className="mb-3 font-semibold text-gray-700">Historial de Ajustes</h2>
+
+              {/* Filtros de historial */}
+              <div className="mb-4 flex flex-wrap items-end gap-3 rounded-xl bg-gray-50 p-3">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
+                  <Filter className="h-4 w-4" />
+                  Filtrar:
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-gray-500">Desde</label>
+                  <input
+                    type="date"
+                    value={filtroAjusteDesde}
+                    max={filtroAjusteHasta || undefined}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setFiltroAjusteDesde(val);
+                      if (val && filtroAjusteHasta && val > filtroAjusteHasta) {
+                        setFiltroAjusteHasta(val);
+                      }
+                    }}
+                    className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-gray-500">Hasta</label>
+                  <input
+                    type="date"
+                    value={filtroAjusteHasta}
+                    min={filtroAjusteDesde || undefined}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setFiltroAjusteHasta(val && filtroAjusteDesde && val < filtroAjusteDesde ? filtroAjusteDesde : val);
+                    }}
+                    className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-gray-500">Producto</label>
+                  <select
+                    value={filtroAjusteProducto}
+                    onChange={(e) => setFiltroAjusteProducto(e.target.value)}
+                    className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  >
+                    <option value="">Todos</option>
+                    {productos.map((p) => (
+                      <option key={p.id} value={p.id}>{p.nombre} - {p.marca}</option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={filtrarAjustes}
+                  disabled={cargandoAjustes}
+                  className="flex items-center gap-1.5 rounded-lg bg-[#6366f1] px-3 py-1.5 text-sm text-white transition-colors hover:bg-indigo-600 disabled:opacity-70"
+                >
+                  {cargandoAjustes ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Filter className="h-3.5 w-3.5" />}
+                  Aplicar
+                </button>
+                {(filtroAjusteDesde || filtroAjusteHasta || filtroAjusteProducto) && (
+                  <button
+                    onClick={limpiarFiltrosAjustes}
+                    className="flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-500 transition-colors hover:bg-gray-100"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                    Limpiar
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {ajustes.length === 0 ? (
+              <div className="flex h-32 items-center justify-center text-sm text-gray-400">
+                No hay ajustes registrados
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="bg-[#6366f1] text-white">
+                      <th className="px-4 py-3 font-medium">Producto</th>
+                      <th className="px-4 py-3 font-medium">Stock Sistema</th>
+                      <th className="px-4 py-3 font-medium">Contado</th>
+                      <th className="px-4 py-3 font-medium">Diferencia</th>
+                      <th className="px-4 py-3 font-medium">Observaciones</th>
+                      <th className="px-4 py-3 font-medium">Registrado por</th>
+                      <th className="px-4 py-3 font-medium">Fecha</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ajustes.map((a, i) => (
+                      <tr key={a.id} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                        <td className="px-4 py-3 text-gray-800">
+                          {a.producto?.nombre || a.producto_nombre}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">{a.cantidad_sistema}</td>
+                        <td className="px-4 py-3 text-gray-500">{a.cantidad_contada}</td>
+                        <td className="px-4 py-3">
+                          <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                            a.diferencia > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                          }`}>
+                            {a.diferencia > 0 ? `+${a.diferencia}` : a.diferencia} und(s)
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {a.observaciones || <span className="text-gray-300">—</span>}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                          {a.usuario?.nombre || a.registrado_por}
+                        </td>
+                        <td className="px-4 py-3 text-gray-400">
+                          {formatFechaHora(a.createdAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+}
