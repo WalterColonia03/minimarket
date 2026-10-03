@@ -19,6 +19,18 @@ router.get(
 );
 
 router.get(
+  '/comprobantes/buscar',
+  verificarRol('Administrador', 'Gerente', 'Vendedor'),
+  ventaController.buscarComprobantes
+);
+
+router.post(
+  '/:id/reenviar-email',
+  verificarRol('Administrador', 'Gerente', 'Vendedor'),
+  ventaController.reenviarEmail
+);
+
+router.get(
   '/:id',
   verificarRol('Administrador', 'Gerente', 'Vendedor'),
   ventaController.obtener

@@ -8,7 +8,8 @@
     "build": "cd client && npm run build",
     "db:limpiar": "npm run db:limpiar --prefix server",
     "db:sembrar": "npm run db:sembrar --prefix server",
-    "db:reset": "npm run db:limpiar --prefix server && npm run db:sembrar --prefix server"
+    "db:reset": "npm run db:limpiar --prefix server && npm run db:sembrar --prefix server",
+    "test": "npm run test --prefix server && npm run test --prefix client"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

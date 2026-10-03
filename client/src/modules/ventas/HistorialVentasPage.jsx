@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Search, X, ChevronLeft, ChevronRight, Eye, FileText, CheckCircle, XCircle, Banknote, Smartphone, Loader2, Ban } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, Eye, FileText, CheckCircle, XCircle, Banknote, Smartphone, Loader2, Ban, Mail } from 'lucide-react';
 import api from '../../utils/axios';
 import Breadcrumb from '../../components/Breadcrumb';
 import Toast from '../../components/Toast';
@@ -38,6 +38,10 @@ export default function HistorialVentasPage() {
   // Por cada línea de la venta: si vuelve a stock vendible o no (y, si no,
   // con qué motivo) — clave = id de la línea (DetalleVenta).
   const [decisionesRepo, setDecisionesRepo] = useState({});
+  const [busqueda, setBusqueda] = useState('');
+  const [modalEmail, setModalEmail] = useState(false);
+  const [emailDestino, setEmailDestino] = useState('');
+  const [enviandoEmail, setEnviandoEmail] = useState(false);
 
   const abrirModalAnular = (venta) => {
     setVentaAAnular(venta);
@@ -71,25 +75,42 @@ export default function HistorialVentasPage() {
     setLoading(true);
     setError('');
     try {
+      let endpoint = '/ventas';
       const params = { pagina: paginaActual, limite: 25 };
-      if (fechaInicio) params.fecha_inicio = fechaInicio;
-      if (fechaHasta) params.fecha_hasta = fechaHasta;
+      if (fechaInicio) { params.fecha_inicio = fechaInicio; params.desde = fechaInicio; }
+      if (fechaHasta) { params.fecha_hasta = fechaHasta; params.hasta = fechaHasta; }
       if (filtroMetodo) params.metodo_pago = filtroMetodo;
 
-      const { data } = await api.get('/ventas', { params });
+      if (busqueda.trim()) {
+        endpoint = '/ventas/comprobantes/buscar';
+        const term = busqueda.trim().toUpperCase();
+        if (term.includes('-')) {
+          const [serie, corr] = term.split('-');
+          params.serie = serie;
+          params.correlativo = corr;
+        } else if (/^\d{8}$|^\d{11}$/.test(term)) {
+          params.cliente_documento = term;
+        } else if (/^\d+$/.test(term)) {
+          params.correlativo = term;
+        } else {
+          params.serie = term;
+        }
+      }
+
+      const { data } = await api.get(endpoint, { params });
       setVentas(data.data || []);
       setPagination(data.pagination || { total: 0, pagina: 1, limite: 25, totalPaginas: 0 });
     } catch (err) {
-      setError(err.response?.data?.mensaje || 'Error al carrar historial');
+      setError(err.response?.data?.mensaje || 'Error al cargar historial');
     } finally {
       setLoading(false);
     }
-  }, [paginaActual, fechaInicio, fechaHasta, filtroMetodo]);
+  }, [paginaActual, fechaInicio, fechaHasta, filtroMetodo, busqueda]);
 
   useEffect(() => { cargarVentas(); }, [cargarVentas]);
 
-  const handleFiltrar = () => { setPaginaActual(1); };
-  const handleLimpiar = () => { setFechaInicio(''); setFechaHasta(''); setFiltroMetodo(''); setPaginaActual(1); };
+  const handleFiltrar = () => { setPaginaActual(1); cargarVentas(); };
+  const handleLimpiar = () => { setFechaInicio(''); setFechaHasta(''); setFiltroMetodo(''); setBusqueda(''); setPaginaActual(1); };
 
   const verDetalle = async (id) => {
     try {
@@ -109,6 +130,23 @@ export default function HistorialVentasPage() {
       mostrarError(err.message || 'Error al generar el comprobante PDF');
     } finally {
       setDescargandoComprobante(false);
+    }
+  };
+
+  const confirmarReenviarEmail = async () => {
+    if (!emailDestino || !/^\S+@\S+\.\S+$/.test(emailDestino)) {
+      mostrarError('Ingresa un correo electrónico válido');
+      return;
+    }
+    setEnviandoEmail(true);
+    try {
+      await api.post(`/ventas/${detalleVenta.id}/reenviar-email`, { email_destino: emailDestino });
+      mostrarExito('Comprobante reenviado por correo correctamente');
+      setModalEmail(false);
+    } catch (err) {
+      mostrarError(err.response?.data?.mensaje || 'Error al enviar el correo');
+    } finally {
+      setEnviandoEmail(false);
     }
   };
 
@@ -176,6 +214,17 @@ export default function HistorialVentasPage() {
             min={fechaInicio || undefined}
             onChange={(e) => setFechaHasta(e.target.value)}
             className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+        <div>
+          <label className="mb-1 block text-xs font-medium text-gray-500">Buscar por DNI/RUC o Correlativo</label>
+          <input
+            type="text"
+            placeholder="ej. F001-00000012"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            className="w-64 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            onKeyDown={(e) => { if (e.key === 'Enter') handleFiltrar(); }}
           />
         </div>
         <div>
@@ -447,14 +496,26 @@ export default function HistorialVentasPage() {
               </div>
 
               {detalleVenta.estado !== 'Anulada' && (
-                <button
-                  onClick={descargarComprobante}
-                  disabled={descargandoComprobante}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-600 disabled:opacity-60"
-                >
-                  {descargandoComprobante ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileText className="h-4 w-4" />}
-                  {detalleVenta.tipo_comprobante === 'Factura' ? 'Descargar Factura PDF' : 'Descargar Boleta PDF'}
-                </button>
+                <div className="mt-4 flex gap-2">
+                  <button
+                    onClick={descargarComprobante}
+                    disabled={descargandoComprobante}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-emerald-500 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-600 disabled:opacity-60"
+                  >
+                    {descargandoComprobante ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileText className="h-4 w-4" />}
+                    Descargar Copia PDF
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEmailDestino(detalleVenta?.cliente?.email || '');
+                      setModalEmail(true);
+                    }}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-indigo-500 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-600"
+                  >
+                    <Mail className="h-4 w-4" />
+                    Reenviar por Correo
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -547,6 +608,43 @@ export default function HistorialVentasPage() {
               >
                 {anulando && <Loader2 className="h-4 w-4 animate-spin" />}
                 Confirmar anulación
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Reenviar Correo */}
+      {modalEmail && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4" onClick={() => !enviandoEmail && setModalEmail(false)}>
+          <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <h2 className="mb-2 text-lg font-bold text-gray-800">Reenviar Comprobante</h2>
+            <p className="mb-4 text-sm text-gray-500">
+              Ingresa el correo electrónico al cual deseas reenviar el comprobante de pago.
+            </p>
+            <input
+              type="email"
+              value={emailDestino}
+              onChange={(e) => setEmailDestino(e.target.value)}
+              placeholder="ejemplo@correo.com"
+              className="mb-6 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              autoFocus
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setModalEmail(false)}
+                disabled={enviandoEmail}
+                className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 disabled:opacity-50"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={confirmarReenviarEmail}
+                disabled={enviandoEmail}
+                className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+              >
+                {enviandoEmail && <Loader2 className="h-4 w-4 animate-spin" />}
+                Enviar
               </button>
             </div>
           </div>

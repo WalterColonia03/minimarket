@@ -238,16 +238,19 @@ export default function ConfiguracionPage() {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">Teléfono</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Teléfono <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
               name="telefono"
               value={form.telefono}
               onChange={cambiar}
+              required
               placeholder="044-123456"
               className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
-            <p className="mt-1 text-xs text-gray-400">Celular (9XXXXXXXX) o fijo con código de área (ej. 044-123456)</p>
+            <p className="mt-1 text-xs text-gray-400">Celular de 9 dígitos que inicia con 9 o fijo con código de ciudad (ej. 044-123456)</p>
           </div>
 
           <div>

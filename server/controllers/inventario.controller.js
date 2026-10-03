@@ -190,6 +190,10 @@ const registrarBaja = async (req, res) => {
       return res.status(400).json({ mensaje: 'El motivo de baja no es válido' });
     }
 
+    if (motivo === 'Robo o faltante' && (!motivo_detalle || !motivo_detalle.trim())) {
+      return res.status(400).json({ mensaje: 'El detalle es obligatorio para el motivo Robo o faltante' });
+    }
+
     // Un producto dañado es un lote físico puntual, no "todo lo vencido" ni
     // un promedio general: forzar a elegir el lote exacto evita que el
     // sistema descuente por FEFO de un lote sano en vez del realmente dañado.

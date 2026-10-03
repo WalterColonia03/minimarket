@@ -63,15 +63,41 @@ const consultarDniReniec = async (dni) => {
   };
 };
 
+const rucCache = new Map();
+let fallosConsecutivos = 0;
+let circuitoAbiertoHasta = 0;
+
 const consultarRucSunat = async (ruc) => {
   requireToken();
 
+  if (rucCache.has(ruc)) {
+    return rucCache.get(ruc);
+  }
+
+  if (Date.now() < circuitoAbiertoHasta) {
+    throw { status: 503, mensaje: 'Servicio SUNAT temporalmente inactivo. Validación offline requerida.', offline_permitido: true };
+  }
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 3000);
+
   let response;
   try {
-    response = await fetch(`${BASE_URL}/sunat/ruc?numero=${ruc}`, { headers: headers() });
+    response = await fetch(`${BASE_URL}/sunat/ruc?numero=${ruc}`, { headers: headers(), signal: controller.signal });
+    clearTimeout(timeoutId);
   } catch (err) {
-    console.error('Error de red al consultar SUNAT:', err);
-    throw { status: 503, mensaje: 'No se pudo conectar con el servicio de SUNAT. Intenta nuevamente en unos minutos.' };
+    clearTimeout(timeoutId);
+    console.error('Error de red/timeout al consultar SUNAT:', err);
+    fallosConsecutivos++;
+    if (fallosConsecutivos >= 3) {
+      circuitoAbiertoHasta = Date.now() + 60000;
+    }
+    throw { status: 503, mensaje: 'No se pudo conectar con el servicio de SUNAT. Validación offline requerida.', offline_permitido: true };
+  }
+
+  // Decolecta puede responder con errores 500+ si la fuente original falla
+  if (response.ok) {
+    fallosConsecutivos = 0;
   }
 
   const rawText = await response.text();
@@ -86,7 +112,9 @@ const consultarRucSunat = async (ruc) => {
 
   if (!response.ok) {
     console.error(`Error al consultar SUNAT: status=${response.status} body=${rawText}`);
-    throw { status: 502, mensaje: 'No se pudo consultar SUNAT en este momento. Intenta nuevamente más tarde.' };
+    fallosConsecutivos++;
+    if (fallosConsecutivos >= 3) circuitoAbiertoHasta = Date.now() + 60000;
+    throw { status: 502, mensaje: 'No se pudo consultar SUNAT en este momento. Intenta nuevamente más tarde.', offline_permitido: true };
   }
 
   let data;
@@ -94,7 +122,9 @@ const consultarRucSunat = async (ruc) => {
     data = JSON.parse(rawText);
   } catch {
     console.error('Respuesta de SUNAT no es JSON válido:', rawText);
-    throw { status: 502, mensaje: 'No se pudo consultar SUNAT en este momento. Intenta nuevamente más tarde.' };
+    fallosConsecutivos++;
+    if (fallosConsecutivos >= 3) circuitoAbiertoHasta = Date.now() + 60000;
+    throw { status: 502, mensaje: 'No se pudo consultar SUNAT en este momento. Intenta nuevamente más tarde.', offline_permitido: true };
   }
 
   // Algunos RUC inexistentes vuelven con 200 OK pero sin razón social en vez
@@ -103,7 +133,7 @@ const consultarRucSunat = async (ruc) => {
     throw { status: 404, mensaje: 'RUC inaceptable: no se encontró información para ese número en SUNAT.' };
   }
 
-  return {
+  const result = {
     ruc: data.numero_documento,
     razon_social: data.razon_social,
     estado: data.estado || null,
@@ -113,6 +143,9 @@ const consultarRucSunat = async (ruc) => {
     provincia: data.provincia || null,
     departamento: data.departamento || null,
   };
+  
+  rucCache.set(ruc, result);
+  return result;
 };
 
 module.exports = { consultarDniReniec, consultarRucSunat };

@@ -114,6 +114,13 @@ const Venta = sequelize.define('Venta', {
     type: DataTypes.STRING(6),
     allowNull: true,
     unique: true,
+    validate: {
+      is: /^\d{6}$/
+    }
+  },
+  validacion_sunat_pendiente: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
   estado: {
     type: DataTypes.ENUM('Completada', 'Anulada'),
@@ -139,6 +146,13 @@ const Venta = sequelize.define('Venta', {
 }, {
   tableName: 'ventas',
   timestamps: true,
+  hooks: {
+    beforeValidate: (venta) => {
+      if (venta.referencia_pago) {
+        venta.referencia_pago = venta.referencia_pago.replace(/\D/g, '');
+      }
+    }
+  }
 });
 
 module.exports = Venta;

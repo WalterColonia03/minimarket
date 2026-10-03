@@ -52,6 +52,7 @@ export default function CajaPage() {
   // Modales
   const [modalAbrir, setModalAbrir]   = useState(false);
   const [modalCerrar, setModalCerrar] = useState(false);
+  const [modalMovimiento, setModalMovimiento] = useState(null); // 'Ingreso' | 'Egreso' | null
 
   // Formulario apertura
   const [montoApertura, setMontoApertura] = useState('');
@@ -60,6 +61,10 @@ export default function CajaPage() {
   const [contadoEfectivo, setContadoEfectivo] = useState('');
   const [contadoYape, setContadoYape]         = useState('');
   const [observaciones, setObservaciones]     = useState('');
+
+  // Formulario movimiento manual
+  const [montoMovimiento, setMontoMovimiento] = useState('');
+  const [descripcionMovimiento, setDescripcionMovimiento] = useState('');
 
   const [enviando, setEnviando] = useState(false);
 
@@ -116,6 +121,38 @@ export default function CajaPage() {
       setObservaciones('');
     } catch (err) {
       setError(err.response?.data?.mensaje || 'Error al cerrar turno');
+    } finally {
+      setEnviando(false);
+    }
+  };
+
+  // ─── Registrar movimiento manual ────────────────────────────────────────────
+  const handleMovimiento = async (e) => {
+    e.preventDefault();
+    setError('');
+    const monto = parseFloat(montoMovimiento);
+    if (!Number.isFinite(monto) || monto <= 0 || monto > 5000) {
+      setError('El monto debe ser numérico, mayor a 0 y menor o igual a S/ 5000.');
+      return;
+    }
+    if (!descripcionMovimiento.trim()) {
+      setError('La descripción del motivo es obligatoria.');
+      return;
+    }
+    setEnviando(true);
+    try {
+      await api.post('/caja/movimientos', {
+        tipo: modalMovimiento,
+        monto,
+        descripcion: descripcionMovimiento.trim(),
+        metodo: 'Efectivo'
+      });
+      await cargarTurno(); // Refresca los totales y la lista reactivamente sin recargar
+      setModalMovimiento(null);
+      setMontoMovimiento('');
+      setDescripcionMovimiento('');
+    } catch (err) {
+      setError(err.response?.data?.mensaje || `Error al registrar ${modalMovimiento?.toLowerCase()}`);
     } finally {
       setEnviando(false);
     }
@@ -179,6 +216,18 @@ export default function CajaPage() {
                 </p>
               </div>
               <div className="flex gap-2">
+                <button
+                  onClick={() => setModalMovimiento('Ingreso')}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+                >
+                  <Plus className="h-4 w-4" /> Registrar Ingreso
+                </button>
+                <button
+                  onClick={() => setModalMovimiento('Egreso')}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3 py-2 text-sm font-medium text-white hover:bg-amber-600"
+                >
+                  <TrendingDown className="h-4 w-4" /> Registrar Egreso
+                </button>
                 <button
                   onClick={() => setModalCerrar(true)}
                   className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white hover:bg-red-700"
@@ -335,6 +384,57 @@ export default function CajaPage() {
               <button type="submit" disabled={enviando}
                 className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50">
                 {enviando ? 'Cerrando...' : 'Cerrar turno'}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
+
+      {/* ── Modal: Movimiento manual ── */}
+      {modalMovimiento && (
+        <Modal titulo={`Registrar ${modalMovimiento}`} onClose={() => setModalMovimiento(null)}>
+          <form onSubmit={handleMovimiento} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Monto (S/)</label>
+              <input
+                {...propsMonto(montoMovimiento, setMontoMovimiento)}
+                required
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                placeholder="0.00" autoFocus
+              />
+              <p className="mt-1 text-xs text-gray-400">Máximo S/ 5000.00</p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Descripción del motivo</label>
+              <textarea
+                required
+                rows={2}
+                value={descripcionMovimiento}
+                onChange={(e) => setDescripcionMovimiento(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                placeholder={`Motivo del ${modalMovimiento.toLowerCase()}`}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Medio fijo</label>
+              <input
+                type="text"
+                value="Efectivo"
+                readOnly
+                className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-500"
+              />
+              <p className="mt-1 text-xs text-gray-400">Los movimientos manuales solo aplican a efectivo físico en caja.</p>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button type="button" onClick={() => setModalMovimiento(null)}
+                className="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50">
+                Cancelar
+              </button>
+              <button type="submit" disabled={enviando}
+                className={`rounded-lg px-4 py-2 text-sm font-medium text-white disabled:opacity-50 ${
+                  modalMovimiento === 'Ingreso' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-amber-500 hover:bg-amber-600'
+                }`}>
+                {enviando ? 'Guardando...' : `Registrar ${modalMovimiento}`}
               </button>
             </div>
           </form>

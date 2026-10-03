@@ -180,6 +180,7 @@ export default function VentasPage() {
   const [clienteRuc, setClienteRuc] = useState('');
   const [clienteRazonSocial, setClienteRazonSocial] = useState('');
   const [clienteDireccion, setClienteDireccion] = useState('');
+  const [modoOfflineRuc, setModoOfflineRuc] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -264,8 +265,11 @@ export default function VentasPage() {
   }, [esSoloLectura]);
 
   const buscarPorCodigo = async (codigoParam = null) => {
-    const codigo = (codigoParam !== null ? codigoParam : codigoBarras).trim();
+    let codigo = (codigoParam !== null ? codigoParam : codigoBarras).trim();
     if (!codigo) return;
+
+    const cantidadSugerida = 1;
+
     setBuscandoCodigo(true);
     setError('');
     try {
@@ -273,7 +277,7 @@ export default function VentasPage() {
       if (data.activo === false) {
         setError('El producto está desactivado');
       } else {
-        agregarAlCarrito(data);
+        agregarAlCarrito(data, cantidadSugerida);
         setCodigoBarras('');
         inputCodigoRef.current?.focus();
       }
@@ -368,21 +372,21 @@ export default function VentasPage() {
     localStorage.setItem(carritoStorageKey, JSON.stringify(carrito));
   }, [carrito, carritoStorageKey, esSoloLectura]);
 
-  // Agrega 1 unidad del producto (click rápido en la tarjeta o escaneo de
-  // código de barras). Si el producto ya está en el carrito, solo incrementa
+  // Agrega unidades del producto (click rápido en la tarjeta o escaneo de
+  // código de barras GS1). Si el producto ya está en el carrito, solo incrementa
   // la cantidad de esa fila.
-  const agregarAlCarrito = (producto) => {
+  const agregarAlCarrito = (producto, cantidadSugerida = 1) => {
     setCarrito((prev) => {
       const existente = prev.find((item) => item.id === producto.id);
       if (existente) {
         const max = stockVendible(producto);
         return prev.map((item) =>
           item.id === producto.id
-            ? { ...item, cantidad: Math.min(item.cantidad + 1, max || item.cantidad) }
+            ? { ...item, cantidad: Math.min(item.cantidad + cantidadSugerida, max || item.cantidad) }
             : item
         );
       }
-      return [...prev, { ...producto, cantidad: 1 }];
+      return [...prev, { ...producto, cantidad: cantidadSugerida }];
     });
   };
 
@@ -420,6 +424,7 @@ export default function VentasPage() {
     if (tipoComprobante === 'BoletaSimple') return true;
     if (tipoComprobante === 'BoletaDNI') return /^\d{8}$/.test(clienteDni) && dniValidado;
     if (tipoComprobante === 'Factura') {
+      if (modoOfflineRuc) return /^\d{11}$/.test(clienteRuc) && clienteRazonSocial.trim() && clienteDireccion.trim();
       return /^\d{11}$/.test(clienteRuc) && rucValidado;
     }
     return false;
@@ -460,6 +465,7 @@ export default function VentasPage() {
     setRucNoEncontrado('');
     setError('');
     setPdfError('');
+    setModoOfflineRuc(false);
     setPasoYape('inicio');
     setNroAutorizacion('');
     inputCodigoRef.current?.focus();
@@ -549,12 +555,14 @@ export default function VentasPage() {
       setRucValidado(true);
       setRucInfo({ razon_social: data.razon_social, condicion: data.condicion, estado: data.estado });
     } catch (err) {
-      setError(err.response?.data?.mensaje || 'No se encontró información para ese RUC en SUNAT');
-      // Igual que en buscarDni: solo se bloquea el reintento cuando SUNAT
-      // confirmó que el RUC no existe (404) — un error de servicio se puede
-      // reintentar siempre.
-      if (err.response?.status === 404) {
-        setRucNoEncontrado(ruc);
+      if (err.response?.data?.offline_permitido || err.response?.status === 503) {
+        setError('SUNAT no responde. Modo Offline Activado: Ingrese Razón Social y Dirección manualmente.');
+        setModoOfflineRuc(true);
+      } else {
+        setError(err.response?.data?.mensaje || 'No se encontró información para ese RUC en SUNAT');
+        if (err.response?.status === 404) {
+          setRucNoEncontrado(ruc);
+        }
       }
     } finally {
       setBuscandoRuc(false);
@@ -625,10 +633,10 @@ export default function VentasPage() {
           tipo_comprobante: tipoComprobante === 'Factura' ? 'Factura' : 'Boleta',
           cliente_dni: tipoComprobante === 'BoletaDNI' ? clienteDni : null,
           cliente_nombre: tipoComprobante === 'BoletaDNI' ? nombreDni : null,
-          // razón social y dirección ya no se envían: el servidor las toma
-          // directo de su propia consulta a SUNAT (venta.controller.js), no
-          // de estos campos (que en el frontend son de solo lectura).
           cliente_ruc: tipoComprobante === 'Factura' ? clienteRuc : null,
+          validacion_sunat_pendiente: modoOfflineRuc,
+          cliente_razon_social: modoOfflineRuc ? clienteRazonSocial : undefined,
+          cliente_direccion: modoOfflineRuc ? clienteDireccion : undefined,
         };
 
         const { data } = await api.post('/ventas', body);
@@ -1062,9 +1070,10 @@ export default function VentasPage() {
                     <input
                       type="text"
                       value={clienteRazonSocial}
-                      disabled
-                      placeholder="Se completa al verificar el RUC con SUNAT"
-                      className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-500"
+                      onChange={(e) => setClienteRazonSocial(e.target.value)}
+                      disabled={!modoOfflineRuc}
+                      placeholder={modoOfflineRuc ? "Ingrese Razón Social" : "Se completa al verificar el RUC con SUNAT"}
+                      className={`w-full rounded-lg border px-4 py-2 text-sm ${modoOfflineRuc ? 'border-amber-400 bg-white' : 'border-gray-200 bg-gray-50 text-gray-500'}`}
                     />
                   </div>
                   <div>
@@ -1072,9 +1081,10 @@ export default function VentasPage() {
                     <input
                       type="text"
                       value={clienteDireccion}
-                      disabled
-                      placeholder="Se completa al verificar el RUC con SUNAT"
-                      className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-500"
+                      onChange={(e) => setClienteDireccion(e.target.value)}
+                      disabled={!modoOfflineRuc}
+                      placeholder={modoOfflineRuc ? "Ingrese Dirección" : "Se completa al verificar el RUC con SUNAT"}
+                      className={`w-full rounded-lg border px-4 py-2 text-sm ${modoOfflineRuc ? 'border-amber-400 bg-white' : 'border-gray-200 bg-gray-50 text-gray-500'}`}
                     />
                   </div>
                 </div>

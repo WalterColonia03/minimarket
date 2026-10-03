@@ -32,3 +32,7 @@ PLAN_MEJORAS_VENTAS_INVENTARIO.md
 *.png
 *.jpg
 !public/**
+
+# ─── Temporales / Scratch ──────────────────────────────────────────────────────
+scratch/
+

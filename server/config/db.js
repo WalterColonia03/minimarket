@@ -3,12 +3,16 @@ require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
 require('pg');
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'postgres',
-  logging: false,
-  dialectOptions: process.env.DB_SSL === 'true'
-    ? { ssl: { require: true, rejectUnauthorized: false } }
-    : {},
+const isTest = process.env.NODE_ENV === 'test';
+
+const sequelize = isTest
+  ? new Sequelize('sqlite::memory:', { logging: false })
+  : new Sequelize(process.env.DATABASE_URL, {
+      dialect: 'postgres',
+      logging: false,
+      dialectOptions: process.env.DB_SSL === 'true'
+        ? { ssl: { require: true, rejectUnauthorized: false } }
+        : {},
   // En serverless (Vercel) cada invocación fría abre su propio pool: sin límites
   // bajos, varias instancias concurrentes agotan las conexiones del Postgres
   // (ej. Neon) y las que quedan esperando un slot libre se cuelgan hasta el
