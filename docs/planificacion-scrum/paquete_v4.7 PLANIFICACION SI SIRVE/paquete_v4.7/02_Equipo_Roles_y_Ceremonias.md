@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-02
 Título: Equipo, Roles y Ceremonias
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Angeles Pérez, Jhonny
 Revisado por: Colonia Infantas, Walter
 Estado: Aprobado
@@ -20,7 +20,7 @@ El equipo técnico ejecutor está compuesto de manera fija por 6 desarrolladores
 | **Des.1** | Velasquez Revilla, Favio | Developer | **Lógica de Negocio e Inventario:** construcción de movimientos de almacén, políticas de existencias, cálculo de mermas y persistencia operativa. |
 | **Des.2** | Nolasco Castillo, Juan David | Developer | **Flujos de Caja y Catálogos:** construcción de pantallas operativas de caja, registro de turnos y mantenimiento de catálogos maestros. |
 | **Des.3** | Castillo Aranda, Jhordan Alexis | Developer | **Lógica Transaccional y Ventas (POS):** construcción del circuito de punto de venta, medios de pago en mostrador y generación de comprobantes. |
-| **Des.4** | Alcalde Navarro, Sebastian | Developer | **Calidad y Pruebas (QA Lead):** liderazgo de pruebas funcionales, verificación cruzada independiente, certificación de criterios de aceptación y preparación de despliegues web. |
+| **Des.4** | Alcalde Navarro, Sebastián | Developer | **Calidad y Pruebas (QA Lead):** liderazgo de pruebas funcionales, verificación cruzada independiente, certificación de criterios de aceptación y preparación de despliegues web. |
 | **Des.5** | Colonia Infantas, Walter | Developer | **Seguridad, Accesos y Sesiones:** construcción del módulo de autenticación, control de sesiones de usuario, administración de accesos y configuración fiscal. |
 | **Des.6** | Angeles Pérez, Jhonny | Developer | **Catálogos, Datos y Reportes:** construcción de módulos de proveedores, clientes, tableros analíticos e informes gerenciales. |
 

@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-00
 Título: Planificación Scrum y Control Documental
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Angeles Pérez, Jhonny
 Revisado por: Colonia Infantas, Walter
 Estado: Aprobado

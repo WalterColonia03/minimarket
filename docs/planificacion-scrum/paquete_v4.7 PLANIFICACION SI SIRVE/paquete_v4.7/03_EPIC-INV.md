@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-03-03
 Título: Backlog de Producto — EPIC-INV: Inventario y Reposición
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Colonia Infantas, Walter
 Revisado por: Angeles Pérez, Jhonny
 Estado: Aprobado
@@ -53,7 +53,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Como** Almacenero o Administrador del minimarket,  
 **quiero** registrar la baja formal de mercadería averiada, rota o vencida en el almacén,  
-**para** reflejar la pérdida real en el sistema, sincerar el patrimonio comercial y retirar inmediatamente las unidades deterioradas del stock comercializable.
+**para** reflejar la pérdida real en el sistema, conciliar el valor real del inventario y retirar inmediatamente las unidades deterioradas del stock comercializable.
 
 **Justificación de prioridad:** Funcionalidad esencial de control contable y operativo (Must have); indispensable para mantener la veracidad de las existencias y evitar que mercadería dañada o caducada se ofrezca al público o distorsione los arqueos de bodega.
 

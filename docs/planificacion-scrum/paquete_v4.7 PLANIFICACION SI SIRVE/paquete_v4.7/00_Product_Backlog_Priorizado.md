@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-03-00
 Título: Product Backlog Priorizado
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Colonia Infantas, Walter
 Revisado por: Angeles Pérez, Jhonny
 Estado: Aprobado
@@ -34,7 +34,7 @@ Las 5 historias con estimación igual o superior a 8 puntos de historia fueron a
 | **HU-AUTH-04** | Autenticación – Garantizar sesión única por usuario | 8 | SPR-2 | Complejidad en el control de accesos simultáneos desde múltiples dispositivos. | Se mantiene en 8 pts en Sprint 2 (REL-2). Se mitiga mediante la validación del estado de sesión activa por cuenta de usuario, desconectando de forma automática cualquier sesión previa al iniciar sesión en un nuevo puesto de trabajo, dependiendo de `HU-AUTH-03` y complementándose con el cierre forzado remoto por SuperAdmin (`HU-USR-06`). |
 | **HU-SOL-05** | Reposición – Completar solicitud al recibir mercadería | 8 | SPR-2 | Múltiples actividades operativas: cotejo físico de ítems, actualización de existencias, recálculo de costo promedio y cierre del pedido. | Se mantiene en 8 pts en Sprint 2 (REL-2). Se mitiga exigiendo que toda recepción se realice obligatoriamente contra una solicitud de reposición previamente aprobada (RN-01 y RN-14), canalizando las notificaciones de stock crítico hacia el tablero gerencial (`HU-DASH-03`). |
 | **HU-VEN-01** | Ventas (POS) – Registrar una venta con Efectivo o Yape/Plin (IziPay) | 13 | SPR-1 | Núcleo transaccional de máxima criticidad comercial; concentra la atención en mostrador y domina el camino crítico del Sprint 1 (22.00 h lógicas; ver DOC-PLAN-06). | Se mantiene indivisible en 13 pts por su valor operativo integral (el cobro en mostrador pierde sentido demostrable si se fragmenta). Se mitiga iniciando el desarrollo de la interfaz de venta desde el día 1 bajo acuerdo de servicio e implementando verificación continua con cierre planificado en el día 7 y colchón de estabilización. *(Ver nota de descomposición opcional abajo)*. |
-| **HU-VEN-02** | Ventas (POS) – Emitir boleta o factura | 8 | SPR-1 | Generación de comprobantes fiscales con numeración correlativa continua y formatos tributarios SUNAT [DECISIÓN PENDIENTE D8]. | Se mantiene en 8 pts en Sprint 1 (REL-1). Se mitiga desacoplando la expedición documental del cálculo del carrito de ventas mediante especificación previa, ejecutando su verificación de comprobantes inmediatamente después de completar el flujo de venta de `HU-VEN-01`. |
+| **HU-VEN-02** | Ventas (POS) – Emitir boleta o factura | 8 | SPR-1 | Generación de comprobantes fiscales con numeración correlativa continua y formatos tributarios SUNAT (Decisión formal D4: Emisión local correlativa autónoma con contingencia). | Se mantiene en 8 pts en Sprint 1 (REL-1). Se mitiga desacoplando la expedición documental del cálculo del carrito de ventas mediante especificación previa, ejecutando su verificación de comprobantes inmediatamente después de completar el flujo de venta de `HU-VEN-01`. |
 | **HU-VEN-06** | Ventas (POS) – Anular una venta con devolución | 8 | SPR-2 | Impacto simultáneo en la gaveta de caja, egreso de efectivo, reversión de stock comercial y eventual derivación a merma. | Se mantiene en 8 pts en Sprint 2 (REL-2). Se mitiga reservando la autorización exclusivamente a Administrador o Gerente, requiriendo que el turno de caja se mantenga en estado 'Abierto' (RN-08) y aplicando el protocolo de destino a merma o inventario (RN-09). |
 
 > **Nota metodológica de descomposición opcional (Criterio INVEST - Small):**  

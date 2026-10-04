@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-04
 Título: Plan de Lanzamiento y Story Mapping
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Colonia Infantas, Walter
 Revisado por: Angeles Pérez, Jhonny
 Estado: Aprobado

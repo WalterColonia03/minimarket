@@ -2,7 +2,7 @@
 Código de Documento: DOC-PLAN-05
 Título: Estimación de Capacidad, Velocidad y Costos
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Angeles Pérez, Jhonny
 Revisado por: Colonia Infantas, Walter
 Estado: Aprobado

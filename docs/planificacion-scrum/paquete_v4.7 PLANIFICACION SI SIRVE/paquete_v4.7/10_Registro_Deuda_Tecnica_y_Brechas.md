@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-10
 Título: Registro de Supuestos de Arquitectura y Decisiones de Negocio
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Colonia Infantas, Walter
 Revisado por: Angeles Pérez, Jhonny
 Estado: Aprobado
@@ -94,7 +94,7 @@ El propósito central radica en explicitar las reglas operativas, delimitaciones
 - **Reglas de negocio asociadas:** RN-13 (Numeración oficial ininterrumpida) y directrices de imagen corporativa.
 
 ### D12: Modelo de gobernanza Scrum y segregación Construye no es igual a Verifica
-- **Declaración:** El desarrollo y certificación de la solución tecnológica se estructura bajo un estricto principio de verificación cruzada independiente (Construye no es igual a Verifica), asignando el 41.0 % del tiempo total de ingeniería (206.0 horas de un universo de 502.0 horas) a actividades de aseguramiento de calidad, pruebas unitarias y validación formal de criterios de aceptación. Ningún integrante del equipo tiene permitido certificar historias que haya construido directamente. La estructura financiera descansa en una asignación de S/ 625.00 semanales por desarrollador (S/ 25.00 por hora neta), consolidando un presupuesto total cerrado de S/ 22,500.00 distribuido equitativamente en 3 iteraciones de 2 semanas (S/ 7,500.00 por ciclo).
+- **Declaración:** El desarrollo y certificación de la solución tecnológica se estructura bajo un estricto principio de verificación cruzada independiente (Construye no es igual a Verifica), asignando el 41.0 % del tiempo total de ingeniería (206.0 horas de un universo de 502.0 horas) a actividades de aseguramiento de calidad y verificación, desglosado en dos fases indispensables: (a) 131.75 h (26.2 %) en pruebas automatizadas unitarias y de integración (Paso 6 del desglose de tareas) sobre lógica transaccional, cálculos fiscales y consumo FEFO, y (b) 74.25 h (14.8 %) en certificación funcional independiente de criterios de aceptación y pase al entorno web (Paso 8 del desglose de tareas) ejecutada por el Verificador QA. Ningún integrante del equipo tiene permitido certificar historias que haya construido directamente. La estructura financiera descansa en una asignación de S/ 625.00 semanales por desarrollador (S/ 25.00 por hora neta del modelo de capacidad docente de 25 h/sem brutas / 20 h/sem netas), consolidando un presupuesto total cerrado de S/ 22,500.00 distribuido equitativamente en 3 iteraciones de 2 semanas (S/ 7,500.00 por ciclo).
 - **Justificación de negocio:** Garantizar la excelencia operativa del software, erradicar sesgos de confirmación en la entrega de valor y cumplir con los compromisos contractuales de costo y cronograma pactados con el Product Owner.
 - **Historias de usuario vinculadas:** Las 72 historias de usuario del Product Backlog, `DOC-PLAN-02`, `DOC-PLAN-05`, `DOC-PLAN-06`, `DOC-PLAN-07`.
 - **Reglas de negocio asociadas:** Marco de trabajo Scrum del proyecto y acuerdos de Definition of Done (DoD).

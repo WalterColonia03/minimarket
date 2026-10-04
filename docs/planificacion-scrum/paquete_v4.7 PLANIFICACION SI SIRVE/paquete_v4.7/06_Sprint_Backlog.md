@@ -2,7 +2,7 @@
 Código de Documento: DOC-PLAN-06
 Título: Sprint Backlog
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Angeles Pérez, Jhonny
 Revisado por: Colonia Infantas, Walter
 Estado: Aprobado
@@ -117,16 +117,18 @@ Cada celda indica HU y pasos de la plantilla (p. ej. VEN-01·4,5 = pasos 4 y 5 d
 
 | Día | Fecha | Semana del curso | Horas ejecutadas | Horas restantes | HU cerradas (acum.) | Puntos cerrados (acum.) | Puntos pendientes |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | mié 30-sep | 5 | 16.00 | 162.00 | 0 | 0 | 89 |
-| 2 | jue 01-oct | 5 | 23.25 | 138.75 | 0 | 0 | 89 |
-| 3 | vie 02-oct | 5 | 24.00 | 114.75 | 0 | 0 | 89 |
-| 4 | sáb 03-oct | 5 | 22.25 | 92.50 | 1 | 5 | 84 |
-| 5 | lun 05-oct | 6 | 22.50 | 70.00 | 5 | 20 | 69 |
-| 6 | mar 06-oct | 6 | 24.00 | 46.00 | 6 | 25 | 64 |
-| 7 | mié 07-oct | 6 | 24.00 | 22.00 | 7 | 38 | 51 |
-| 8 | vie 09-oct | 6 | 19.50 | 2.50 | 16 | 79 | 10 |
-| 9 | lun 12-oct | 7 | 2.50 | 0.00 | 20 | 89 | 0 |
+| 1 | mié 30-sep | 5 | 6.00 | 172.00 | 0 | 0 | 89 |
+| 2 | jue 01-oct | 5 | 24.00 | 148.00 | 0 | 0 | 89 |
+| 3 | vie 02-oct | 5 | 24.00 | 124.00 | 0 | 0 | 89 |
+| 4 | sáb 03-oct | 5 | 24.00 | 100.00 | 1 | 5 | 84 |
+| 5 | lun 05-oct | 6 | 24.00 | 76.00 | 5 | 20 | 69 |
+| 6 | mar 06-oct | 6 | 24.00 | 52.00 | 6 | 25 | 64 |
+| 7 | mié 07-oct | 6 | 24.00 | 28.00 | 7 | 38 | 51 |
+| 8 | vie 09-oct | 6 | 24.00 | 4.00 | 16 | 79 | 10 |
+| 9 | lun 12-oct | 7 | 4.00 | 0.00 | 20 | 89 | 0 |
 | 10 | mar 13-oct | 7 | 0.00 | 0.00 | 20 | 89 | 0 |
+
+*Nota de cuadratura horaria:* En el Día 1 (miércoles 30 de septiembre), cada uno de los 6 desarrolladores dedica 4.0 horas a la ceremonia oficial de Sprint Planning y 1.0 hora neta a tareas técnicas de arranque y configuración (6.0 h en total para el equipo), respetando estrictamente la jornada máxima de 5.0 h brutas diarias por persona sin sobreasignación. Del Día 2 al Día 8 se ejecutan 24.0 h diarias (4.0 h netas de desarrollo por persona con 1.0 h de margen para Daily/holgura).
 
 #### 6. Cierre de HU
 
@@ -153,7 +155,7 @@ Cada celda indica HU y pasos de la plantilla (p. ej. VEN-01·4,5 = pasos 4 y 5 d
 | HU-PROD-01 | 9 | lun 12-oct | 3 |
 | HU-CAT-01 | 9 | lun 12-oct | 1 |
 
-**Resultado verificado:** HU-VEN-01 (13 pts, camino crítico) cierra el día 7 (mié 07-oct) y HU-VEN-02 el día 8 (vie 09-oct). El sprint cierra formalmente el **día 9 (lun 12-oct) con 2.50 h residuales** en HU periféricas (HU-CONF-02, HU-CAJA-05, HU-PROD-01, HU-CAT-01). El colchón preventivo abarca el resto del lunes 12-oct y el martes 13-oct previo a la clase de presentación del MVP.
+**Resultado verificado:** HU-VEN-01 (13 pts, camino crítico) cierra el día 7 (mié 07-oct) y HU-VEN-02 el día 8 (vie 09-oct). El sprint cierra formalmente el **día 9 (lun 12-oct) con 4.00 h residuales** en HU periféricas (HU-CONF-02, HU-CAJA-05, HU-PROD-01, HU-CAT-01). El colchón preventivo abarca el resto del lunes 12-oct (20.0 h de holgura) y el martes 13-oct previo a la clase de presentación del MVP.
 
 #### 7. Sensibilidad del cierre del Sprint 1 (simulación con restricciones de precedencias)
 Formato: día de cierre (horas efectivas usadas ese día). Escenarios: **base**; **mar 6-oct a media jornada** (clase); **VEN-01 +30 %** de sobre-esfuerzo.
@@ -166,9 +168,9 @@ Formato: día de cierre (horas efectivas usadas ese día). Escenarios: **base**;
 | 6.0 h (7.5 h) | 6 (3.75) | 7 (0.75) | 7 (5.00) | 7 (2.50) | 7 (5.50) | 8 (5.00) |
 
 #### 8. Disparadores de control y Plan B de alcance
-- **Punto de control 1 — cierre del día 5 (lun 05-oct):** Horas restantes planificadas = 70.00 h. Si las horas restantes reales superan **80 h** (desvío ≥ 10 h), se activa el Plan B.
+- **Punto de control 1 — cierre del día 5 (lun 05-oct):** Horas restantes planificadas = 76.00 h. Si las horas restantes reales superan **86 h** (desvío ≥ 10 h), se activa el Plan B.
 - **Plan B:** Mover al Sprint 2 las HU periféricas sin dependientes en Sprint 1: HU-CAT-01 (1 pt), HU-PROD-01 (3 pts), HU-CAJA-05 (3 pts) y HU-VEN-05 (5 pts) = **12 pts / 24 h**. El MVP queda en 77 pts (16 HU, todas Must have) y el Sprint 2 en 102 pts (85 % de la V.E. = 120), dentro de la capacidad.
-- **Punto de control 2 — cierre del día 7 (mié 07-oct):** Horas restantes planificadas = 22.00 h. Si las reales superan **30 h**, el equipo detiene la apertura de historias nuevas y enfoca todo el esfuerzo en cerrar la cadena central de ventas (HU-VEN-01, HU-VEN-02) y sus prerrequisitos.
+- **Punto de control 2 — cierre del día 7 (mié 07-oct):** Horas restantes planificadas = 28.00 h. Si las reales superan **36 h**, el equipo detiene la apertura de historias nuevas y enfoca todo el esfuerzo en cerrar la cadena central de ventas (HU-VEN-01, HU-VEN-02) y sus prerrequisitos.
 
 #### 9. Supuestos del cronograma
 - Sábado 03-oct laborado como compensación del feriado nacional del jueves 08-oct.

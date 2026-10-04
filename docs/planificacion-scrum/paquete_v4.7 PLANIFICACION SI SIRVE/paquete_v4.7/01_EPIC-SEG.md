@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-03-01
 Título: Backlog de Producto — EPIC-SEG: Seguridad y Accesos
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Colonia Infantas, Walter
 Revisado por: Angeles Pérez, Jhonny
 Estado: Aprobado
@@ -137,7 +137,7 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Justificación de prioridad:** Característica de alto valor operativo (Should have); reduce los tiempos muertos en mostrador y almacén provocados por olvido de claves. No se incluye en el primer lanzamiento (Sprint 1) debido a que la entrega inicial de credenciales se resuelve de forma centralizada con la creación de usuarios (`HU-USR-02`), programándose como autoservicio para el Release 2.
 
 **Criterios de aceptación:**
-1. **Dado que** un empleado no recuerda su contraseña de ingreso, **cuando** introduce su dirección de correo electrónico institucional institucional registrada en la pantalla de recuperación y presiona «Enviar código», **entonces** el sistema genera un código de autorización numérico temporal `[DECISIÓN PENDIENTE D3]` y lo despacha de forma inmediata a la bandeja del usuario con una validez máxima e improrrogable de 15 minutos.
+1. **Dado que** un empleado no recuerda su contraseña de ingreso, **cuando** introduce su dirección de correo electrónico institucional registrada en la pantalla de recuperación y presiona «Enviar código», **entonces** el sistema genera un código de autorización numérico temporal `de 4 dígitos (Decisión formal D2/D3)` y lo despacha de forma inmediata a la bandeja del usuario con una validez máxima e improrrogable de 15 minutos.
 2. **Dado que** el colaborador ha recibido el código de autorización en su casilla de correo, **cuando** digita dicho código dentro del período de 15 minutos e ingresa su nueva contraseña cumpliendo las políticas de seguridad, **entonces** el sistema valida el código, actualiza la credencial y confirma que el acceso ha sido restaurado exitosamente, habilitando el ingreso con la nueva clave.
 3. **Dado que** han transcurrido más de 15 minutos desde la generación del código de autorización o se acumulan 5 intentos fallidos de validación, **cuando** el usuario intenta utilizar el código expirado o bloqueado, **entonces** el sistema invalida la solicitud, despliega una alerta indicando que el código ya no tiene vigencia por razones de seguridad y orienta al usuario a solicitar una nueva emisión.
 4. **Dado que** el usuario tramita el autoservicio de recuperación, **cuando** navega por los formularios de solicitud de código y definición de nueva contraseña, **entonces** la interfaz responde estrictamente a la presentación visual, campos de texto y mensajes detallados en UI-002 (Recuperación de Contraseña) del Catálogo de Interfaces (DOC-ANEXO-B).
@@ -149,7 +149,7 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 - Requiere `HU-AUTH-01` (completada en Sprint 1).
 
 **Decisiones de Negocio Pendientes:**
-- `[DECISIÓN PENDIENTE D3]`: Longitud y formato del código de autorización de recuperación por correo electrónico. Opciones en evaluación por el Product Owner: código de autorización numérico ágil de 4 dígitos (permite rápida digitación en terminales táctiles) frente a código de autorización numérico estandarizado de 6 dígitos (mayor robustez ante patrones de seguridad).
+- `de 4 dígitos (Decisión formal D2/D3)`: Longitud y formato del código de autorización de recuperación por correo electrónico. Opciones en evaluación por el Product Owner: código de autorización numérico ágil de 4 dígitos (permite rápida digitación en terminales táctiles) frente a código de autorización numérico estandarizado de 6 dígitos (mayor robustez ante patrones de seguridad).
 
 ---
 
@@ -166,10 +166,10 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Justificación de prioridad:** Funcionalidad recomendada (Should have); promueve la autogestión y el fortalecimiento de la seguridad individual del personal, reduciendo la carga administrativa en el Release 3.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con sesión abierta accede a la funcionalidad de cambio de clave, **cuando** introduce su contraseña actual correcta y define una nueva contraseña que cumpla con los estándares de robustez del minimarket (mínimo 7 caracteres alfanuméricos combinando mayúsculas, minúsculas y números), **entonces** el sistema actualiza la contraseña de la cuenta, confirma el éxito de la operación y culmina las demás conexiones activas para demandar reautenticación segura con la clave recién establecida.
+1. **Dado que** un colaborador con sesión abierta accede a la funcionalidad de cambio de clave, **cuando** introduce su contraseña actual correcta y define una nueva contraseña que cumpla con los estándares de robustez del minimarket (mínimo 8 caracteres alfanuméricos combinando mayúsculas, minúsculas y números), **entonces** el sistema actualiza la contraseña de la cuenta, confirma el éxito de la operación y culmina las demás conexiones activas para demandar reautenticación segura con la clave recién establecida.
 2. **Dado que** el colaborador intenta modificar su clave, **cuando** introduce erróneamente su contraseña actual, **entonces** el sistema rechaza la actualización, mantiene la clave original y notifica: «La contraseña actual ingresada es incorrecta».
 3. **Dado que** el colaborador digita una nueva contraseña, **cuando** dicha combinación no satisface los requisitos mínimos de longitud o variedad de caracteres, **entonces** el sistema le indica de forma explícita las reglas pendientes por cumplir y bloquea el botón de confirmación hasta su debida satisfacción.
-4. **Dado que** el colaborador efectúa la modificación de sus credenciales, **cuando** interactúa con los controles en pantalla, **entonces** la experiencia visual y formulario se ajustarán a lo resuelto en la definición de interfaz de usuario de `[DECISIÓN PENDIENTE D7]`.
+4. **Dado que** el colaborador efectúa la modificación de sus credenciales, **cuando** interactúa con los controles en pantalla, **entonces** la experiencia visual y formulario se ajustan a la decisión formal D7 adoptada (diálogo modal emergente de cambio de contraseña accesible desde la barra superior UI-003).
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -177,8 +177,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Dependencias:** 
 - Requiere `HU-AUTH-01` y `HU-AUTH-03` (finalizadas en Sprint 1).
 
-**Decisiones de Negocio Pendientes:**
-- `[DECISIÓN PENDIENTE D7]`: Definición de la interfaz de usuario para autogestión de perfil y cambio voluntario de clave. Opciones en evaluación por el Product Owner: incorporación de un diálogo emergente (modal) desplegable desde la barra de navegación superior (UI-003) versus el diseño de una pantalla completa independiente dedicada al Perfil del Empleado (propuesta UI-027).
+**Decisiones de arquitectura y negocio:**
+- **Decisión formal D7 adoptada:** Implementación mediante diálogo modal emergente accesible desde la barra de navegación superior (UI-003), garantizando cambio seguro de contraseña sin requerir una pantalla independiente.
 
 ### HU-USR-01 · Usuarios – Listar empleados del sistema
 
@@ -215,7 +215,7 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **quiero** registrar a un nuevo colaborador en el sistema asignándole sus datos personales, correo institucional, contraseña inicial y rol funcional,  
 **para** habilitar su cuenta de trabajo y permitirle operar en las labores de venta, caja, almacén o supervisión según corresponda a sus atribuciones.
 
-**Justificación de prioridad:** Funcionalidad imprescindible para el producto mínimo viable (Must have); sin la capacidad de dar de alta al personal operativo (Cajeros, Almaceneros, Administradores), el negocio no puede operar el sistema de forma segregada ni atribuir transacciones comerciales.
+**Justificación de prioridad:** Funcionalidad imprescindible para el producto mínimo viable (Must have); sin la capacidad de dar de alta al personal operativo (Vendedores, Almaceneros, Administradores), el negocio no puede operar el sistema de forma segregada ni atribuir transacciones comerciales.
 
 **Criterios de aceptación:**
 1. **Dado que** el SuperAdmin diligencia el formulario de alta de un colaborador, **cuando** introduce una dirección de correo electrónico que ya pertenece a otro usuario registrado (activo o inactivo), **entonces** el sistema deniega el registro y muestra un mensaje de alerta indicando que la dirección de correo ya existe, asegurando la identidad unívoca de empleados (RN-12).
@@ -268,8 +268,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Justificación de prioridad:** Salvaguarda de seguridad crítica (Must have); indispensable para prevenir fraudes, operaciones no autorizadas o cobros en caja por parte de personal desvinculado de la empresa.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador cesa en sus funciones en el minimarket, **cuando** el SuperAdmin ubica su perfil en la nómina, pulsa «Desactivar» y confirma la instrucción en el diálogo de advertencia, **entonces** el sistema conmuta su estado a Inactivo e interrumpe de forma fulminante cualquier sesión de trabajo que el usuario mantuviese abierta en cualquier terminal del negocio.
-2. **Dado que** la cuenta de un trabajador ha sido dada de baja o desactivada, **cuando** él o un tercero intenta iniciar sesión introduciendo las credenciales habituales, **entonces** el sistema rechaza rotundamente la entrada y le notifica que su cuenta se encuentra inactiva y debe contactar a la administración.
+1. **Dado que** un colaborador cesa en sus funciones en el minimarket, **cuando** el SuperAdmin ubica su perfil en la nómina, pulsa «Desactivar» y confirma la instrucción en el diálogo de advertencia, **entonces** el sistema conmuta su estado a Inactivo e interrumpe de forma inmediata cualquier sesión de trabajo que el usuario mantuviese abierta en cualquier terminal del negocio.
+2. **Dado que** la cuenta de un trabajador ha sido dada de baja o desactivada, **cuando** él o un tercero intenta iniciar sesión introduciendo las credenciales habituales, **entonces** el sistema deniega formalmente el acceso y le notifica que su cuenta se encuentra inactiva y debe contactar a la administración.
 3. **Dado que** el SuperAdmin realiza la suspensión desde el panel de colaboradores, **cuando** acciona el botón y visualiza el cambio de etiqueta de estado y los avisos de confirmación, **entonces** la interfaz satisface los parámetros visuales y de interacción fijados en UI-004 del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 

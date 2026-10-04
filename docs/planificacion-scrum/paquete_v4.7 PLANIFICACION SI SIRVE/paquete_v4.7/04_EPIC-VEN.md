@@ -1,8 +1,8 @@
 ---
 Código de documento: DOC-PLAN-03-04
-Título: Backlog de Producto — EPIC-VEN: Ventas, Caja y Facturación Electrónica
+Título: Backlog de Producto — EPIC-VEN: Ventas, Caja y Comprobantes de Pago
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Colonia Infantas, Walter
 Revisado por: Angeles Pérez, Jhonny
 Estado: Aprobado
@@ -10,7 +10,7 @@ Propósito: Especificación de requisitos e historias de usuario de la épica de
 Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, DOC-ANEXO-B
 ---
 
-# EPIC-VEN: Ventas, Caja y Facturación Electrónica
+# EPIC-VEN: Ventas, Caja y Comprobantes de Pago
 
 **Objetivo de negocio (OBJ-04):** Procesar las transacciones comerciales de venta en el salón de atención al público de forma ágil, emitiendo comprobantes de pago válidos ante la normativa tributaria nacional (SUNAT), resguardando la integridad del inventario por despacho preferente de vencimiento y asegurando el cuadre exacto del dinero en las cajas del minimarket mediante estrictos mecanismos de control y arqueo físico.
 
@@ -26,7 +26,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Como** Vendedor o Administrador del minimarket,  
 **quiero** abrir formalmente mi turno de caja registrando el fondo monetario inicial (efectivo en gaveta),  
-**para** habilitar las operaciones de venta en el terminal de punto de venta (POS) y establecer la base dineraria obligatoria para el arqueo y cuadre al cierre de jornada.
+**para** habilitar las operaciones de venta en el terminal de punto de venta (POS) y establecer la fondo inicial de caja en efectivo obligatoria para el arqueo y cuadre al cierre de jornada.
 
 **Justificación de prioridad:** Funcionalidad crítica indispensable para el producto mínimo viable (Must have); sin un turno abierto con fondo verificado, el sistema bloquea cualquier transacción comercial, impidiendo ventas sin trazabilidad financiera y garantizando la custodia del dinero físico.
 
@@ -40,7 +40,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 - RN-10 (Fondo Mínimo de Apertura de Caja)
 
 **Dependencias:** 
-- Requiere `HU-AUTH-01` (inicio de sesión del cajero) y `HU-CONF-02` (parámetros de tienda).
+- Requiere `HU-AUTH-01` (inicio de sesión del vendedor) y `HU-CONF-02` (parámetros de tienda).
 
 ---
 
@@ -51,22 +51,22 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 | HU-CAJA-02 | EPIC-VEN | Must have | 5 pts | REL-1 | SPR-1 |
 
 **Como** Vendedor o Administrador del minimarket,  
-**quiero** cerrar formalmente mi turno de caja declarando el arqueo físico de efectivo y pagos digitales (Yape/Plin (IziPay)/Plin (IziPay)),  
+**quiero** cerrar formalmente mi turno de caja declarando el arqueo físico de efectivo en gaveta y la conciliación del reporte de liquidación del terminal de pagos digitales (Yape/Plin vía IziPay),  
 **para** que el sistema calcule el cuadre de caja (sobrante o faltante), deshabilite nuevas ventas en dicho turno y deje constancia auditable de la custodia monetaria.
 
-**Justificación de prioridad:** Funcionalidad crítica de control antifraude y cuadre contable (Must have); el cierre con declaración de valores físicos es el mecanismo nuclear para verificar que lo recaudado coincida con las ventas registradas.
+**Justificación de prioridad:** Funcionalidad crítica de control antifraude y cuadre contable (Must have); el cierre con declaración de valores físicos y liquidación digital es el mecanismo nuclear para verificar que lo recaudado coincida con las ventas registradas.
 
 **Criterios de aceptación:**
-1. **Dado que** el colaborador finaliza su jornada con un turno en estado «Abierto», **cuando** ingresa el arqueo físico de dinero contando e introduciendo los montos reales de efectivo y pagos por billetera digital y confirma el cierre, **entonces** el sistema pasa el turno a estado «Cerrado», calcula automáticamente las diferencias respecto a los saldos esperados, registra las observaciones del cajero e inhabilita inmediatamente las funciones de cobro en el POS para ese turno.
-2. **Dado que** el colaborador ejecuta el arqueo de cierre, **cuando** se somete a la modalidad de supervisión `[DECISIÓN PENDIENTE D1]`, **entonces** el formulario de cierre procesará la declaración bajo el estándar institucional acordado (conteo ciego sin exhibición previa de saldos esperados en pantalla o verificación guiada con saldo teórico visible).
-3. **Dado que** un turno ha quedado formalmente en estado «Cerrado», **cuando** el cajero intenta registrar una nueva venta o movimiento manual bajo dicho turno, **entonces** el sistema deniega el acceso exigiendo la apertura de un nuevo turno para continuar operando.
-4. **Dado que** el usuario interactúa con el formulario de arqueo final, **cuando** declara los importes físicos y visualiza el resumen del cuadre, **entonces** la interfaz satisface rigurosamente los estándares visuales y de microcopy de UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
+1. **Dado que** el colaborador finaliza su jornada con un turno en estado «Abierto», **cuando** ingresa el arqueo físico contando el efectivo en gaveta e introduce el total del reporte de liquidación emitido por el terminal IziPay para pagos digitales y confirma el cierre, **entonces** el sistema pasa el turno a estado «Cerrado», calcula automáticamente las diferencias respecto a los saldos esperados, registra las observaciones del vendedor e inhabilita inmediatamente las funciones de cobro en el POS para ese turno.
+2. **Dado que** el colaborador ejecuta el arqueo de cierre, **cuando** introduce el recuento físico de efectivo y la liquidación del terminal digital, **entonces** el formulario de cierre procesará la declaración bajo la modalidad institucional de arqueo con saldo esperado visible en pantalla (Decisión formal D1/D5), orientando al colaborador en la conciliación previa al guardado formal.
+3. **Dado que** un turno ha quedado formalmente en estado «Cerrado», **cuando** el vendedor intenta registrar una nueva venta o movimiento manual bajo dicho turno, **entonces** el sistema deniega el acceso exigiendo la apertura de un nuevo turno para continuar operando.
+4. **Dado que** el usuario interactúa con el formulario de arqueo final, **cuando** declara los importes físicos y la liquidación digital y visualiza el resumen del cuadre, **entonces** la interfaz satisface rigurosamente los estándares visuales y de microcopy de UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Decisiones pendientes:**
-- `[DECISIÓN PENDIENTE D1]`: Modalidad de arqueo de caja al cierre de turno. Opciones en evaluación por el Product Owner: Cierre ciego (el cajero no visualiza los totales calculados por el sistema hasta después de confirmar su conteo físico, mitigando fraudes) frente a Cierre con saldo esperado visible (el cajero ve los totales teóricos en pantalla para orientar la reconciliación antes de guardar).
+**Decisiones de arquitectura y negocio:**
+- **Decisión formal D1/D5 adoptada:** Modalidad de arqueo con saldo esperado visible en pantalla para orientar al vendedor en la conciliación del efectivo y la liquidación digital IziPay antes de confirmar el cierre.
 
 **Dependencias:** 
 - Requiere `HU-CAJA-01` (existencia de un turno abierto).
@@ -81,14 +81,14 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Como** Vendedor o Administrador del minimarket,  
 **quiero** registrar entradas o salidas manuales de efectivo físico en la gaveta con su debida justificación escrita,  
-**para** documentar compras menores de emergencia, pagos de servicios básicos o inyecciones de sencillo para vuelto sin alterar los registros de ventas y manteniendo cuadrada la caja.
+**para** documentar compras menores de emergencia, pagos de servicios básicos o ingresos manuales de efectivo para cambio para vuelto sin alterar los registros de ventas y manteniendo cuadrada la caja.
 
 **Justificación de prioridad:** Funcionalidad de flexibilidad operativa importante (Should have); en el Release 1 el minimarket opera exclusivamente cobros de venta y fondo inicial; el Release 2 introduce el manejo controlado de caja chica para gastos operativos menores.
 
 **Criterios de aceptación:**
 1. **Dado que** el colaborador requiere ingresar o retirar dinero en efectivo de la gaveta por un concepto operativo (ejemplo: retiro para compra de insumos de limpieza o inyección de sencillo para cambio), **cuando** selecciona el tipo de movimiento («Ingreso» o «Egreso»), especifica el importe mayor a cero y digita obligatoriamente una justificación textual, **entonces** el sistema registra el movimiento físico en efectivo y ajusta de forma inmediata el saldo esperado de efectivo del turno (RN-15).
 2. **Dado que** el operador intenta registrar un movimiento manual, **cuando** ingresa un importe superior al límite reglamentario de S/ 5,000.00 por movimiento, **entonces** el sistema bloquea la transacción notificando que los egresos e ingresos de caja chica no pueden exceder el tope máximo permitido de S/ 5,000.00 (RN-11).
-3. **Dado que** el cajero procesa el formulario de movimiento manual, **cuando** intenta guardar sin registrar una descripción o justificación del gasto/ingreso, **entonces** el sistema impide el registro exigiendo un motivo documentado para fines de supervisión interna.
+3. **Dado que** el vendedor procesa el formulario de movimiento manual, **cuando** intenta guardar sin registrar una descripción o justificación del gasto/ingreso, **entonces** el sistema impide el registro exigiendo un motivo documentado para fines de supervisión interna.
 4. **Dado que** el usuario opera desde la ventana de movimientos de caja, **cuando** captura el tipo, monto y motivo, **entonces** la pantalla satisface las especificaciones de interfaz descritas en UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -113,16 +113,16 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad de apoyo operativo importante (Should have); proporciona transparencia al operador y facilita la reconciliación preventiva de valores en el Release 2 sin interferir con la velocidad de atención al cliente.
 
 **Criterios de aceptación:**
-1. **Dado que** el cajero mantiene un turno en estado «Abierto», **cuando** consulta el panel de resumen de turno, **entonces** el sistema presenta un tablero consolidado con el monto de apertura, el volumen acumulado de ventas, el subtotal recaudado en efectivo físico, el total capturado en pagos digitales y los ingresos/egresos manuales procesados.
-2. **Dado que** el negocio define sus políticas de control interno según `[DECISIÓN PENDIENTE D1]` y `[DECISIÓN PENDIENTE D2]`, **cuando** el colaborador visualiza el resumen, **entonces** la visibilidad de los saldos teóricos esperados y las alertas de desviación se presentarán con base en las directrices de arqueo y tolerancia de descuadre adoptadas por la gerencia.
+1. **Dado que** el vendedor mantiene un turno en estado «Abierto», **cuando** consulta el panel de resumen de turno, **entonces** el sistema presenta un tablero consolidado con el monto de apertura, el volumen acumulado de ventas, el subtotal recaudado en efectivo físico, el total capturado en pagos digitales y los ingresos/egresos manuales procesados.
+2. **Dado que** el negocio define sus políticas de control interno según la decisión formal D1 (saldo esperado visible) y decisión formal D2 (tolerancia cero en descuadres no justificados), **cuando** el colaborador visualiza el resumen, **entonces** la visibilidad de los saldos teóricos esperados y las alertas de desviación se presentan orientando la conciliación y requiriendo justificación obligatoria ante cualquier descuadre.
 3. **Dado que** el colaborador consulta el estado del turno, **cuando** interactúa con las tarjetas de métricas y opciones de actualización, **entonces** la pantalla cumple las pautas visuales y de microcopy de UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Decisiones pendientes:**
-- `[DECISIÓN PENDIENTE D1]`: Modalidad de arqueo de caja (Cierre ciego vs Cierre con saldo esperado en pantalla).
-- `[DECISIÓN PENDIENTE D2]`: Tolerancia monetaria máxima permitida en descuadres de caja. Opciones en evaluación por el Product Owner: tolerancia cero (cualquier discrepancia genera alerta y requiere validación administrativa en HU-CAJA-06) frente a tolerancia operativa menor (ejemplo: ± S/ 2.00 por redondeos comerciales de monedas de baja denominación).
+**Decisiones de arquitectura y negocio:**
+- **Decisión formal D1 adoptada:** Modalidad de arqueo con saldo esperado visible en pantalla.
+- **Decisión formal D2 adoptada:** Tolerancia cero en descuadres; cualquier discrepancia entre el saldo esperado y el arqueado genera alerta visual obligatoria y requiere justificación formal para su posterior revisión administrativa en HU-CAJA-06.
 
 **Dependencias:** 
 - Requiere `HU-CAJA-01` (turno activo en estado Abierto).
@@ -142,7 +142,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad indispensable de supervisión y control financiero (Must have); permite a la administración diaria cuadrar el flujo monetario del negocio y conciliar la caja con el patrimonio declarado en el MVP (Release 1).
 
 **Criterios de aceptación:**
-1. **Dado que** la jefatura requiere conciliar períodos contables anteriores, **cuando** aplica filtros de búsqueda por rango de fechas, cajero responsable o estado del turno («Abierto» o «Cerrado»), **entonces** el sistema despliega el listado cronológico de turnos exhibiendo identificador, colaborador, fecha y hora de apertura/cierre, monto inicial, efectivo esperado, monto físico declarado, diferencias de arqueo y estado.
+1. **Dado que** la jefatura requiere conciliar períodos contables anteriores, **cuando** aplica filtros de búsqueda por rango de fechas, vendedor responsable o estado del turno («Abierto» o «Cerrado»), **entonces** el sistema despliega el listado cronológico de turnos exhibiendo identificador, colaborador, fecha y hora de apertura/cierre, monto inicial, efectivo esperado, monto físico declarado, diferencias de arqueo y estado.
 2. **Dado que** el auditor inspecciona una fila del listado de turnos, **cuando** pulsa sobre el registro o su botón de detalle, **entonces** el sistema exhibe el desglose exhaustivo de movimientos del turno, incluyendo las ventas individuales realizadas, movimientos manuales de caja chica y, de corresponder, la identidad del supervisor que intervino en cierres forzados con su motivo fundamentado.
 3. **Dado que** el directivo utiliza la pantalla de historial de turnos, **cuando** navega por los filtros y grillas de supervisión, **entonces** la interfaz satisface íntegramente las especificaciones de diseño y microcopy de UI-017 (Historial de Cajas y Cierres Forzados) del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -170,7 +170,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** el colaborador agrega artículos válidos y activos al carrito de compras en el terminal POS con un turno de caja en estado «Abierto», **cuando** selecciona como medio de pago «Efectivo» e ingresa el monto entregado por el cliente, **entonces** el sistema valida que el importe entregado sea igual o superior al total de la compra, verifica que la gaveta de caja disponga de efectivo suficiente para entregar el vuelto correspondiente, ejecuta la transacción descontando los lotes de inventario bajo el principio de despacho por expiración preferente (primero en expirar, primero en salir) y registra la venta emitiendo el comprobante.
-2. **Dado que** el cliente opta por cancelar mediante billetera digital (Yape/Plin (IziPay) o Plin mediante terminal de pago IziPay), **cuando** el cajero ingresa el código de autorización emitido por la pasarela de pagos, **entonces** el sistema exige que conste de exactamente 6 dígitos numéricos y verifica que no haya sido utilizado en ninguna transacción comercial previa en el historial del negocio para prevenir fraudes por comprobantes reutilizados (RN-02).
+2. **Dado que** el cliente opta por cancelar mediante billetera digital (Yape/Plin (IziPay) o Plin mediante terminal de pago IziPay), **cuando** el vendedor ingresa el código de autorización emitido por la pasarela de pagos, **entonces** el sistema exige que conste de exactamente 6 dígitos numéricos y verifica que no haya sido utilizado en ninguna transacción comercial previa en el historial del negocio para prevenir fraudes por comprobantes reutilizados (RN-02).
 3. **Dado que** un producto cuenta con unidades físicas pero su lote de procedencia registra una fecha de caducidad expirada o igual a la fecha actual, **cuando** el vendedor intente seleccionarlo o agregarlo al carrito POS, **entonces** el sistema bloquea inmediatamente la operación e impide comercializar artículos caducados (RN-03).
 4. **Dado que** el colaborador opera en el mostrador de atención al público, **cuando** interactúa con el catálogo de artículos, buscador, carrito interactivo, cálculo automático de importes y modal de confirmación de cobro, **entonces** la pantalla satisface con exactitud las especificaciones de diseño, controles y microcopy de UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -178,7 +178,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 Para fines de documentación y análisis granular del esfuerzo sin alterar los 13 pts indivisibles del Backlog Maestro, la historia se desglosa en:  
 - **HU-VEN-01a:** Carrito POS, catálogo en memoria y cálculo automático de totales con desglose de IGV 18 % (5 pts).  
 - **HU-VEN-01b:** Transacción de pago en efectivo con validación de liquidez de gaveta para vuelto y descuento preferente de existencias (3 pts).  
-- **HU-VEN-01c:** Transacción de pago con billetera digital (Yape/Plin (IziPay)/Plin (IziPay) vía IziPay) y validación de unicidad de código de autorización de 6 dígitos numéricos RN-02 (5 pts).
+- **HU-VEN-01c:** Transacción de pago con billetera digital (Yape/Plin (IziPay) vía IziPay) y validación de unicidad de código de autorización de 6 dígitos numéricos RN-02 (5 pts).
 
 **Reglas de negocio aplicables:** 
 - RN-02 (Protección contra Pagos Duplicados Yape/Plin (IziPay))
@@ -201,14 +201,14 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 
 **Criterios de aceptación:**
 1. **Dado que** un turno de caja se encuentra en estado «Cerrado» y no ha sido validado previamente, **cuando** el Administrador o Gerente revisa el arqueo físico frente al saldo esperado y confirma su conformidad, **entonces** el sistema registra la aprobación administrativa, asocia la identidad del directivo responsable y la fecha de validación, manteniendo el estado «Cerrado» definitivo del turno.
-2. **Dado que** el directivo inspecciona un turno cerrado con reporte de descuadre (sobrante o faltante), **cuando** examina el detalle de liquidación, **entonces** el sistema expone el desglose comparativo de montos: fondo de apertura, recaudación en efectivo, ventas digitales, egresos e ingresos manuales, monto físico declarado por el cajero y la diferencia monetaria resultante.
+2. **Dado que** el directivo inspecciona un turno cerrado con reporte de descuadre (sobrante o faltante), **cuando** examina el detalle de liquidación, **entonces** el sistema expone el desglose comparativo de montos: fondo de apertura, recaudación en efectivo, ventas digitales, egresos e ingresos manuales, monto físico declarado por el vendedor y la diferencia monetaria resultante.
 3. **Dado que** la jefatura supervisa los arqueos desde el panel administrativo, **cuando** interactúa con los módulos de revisión y confirmación, **entonces** las pantallas satisfacen los lineamientos visuales, grillas de control y microcopy especificados en UI-016 (Turno de Caja y Arqueo Inicial) y UI-017 (Historial de Cajas y Cierres Forzados) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
 - N/A
 
 **Dependencias:** 
-- Requiere `HU-CAJA-02` (cierre de turnos por los cajeros).
+- Requiere `HU-CAJA-02` (cierre de turnos por los vendedores).
 
 ---
 
@@ -220,7 +220,7 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 
 **Como** Administrador o Gerente del minimarket,  
 **quiero** forzar el cierre administrativo de un turno de caja que un colaborador haya dejado abierto por abandono, emergencia o negligencia,  
-**para** desbloquear la terminal de cobro, realizar el conteo físico de la gaveta ante testigos y permitir que un nuevo cajero inicie su jornada sin alterar la trazabilidad contable.
+**para** desbloquear la terminal de cobro, realizar el conteo físico de la gaveta ante testigos y permitir que un nuevo vendedor inicie su jornada sin alterar la trazabilidad contable.
 
 **Justificación de prioridad:** Funcionalidad de contingencia operativa importante (Should have); resuelve bloqueos físicos en tienda cuando un turno queda abierto indefinidamente por ausencia del operador, evitando la parálisis de la caja en el Release 2.
 
@@ -252,8 +252,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 
 **Criterios de aceptación:**
 1. **Dado que** el cliente solicita una Factura Comercial para sustento tributario de su empresa, **cuando** el vendedor ingresa el número de RUC de 11 dígitos y selecciona tipo «Factura», **entonces** el sistema verifica en línea que el RUC figure en estado Activo y condición Habido ante el padrón tributario, genera la serie y el correlativo ininterrumpido oficial (RN-13) y emite el comprobante desglosando base imponible e Impuesto General a las Ventas (IGV 18 %).
-2. **Dado que** el servicio externo de consulta tributaria no responde o no se encuentra disponible al momento de la venta y el cliente acredita sus datos fiscales, **cuando** el cajero introduce manualmente la razón social y dirección fiscal, **entonces** el sistema permite emitir la factura en modalidad de contingencia dejando una marca de verificación tributaria pendiente para su posterior regularización.
-3. **Dado que** el comprador requiere una Boleta de Venta sin identificación personal, **cuando** el cajero no introduce un documento de identidad, **entonces** el sistema emite automáticamente el comprobante asignado a «Cliente Genérico» asignando el siguiente número correlativo correlacionado e inalterable de la serie de boletas (RN-13).
+2. **Dado que** el servicio externo de consulta tributaria no responde o no se encuentra disponible al momento de la venta y el cliente acredita sus datos fiscales, **cuando** el vendedor introduce manualmente la razón social y dirección fiscal, **entonces** el sistema permite emitir la factura en modalidad de contingencia dejando una marca de verificación tributaria pendiente para su posterior regularización.
+3. **Dado que** el comprador requiere una Boleta de Venta sin identificación personal, **cuando** el vendedor no introduce un documento de identidad, **entonces** el sistema emite automáticamente el comprobante asignado a «Cliente Genérico» asignando el siguiente número correlativo correlacionado e inalterable de la serie de boletas (RN-13).
 4. **Dado que** el colaborador emite comprobantes desde el mostrador de ventas, **cuando** visualiza la previsualización del ticket, serie, correlativo y datos del receptor, **entonces** la interfaz satisface los estándares visuales y de formato de comprobante descritos en UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -277,8 +277,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **Justificación de prioridad:** Funcionalidad crítica de servicio y atención al cliente (Must have); indispensable en el Release 1 para verificar tickets emitidos ante devoluciones inmediatas, reclamos de vuelto o aclaraciones en caja.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil Vendedor consulta el historial de ventas, **cuando** carga la pantalla de consulta, **entonces** el sistema filtra automáticamente las transacciones mostrando únicamente las ventas procesadas por su propio usuario durante su turno, garantizando la privacidad y segregación estricta entre cajeros (RN-07).
-2. **Dado que** un directivo con perfil Administrador o Gerente accede al historial, **cuando** aplica filtros de búsqueda, **entonces** el sistema despliega las transacciones comerciales de todos los cajeros del minimarket, permitiendo filtrar por rango de fechas, número de serie/correlativo, medio de pago y estado de la venta.
+1. **Dado que** un colaborador con perfil Vendedor consulta el historial de ventas, **cuando** carga la pantalla de consulta, **entonces** el sistema filtra automáticamente las transacciones mostrando únicamente las ventas procesadas por su propio usuario durante su turno, garantizando la privacidad y segregación estricta entre vendedores (RN-07).
+2. **Dado que** un directivo con perfil Administrador o Gerente accede al historial, **cuando** aplica filtros de búsqueda, **entonces** el sistema despliega las transacciones comerciales de todos los vendedores del minimarket, permitiendo filtrar por rango de fechas, número de serie/correlativo, medio de pago y estado de la venta.
 3. **Dado que** el usuario localiza una transacción específica en la grilla y pulsa en ver detalle, **cuando** el sistema abre la vista ampliada, **entonces** se visualiza la relación completa de artículos vendidos, cantidades, precios unitarios, subtotales, método de pago, código de autorización si fue billetera digital y datos del cliente.
 4. **Dado que** el operador consulta el módulo de ventas históricas, **cuando** interactúa con los filtros y la grilla de comprobantes, **entonces** la pantalla satisface las especificaciones de interfaz descritas en UI-015 (Historial de Ventas y Anulaciones) del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -349,9 +349,9 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 
 **Como** Vendedor, Administrador o Gerente del minimarket,  
 **quiero** generar el comprobante oficial de pago en formato imprimible PDF y poder reenviarlo por correo electrónico al cliente,  
-**para** atender a clientes que requieren respaldo digital de su compra, enviar el comprobante a clientes corporativos remotos o respaldar la venta si la ticketera física falla.
+**para** atender a clientes que requieren respaldo digital de su compra, enviar el comprobante a clientes corporativos remotos o respaldar la venta si la impresora térmica de tickets física falla.
 
-**Justificación de prioridad:** Funcionalidad de omnicanalidad y soporte al cliente importante (Should have); programada en el Release 3 de consolidación de servicios para sustituir tickets impresos dañados o perdidos y brindar respaldo digital a los consumidores.
+**Justificación de prioridad:** Funcionalidad de distribución de comprobantes por correo electrónico y soporte al cliente importante (Should have); programada en el Release 3 de consolidación de servicios para sustituir tickets impresos dañados o perdidos y brindar respaldo digital a los consumidores.
 
 **Criterios de aceptación:**
 1. **Dado que** una venta ha sido formalizada y cuenta con su numeración oficial ininterrumpida (RN-13), **cuando** el colaborador solicita la descarga del comprobante en formato digital, **entonces** el sistema genera un documento PDF estructurado que contiene los datos fiscales del minimarket, datos del cliente, desglose de ítems, precios, impuestos (IGV 18 %) y número de serie y correlativo oficial.
@@ -375,7 +375,7 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 
 **Como** Vendedor o Administrador del minimarket,  
 **quiero** escanear los productos en el punto de cobro utilizando una lectora óptica de código de barras,  
-**para** agregar los artículos al carrito de ventas de forma ultrarrápida, evitar errores de digitación manual y reducir los tiempos de espera de los clientes en caja.
+**para** agregar los artículos al carrito de ventas de forma ágil y precisa, evitar errores de digitación manual y reducir los tiempos de espera de los clientes en caja.
 
 **Justificación de prioridad:** Funcionalidad de agilidad y eficiencia operativa importante (Should have); en los Releases 1 y 2 los artículos se seleccionan en el catálogo en pantalla o mediante búsqueda por nombre/código manual; la lectura óptica por hardware en el Release 3 potencia la velocidad de despacho en horas punta.
 
@@ -383,7 +383,7 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 1. **Dado que** el vendedor se encuentra en la pantalla de Punto de Venta con una caja abierta, **cuando** escanea con el lector óptico el código de barras de un producto activo, **entonces** el sistema localiza el artículo en el catálogo y lo agrega de inmediato al carrito de compra con cantidad inicial 1.
 2. **Dado que** un artículo ya figura en el carrito de compras, **cuando** el colaborador escanea nuevamente su código de barras una o más veces sucesivas, **entonces** el sistema incrementa la cantidad en la misma fila del producto en vez de generar filas duplicadas.
 3. **Dado que** el colaborador escanea un código de barras inexistente en el catálogo o perteneciente a un producto desactivado, **cuando** el escáner envía el código, **entonces** el sistema emite una alerta auditiva o visual notificando que el código no corresponde a ningún producto comercializable activo.
-4. **Dado que** el cajero utiliza la interfaz de cobro, **cuando** interactúa con el buscador óptico y visualiza la lista dinámica del carrito, **entonces** la pantalla cumple rigurosamente las pautas de diseño y microcopy de UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
+4. **Dado que** el vendedor utiliza la interfaz de cobro, **cuando** interactúa con el buscador óptico y visualiza la lista dinámica del carrito, **entonces** la pantalla cumple rigurosamente las pautas de diseño y microcopy de UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -429,4 +429,4 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **quiero** comercializar productos a granel o por peso (balanza digital conectada),  
 **para** expender artículos perecibles (frutas, verduras, embutidos) que se tasan por fracciones de kilogramo.
 
-**Justificación de exclusión:** Clasificada como Won't have para el presente ciclo de 3 Sprints. El modelo de datos comercial, catálogo de productos y control de existencias del minimarket operan bajo unidades enteras discretas ('und'). La incorporación de cantidades fraccionarias con integración directa de balanzas electrónicas exige rediseñar el cálculo de precios, el control de mermas y la pesquería/etiquetado, por lo que se reserva formalmente para una fase posterior de evolución del producto. No cuenta con criterios de aceptación al no formar parte de los compromisos de entrega de los Sprints planificados.
+**Justificación de exclusión:** Clasificada como Won't have para el presente ciclo de 3 Sprints. El modelo de datos comercial, catálogo de productos y control de existencias del minimarket operan bajo unidades enteras discretas ('und'). La incorporación de cantidades fraccionarias con integración directa de balanzas electrónicas exige rediseñar el cálculo de precios, el control de mermas y la pesaje y etiquetado, por lo que se reserva formalmente para una fase posterior de evolución del producto. No cuenta con criterios de aceptación al no formar parte de los compromisos de entrega de los Sprints planificados.

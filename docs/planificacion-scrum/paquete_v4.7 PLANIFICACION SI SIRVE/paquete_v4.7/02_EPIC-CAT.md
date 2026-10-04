@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-03-02
 Título: Backlog de Producto — EPIC-CAT: Catálogos y Clientes
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Colonia Infantas, Walter
 Revisado por: Angeles Pérez, Jhonny
 Estado: Aprobado
@@ -252,17 +252,17 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | HU-CLI-02 | EPIC-CAT | Must have | 3 pts | REL-1 | SPR-1 |
 
-**Como** Vendedor o Cajero del minimarket,  
+**Como** Vendedor del minimarket,  
 **quiero** registrar o asociar con agilidad la identificación del cliente (DNI o RUC) durante el flujo de cobro en el punto de venta,  
 **para** emitir comprobantes de pago válidos conforme a los requerimientos tributarios oficiales sin demorar ni entorpecer el despacho de la fila de atención.
 
 **Justificación de prioridad:** Funcionalidad crítica indispensable para el producto mínimo viable (Must have); mandatoria por regulación fiscal para la emisión de boletas identificadas y facturas comerciales en el mostrador del negocio.
 
 **Criterios de aceptación:**
-1. **Dado que** el cajero está formalizando una venta mediante Boleta de Venta electrónica, **cuando** digita un número de DNI de 8 dígitos numéricos no registrado con anterioridad y el nombre del comprador, **entonces** el sistema registra de forma automática la ficha del nuevo cliente en el directorio y la asocia de forma atómica a la venta en curso sin salir del flujo de cobro.
-2. **Dado que** el comprador solicita la emisión de una Factura comercial, **cuando** el cajero digita el número de RUC de 11 dígitos, la razón social y la dirección fiscal de la empresa adquirente, **entonces** el sistema vincula inmediatamente dichos datos fiscales al comprobante de venta generado.
-3. **Dado que** el cliente que se acerca a caja ya se encuentra registrado previamente en el minimarket, **cuando** el cajero digita su número de documento en la casilla correspondiente, **entonces** el sistema autocompleta de inmediato sus datos personales en pantalla evitando duplicidades en el directorio.
-4. **Dado que** el cajero atiende la captura de datos en el terminal de venta, **cuando** interactúa con las casillas de identificación del comprador y los mensajes informativos, **entonces** la interfaz satisface integralmente los estándares visuales y de interacción descritos en UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
+1. **Dado que** el vendedor está formalizando una venta mediante Boleta de Venta (formato SUNAT), **cuando** digita un número de DNI de 8 dígitos numéricos no registrado con anterioridad y el nombre del comprador, **entonces** el sistema registra de forma automática la ficha del nuevo cliente en el directorio y la asocia de forma atómica a la venta en curso sin salir del flujo de cobro.
+2. **Dado que** el comprador solicita la emisión de una Factura comercial, **cuando** el vendedor digita el número de RUC de 11 dígitos, la razón social y la dirección fiscal de la empresa adquirente, **entonces** el sistema vincula inmediatamente dichos datos fiscales al comprobante de venta generado.
+3. **Dado que** el cliente que se acerca a caja ya se encuentra registrado previamente en el minimarket, **cuando** el vendedor digita su número de documento en la casilla correspondiente, **entonces** el sistema autocompleta de inmediato sus datos personales en pantalla evitando duplicidades en el directorio.
+4. **Dado que** el vendedor atiende la captura de datos en el terminal de venta, **cuando** interactúa con las casillas de identificación del comprador y los mensajes informativos, **entonces** la interfaz satisface integralmente los estándares visuales y de interacción descritos en UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -305,7 +305,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Como** Almacenero o Administrador del minimarket,  
 **quiero** consultar el catálogo maestro consolidado de productos comerciales,  
-**para** verificar precios de venta, costos de adquisición de referencia y existencias totales al recepcionar mercaderías o realizar supervisións físicas en bodega.
+**para** verificar precios de venta, costos de adquisición de referencia y existencias totales al recepcionar mercaderías o realizar supervisiones físicas en bodega.
 
 **Justificación de prioridad:** Funcionalidad núcleo esencial para el producto mínimo viable (Must have); consulta obligatoria para la gestión de existencias y control físico en almacén. En mostrador, el personal de ventas consulta productos exclusivamente a través del terminal POS (`HU-VEN-01`).
 

@@ -2,7 +2,7 @@
 Código de Documento: DOC-PLAN-07
 Título: Desglose de Tareas (Task Breakdown)
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Angeles Pérez, Jhonny
 Revisado por: Colonia Infantas, Walter
 Estado: Aprobado
@@ -14,12 +14,16 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 
 ## Convenciones del desglose
 - **Formato:** un cuadro por historia de usuario (HU) con las columnas Tarea, Tipo, Estado, Responsable y Tiempo (h), según la plantilla del docente.
-- **Plantilla de 8 pasos:** 1 Configurar entorno · 2 Diseñar modelo de datos · 3 Implementar modelo de datos · 4 Desarrollar interfaces · 5 Codificar · 6 Probar de unidad · 7 Depuración · 8 Desplegar en la web.
+- **Plantilla de 8 pasos:** 1 Configurar entorno · 2 Diseñar modelo de datos · 3 Implementar modelo de datos · 4 Desarrollar interfaces · 5 Codificar · 6 Pruebas de unidad e integración · 7 Depuración · 8 Verificación funcional y pase web.
 - **Pasos 1 a 3:** se ejecutan una sola vez, en HU-AUTH-01 (primera HU del sistema). Las demás HU reutilizan ese trabajo y comienzan en el paso 4; el número final del ID indica el paso de la plantilla (TAR-HU-XXX-nn).
 - **Tipos:** Configuración, Diseño, Codificación, Diseño/Cod. y Test (la Depuración se clasifica como Test, como en la plantilla del docente).
 - **Estado inicial:** Pend. en todas las tareas.
 - **Pivote de estimación:** HU-CAT-01 (Ver lista de categorías) = 1 pt = 2.0 h-hombre. Las horas de cada HU son 2 × sus puntos; el reparto entre pasos sigue la proporción de la plantilla (1 : 2 : 2 : 1 : 1 para los pasos 4 a 8), con precisión de 0.25 h.
 - **Roles por HU:** el Constructor Principal ejecuta los pasos 4, 5 y 7 (y 1 a 3 en HU-AUTH-01); el Verificador QA ejecuta los pasos 6 y 8. Nadie verifica su propia HU. Des.4 Alcalde actúa como QA Lead y no construye.
+- **Composición del 41.0 % de QA (206.0 h en 144 tareas):** El bloque de Aseguramiento de Calidad y Verificación ejecutado por el Verificador QA comprende dos fases metodológicas complementarias:
+  - **Paso 6 (Pruebas de unidad e integración):** 131.75 h (26.2 %) en pruebas automatizadas unitarias y de integración sobre componentes, cálculos de caja, inventario y reglas tributarias.
+  - **Paso 8 (Verificación funcional y pase web):** 74.25 h (14.8 %) en certificación manual e independiente del 100 % de los criterios de aceptación en la interfaz web y validación de entrega bajo la regla Construye ≠ Verifica.
+  - **Total QA:** 131.75 h + 74.25 h = 206.00 h (41.0 % exacto del universo de 502.0 h).
 - **Capacidad:** 40 h netas por developer y sprint (25 h/semana × 2 semanas × 80 %).
 - **Secuencia entre HU:** el orden de ejecución dentro del Sprint 1 y su camino crítico se detallan en el plan de ejecución del Sprint 1 (documento 06).
 
@@ -37,9 +41,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 | TAR-HU-AUTH-01-03 | Implementar modelo de datos | Codificación | Pend. | Des.5 - Colonia | 1.00 |
 | TAR-HU-AUTH-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.00 |
 | TAR-HU-AUTH-01-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 2.00 |
-| TAR-HU-AUTH-01-06 | Probar de unidad | Test | Pend. | Des.2 - Nolasco | 2.00 |
+| TAR-HU-AUTH-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.2 - Nolasco | 2.00 |
 | TAR-HU-AUTH-01-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.00 |
-| TAR-HU-AUTH-01-08 | Desplegar en la web | Configuración | Pend. | Des.2 - Nolasco | 1.00 |
+| TAR-HU-AUTH-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.2 - Nolasco | 1.00 |
 
 **Subtotal HU-AUTH-01:** 7.00 h Construcción, 3.00 h Verificación. Total: 10.00 h.
 
@@ -50,9 +54,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-AUTH-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.00 |
 | TAR-HU-AUTH-02-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-AUTH-02-06 | Probar de unidad | Test | Pend. | Des.6 - Angeles | 1.50 |
+| TAR-HU-AUTH-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.6 - Angeles | 1.50 |
 | TAR-HU-AUTH-02-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.00 |
-| TAR-HU-AUTH-02-08 | Desplegar en la web | Configuración | Pend. | Des.6 - Angeles | 1.00 |
+| TAR-HU-AUTH-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.6 - Angeles | 1.00 |
 
 **Subtotal HU-AUTH-02:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -63,9 +67,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-AUTH-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 0.75 |
 | TAR-HU-AUTH-03-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-AUTH-03-06 | Probar de unidad | Test | Pend. | Des.5 - Colonia | 1.00 |
+| TAR-HU-AUTH-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.5 - Colonia | 1.00 |
 | TAR-HU-AUTH-03-07 | Depuración | Test | Pend. | Des.3 - Castillo | 0.75 |
-| TAR-HU-AUTH-03-08 | Desplegar en la web | Configuración | Pend. | Des.5 - Colonia | 0.50 |
+| TAR-HU-AUTH-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.5 - Colonia | 0.50 |
 
 **Subtotal HU-AUTH-03:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -76,9 +80,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAJA-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.50 |
 | TAR-HU-CAJA-01-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 2.75 |
-| TAR-HU-CAJA-01-06 | Probar de unidad | Test | Pend. | Des.5 - Colonia | 2.75 |
+| TAR-HU-CAJA-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.5 - Colonia | 2.75 |
 | TAR-HU-CAJA-01-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-CAJA-01-08 | Desplegar en la web | Configuración | Pend. | Des.5 - Colonia | 1.50 |
+| TAR-HU-CAJA-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.5 - Colonia | 1.50 |
 
 **Subtotal HU-CAJA-01:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -89,9 +93,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAT-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 0.75 |
 | TAR-HU-CAT-02-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-CAT-02-06 | Probar de unidad | Test | Pend. | Des.3 - Castillo | 1.00 |
+| TAR-HU-CAT-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.3 - Castillo | 1.00 |
 | TAR-HU-CAT-02-07 | Depuración | Test | Pend. | Des.6 - Angeles | 0.75 |
-| TAR-HU-CAT-02-08 | Desplegar en la web | Configuración | Pend. | Des.3 - Castillo | 0.50 |
+| TAR-HU-CAT-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.3 - Castillo | 0.50 |
 
 **Subtotal HU-CAT-02:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -102,9 +106,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CONF-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 1.00 |
 | TAR-HU-CONF-02-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.50 |
-| TAR-HU-CONF-02-06 | Probar de unidad | Test | Pend. | Des.6 - Angeles | 1.50 |
+| TAR-HU-CONF-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.6 - Angeles | 1.50 |
 | TAR-HU-CONF-02-07 | Depuración | Test | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-CONF-02-08 | Desplegar en la web | Configuración | Pend. | Des.6 - Angeles | 1.00 |
+| TAR-HU-CONF-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.6 - Angeles | 1.00 |
 
 **Subtotal HU-CONF-02:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -115,9 +119,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROV-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 1.00 |
 | TAR-HU-PROV-02-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.50 |
-| TAR-HU-PROV-02-06 | Probar de unidad | Test | Pend. | Des.5 - Colonia | 1.50 |
+| TAR-HU-PROV-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.5 - Colonia | 1.50 |
 | TAR-HU-PROV-02-07 | Depuración | Test | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-PROV-02-08 | Desplegar en la web | Configuración | Pend. | Des.5 - Colonia | 1.00 |
+| TAR-HU-PROV-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.5 - Colonia | 1.00 |
 
 **Subtotal HU-PROV-02:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -128,9 +132,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-USR-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.50 |
 | TAR-HU-USR-02-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 2.75 |
-| TAR-HU-USR-02-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 2.75 |
+| TAR-HU-USR-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 2.75 |
 | TAR-HU-USR-02-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-USR-02-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-USR-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
 
 **Subtotal HU-USR-02:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -141,9 +145,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAJA-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.50 |
 | TAR-HU-CAJA-02-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 2.75 |
-| TAR-HU-CAJA-02-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 2.75 |
+| TAR-HU-CAJA-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 2.75 |
 | TAR-HU-CAJA-02-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-CAJA-02-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-CAJA-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
 
 **Subtotal HU-CAJA-02:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -154,9 +158,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAT-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 0.50 |
 | TAR-HU-CAT-01-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 0.50 |
-| TAR-HU-CAT-01-06 | Probar de unidad | Test | Pend. | Des.2 - Nolasco | 0.50 |
+| TAR-HU-CAT-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.2 - Nolasco | 0.50 |
 | TAR-HU-CAT-01-07 | Depuración | Test | Pend. | Des.6 - Angeles | 0.25 |
-| TAR-HU-CAT-01-08 | Desplegar en la web | Configuración | Pend. | Des.2 - Nolasco | 0.25 |
+| TAR-HU-CAT-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.2 - Nolasco | 0.25 |
 
 **Subtotal HU-CAT-01:** 1.25 h Construcción, 0.75 h Verificación. Total: 2.00 h.
 
@@ -167,9 +171,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROD-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.50 |
 | TAR-HU-PROD-02-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 2.75 |
-| TAR-HU-PROD-02-06 | Probar de unidad | Test | Pend. | Des.6 - Angeles | 2.75 |
+| TAR-HU-PROD-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.6 - Angeles | 2.75 |
 | TAR-HU-PROD-02-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-PROD-02-08 | Desplegar en la web | Configuración | Pend. | Des.6 - Angeles | 1.50 |
+| TAR-HU-PROD-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.6 - Angeles | 1.50 |
 
 **Subtotal HU-PROD-02:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -180,9 +184,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAJA-05-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 1.00 |
 | TAR-HU-CAJA-05-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.50 |
-| TAR-HU-CAJA-05-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-CAJA-05-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-CAJA-05-07 | Depuración | Test | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-CAJA-05-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-CAJA-05-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-CAJA-05:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -193,9 +197,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-INV-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.50 |
 | TAR-HU-INV-01-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 2.75 |
-| TAR-HU-INV-01-06 | Probar de unidad | Test | Pend. | Des.6 - Angeles | 2.75 |
+| TAR-HU-INV-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.6 - Angeles | 2.75 |
 | TAR-HU-INV-01-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-INV-01-08 | Desplegar en la web | Configuración | Pend. | Des.6 - Angeles | 1.50 |
+| TAR-HU-INV-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.6 - Angeles | 1.50 |
 
 **Subtotal HU-INV-01:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -206,9 +210,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROD-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.00 |
 | TAR-HU-PROD-01-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 1.50 |
-| TAR-HU-PROD-01-06 | Probar de unidad | Test | Pend. | Des.6 - Angeles | 1.50 |
+| TAR-HU-PROD-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.6 - Angeles | 1.50 |
 | TAR-HU-PROD-01-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.00 |
-| TAR-HU-PROD-01-08 | Desplegar en la web | Configuración | Pend. | Des.6 - Angeles | 1.00 |
+| TAR-HU-PROD-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.6 - Angeles | 1.00 |
 
 **Subtotal HU-PROD-01:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -219,9 +223,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-INV-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.50 |
 | TAR-HU-INV-02-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 2.75 |
-| TAR-HU-INV-02-06 | Probar de unidad | Test | Pend. | Des.1 - Velasquez | 2.75 |
+| TAR-HU-INV-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.1 - Velasquez | 2.75 |
 | TAR-HU-INV-02-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-INV-02-08 | Desplegar en la web | Configuración | Pend. | Des.1 - Velasquez | 1.50 |
+| TAR-HU-INV-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.1 - Velasquez | 1.50 |
 
 **Subtotal HU-INV-02:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -232,9 +236,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-INV-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 1.50 |
 | TAR-HU-INV-03-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 2.75 |
-| TAR-HU-INV-03-06 | Probar de unidad | Test | Pend. | Des.6 - Angeles | 2.75 |
+| TAR-HU-INV-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.6 - Angeles | 2.75 |
 | TAR-HU-INV-03-07 | Depuración | Test | Pend. | Des.3 - Castillo | 1.50 |
-| TAR-HU-INV-03-08 | Desplegar en la web | Configuración | Pend. | Des.6 - Angeles | 1.50 |
+| TAR-HU-INV-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.6 - Angeles | 1.50 |
 
 **Subtotal HU-INV-03:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -245,9 +249,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-VEN-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 3.75 |
 | TAR-HU-VEN-01-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 7.50 |
-| TAR-HU-VEN-01-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 7.25 |
+| TAR-HU-VEN-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 7.25 |
 | TAR-HU-VEN-01-07 | Depuración | Test | Pend. | Des.3 - Castillo | 3.75 |
-| TAR-HU-VEN-01-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 3.75 |
+| TAR-HU-VEN-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 3.75 |
 
 **Subtotal HU-VEN-01:** 15.00 h Construcción, 11.00 h Verificación. Total: 26.00 h.
 
@@ -258,9 +262,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CLI-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.00 |
 | TAR-HU-CLI-02-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-CLI-02-06 | Probar de unidad | Test | Pend. | Des.3 - Castillo | 1.50 |
+| TAR-HU-CLI-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.3 - Castillo | 1.50 |
 | TAR-HU-CLI-02-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-CLI-02-08 | Desplegar en la web | Configuración | Pend. | Des.3 - Castillo | 1.00 |
+| TAR-HU-CLI-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.3 - Castillo | 1.00 |
 
 **Subtotal HU-CLI-02:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -271,9 +275,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-VEN-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 2.50 |
 | TAR-HU-VEN-02-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 4.50 |
-| TAR-HU-VEN-02-06 | Probar de unidad | Test | Pend. | Des.5 - Colonia | 4.50 |
+| TAR-HU-VEN-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.5 - Colonia | 4.50 |
 | TAR-HU-VEN-02-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 2.25 |
-| TAR-HU-VEN-02-08 | Desplegar en la web | Configuración | Pend. | Des.5 - Colonia | 2.25 |
+| TAR-HU-VEN-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.5 - Colonia | 2.25 |
 
 **Subtotal HU-VEN-02:** 9.25 h Construcción, 6.75 h Verificación. Total: 16.00 h.
 
@@ -284,9 +288,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-VEN-05-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.50 |
 | TAR-HU-VEN-05-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 2.75 |
-| TAR-HU-VEN-05-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 2.75 |
+| TAR-HU-VEN-05-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 2.75 |
 | TAR-HU-VEN-05-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.50 |
-| TAR-HU-VEN-05-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-VEN-05-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
 
 **Subtotal HU-VEN-05:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -301,9 +305,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-AUTH-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 2.50 |
 | TAR-HU-AUTH-04-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 4.50 |
-| TAR-HU-AUTH-04-06 | Probar de unidad | Test | Pend. | Des.3 - Castillo | 4.50 |
+| TAR-HU-AUTH-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.3 - Castillo | 4.50 |
 | TAR-HU-AUTH-04-07 | Depuración | Test | Pend. | Des.5 - Colonia | 2.25 |
-| TAR-HU-AUTH-04-08 | Desplegar en la web | Configuración | Pend. | Des.3 - Castillo | 2.25 |
+| TAR-HU-AUTH-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.3 - Castillo | 2.25 |
 
 **Subtotal HU-AUTH-04:** 9.25 h Construcción, 6.75 h Verificación. Total: 16.00 h.
 
@@ -314,9 +318,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-AUTH-05-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.50 |
 | TAR-HU-AUTH-05-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 2.75 |
-| TAR-HU-AUTH-05-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 2.75 |
+| TAR-HU-AUTH-05-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 2.75 |
 | TAR-HU-AUTH-05-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.50 |
-| TAR-HU-AUTH-05-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-AUTH-05-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
 
 **Subtotal HU-AUTH-05:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -327,9 +331,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-USR-06-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 1.00 |
 | TAR-HU-USR-06-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.50 |
-| TAR-HU-USR-06-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-USR-06-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-USR-06-07 | Depuración | Test | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-USR-06-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-USR-06-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-USR-06:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -340,9 +344,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CONF-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 0.50 |
 | TAR-HU-CONF-01-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 0.50 |
-| TAR-HU-CONF-01-06 | Probar de unidad | Test | Pend. | Des.6 - Angeles | 0.50 |
+| TAR-HU-CONF-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.6 - Angeles | 0.50 |
 | TAR-HU-CONF-01-07 | Depuración | Test | Pend. | Des.5 - Colonia | 0.25 |
-| TAR-HU-CONF-01-08 | Desplegar en la web | Configuración | Pend. | Des.6 - Angeles | 0.25 |
+| TAR-HU-CONF-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.6 - Angeles | 0.25 |
 
 **Subtotal HU-CONF-01:** 1.25 h Construcción, 0.75 h Verificación. Total: 2.00 h.
 
@@ -353,9 +357,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROV-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 0.75 |
 | TAR-HU-PROV-01-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-PROV-01-06 | Probar de unidad | Test | Pend. | Des.5 - Colonia | 1.00 |
+| TAR-HU-PROV-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.5 - Colonia | 1.00 |
 | TAR-HU-PROV-01-07 | Depuración | Test | Pend. | Des.6 - Angeles | 0.75 |
-| TAR-HU-PROV-01-08 | Desplegar en la web | Configuración | Pend. | Des.5 - Colonia | 0.50 |
+| TAR-HU-PROV-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.5 - Colonia | 0.50 |
 
 **Subtotal HU-PROV-01:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -366,9 +370,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-USR-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 0.75 |
 | TAR-HU-USR-01-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-USR-01-06 | Probar de unidad | Test | Pend. | Des.1 - Velasquez | 1.00 |
+| TAR-HU-USR-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.1 - Velasquez | 1.00 |
 | TAR-HU-USR-01-07 | Depuración | Test | Pend. | Des.3 - Castillo | 0.75 |
-| TAR-HU-USR-01-08 | Desplegar en la web | Configuración | Pend. | Des.1 - Velasquez | 0.50 |
+| TAR-HU-USR-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.1 - Velasquez | 0.50 |
 
 **Subtotal HU-USR-01:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -379,9 +383,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-USR-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.00 |
 | TAR-HU-USR-04-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-USR-04-06 | Probar de unidad | Test | Pend. | Des.1 - Velasquez | 1.50 |
+| TAR-HU-USR-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.1 - Velasquez | 1.50 |
 | TAR-HU-USR-04-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-USR-04-08 | Desplegar en la web | Configuración | Pend. | Des.1 - Velasquez | 1.00 |
+| TAR-HU-USR-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.1 - Velasquez | 1.00 |
 
 **Subtotal HU-USR-04:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -392,9 +396,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAJA-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 1.00 |
 | TAR-HU-CAJA-03-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.50 |
-| TAR-HU-CAJA-03-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-CAJA-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-CAJA-03-07 | Depuración | Test | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-CAJA-03-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-CAJA-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-CAJA-03:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -405,9 +409,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAJA-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 0.75 |
 | TAR-HU-CAJA-04-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 1.00 |
-| TAR-HU-CAJA-04-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-CAJA-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.00 |
 | TAR-HU-CAJA-04-07 | Depuración | Test | Pend. | Des.5 - Colonia | 0.75 |
-| TAR-HU-CAJA-04-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-CAJA-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
 
 **Subtotal HU-CAJA-04:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -418,9 +422,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAJA-07-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.50 |
 | TAR-HU-CAJA-07-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 2.75 |
-| TAR-HU-CAJA-07-06 | Probar de unidad | Test | Pend. | Des.3 - Castillo | 2.75 |
+| TAR-HU-CAJA-07-06 | Pruebas de unidad e integración | Test | Pend. | Des.3 - Castillo | 2.75 |
 | TAR-HU-CAJA-07-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-CAJA-07-08 | Desplegar en la web | Configuración | Pend. | Des.3 - Castillo | 1.50 |
+| TAR-HU-CAJA-07-08 | Verificación funcional y pase web | Configuración | Pend. | Des.3 - Castillo | 1.50 |
 
 **Subtotal HU-CAJA-07:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -431,9 +435,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROV-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 0.75 |
 | TAR-HU-PROV-04-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-PROV-04-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-PROV-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.00 |
 | TAR-HU-PROV-04-07 | Depuración | Test | Pend. | Des.3 - Castillo | 0.75 |
-| TAR-HU-PROV-04-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-PROV-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
 
 **Subtotal HU-PROV-04:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -444,9 +448,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-SOL-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 1.00 |
 | TAR-HU-SOL-01-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.50 |
-| TAR-HU-SOL-01-06 | Probar de unidad | Test | Pend. | Des.1 - Velasquez | 1.50 |
+| TAR-HU-SOL-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.1 - Velasquez | 1.50 |
 | TAR-HU-SOL-01-07 | Depuración | Test | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-SOL-01-08 | Desplegar en la web | Configuración | Pend. | Des.1 - Velasquez | 1.00 |
+| TAR-HU-SOL-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.1 - Velasquez | 1.00 |
 
 **Subtotal HU-SOL-01:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -457,9 +461,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAJA-06-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 0.75 |
 | TAR-HU-CAJA-06-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-CAJA-06-06 | Probar de unidad | Test | Pend. | Des.2 - Nolasco | 1.00 |
+| TAR-HU-CAJA-06-06 | Pruebas de unidad e integración | Test | Pend. | Des.2 - Nolasco | 1.00 |
 | TAR-HU-CAJA-06-07 | Depuración | Test | Pend. | Des.6 - Angeles | 0.75 |
-| TAR-HU-CAJA-06-08 | Desplegar en la web | Configuración | Pend. | Des.2 - Nolasco | 0.50 |
+| TAR-HU-CAJA-06-08 | Verificación funcional y pase web | Configuración | Pend. | Des.2 - Nolasco | 0.50 |
 
 **Subtotal HU-CAJA-06:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -470,9 +474,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-DASH-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 1.50 |
 | TAR-HU-DASH-03-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 2.75 |
-| TAR-HU-DASH-03-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 2.75 |
+| TAR-HU-DASH-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 2.75 |
 | TAR-HU-DASH-03-07 | Depuración | Test | Pend. | Des.6 - Angeles | 1.50 |
-| TAR-HU-DASH-03-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-DASH-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
 
 **Subtotal HU-DASH-03:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -483,9 +487,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROD-06-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.00 |
 | TAR-HU-PROD-06-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-PROD-06-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-PROD-06-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-PROD-06-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-PROD-06-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-PROD-06-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-PROD-06:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -496,9 +500,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-REP-05-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.00 |
 | TAR-HU-REP-05-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-REP-05-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-REP-05-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-REP-05-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.00 |
-| TAR-HU-REP-05-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-REP-05-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-REP-05:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -509,9 +513,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-SOL-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 0.75 |
 | TAR-HU-SOL-02-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-SOL-02-06 | Probar de unidad | Test | Pend. | Des.1 - Velasquez | 1.00 |
+| TAR-HU-SOL-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.1 - Velasquez | 1.00 |
 | TAR-HU-SOL-02-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 0.75 |
-| TAR-HU-SOL-02-08 | Desplegar en la web | Configuración | Pend. | Des.1 - Velasquez | 0.50 |
+| TAR-HU-SOL-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.1 - Velasquez | 0.50 |
 
 **Subtotal HU-SOL-02:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -522,9 +526,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-SOL-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 1.00 |
 | TAR-HU-SOL-03-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.50 |
-| TAR-HU-SOL-03-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-SOL-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-SOL-03-07 | Depuración | Test | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-SOL-03-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-SOL-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-SOL-03:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -535,9 +539,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-SOL-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 0.75 |
 | TAR-HU-SOL-04-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 1.00 |
-| TAR-HU-SOL-04-06 | Probar de unidad | Test | Pend. | Des.3 - Castillo | 1.00 |
+| TAR-HU-SOL-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.3 - Castillo | 1.00 |
 | TAR-HU-SOL-04-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 0.75 |
-| TAR-HU-SOL-04-08 | Desplegar en la web | Configuración | Pend. | Des.3 - Castillo | 0.50 |
+| TAR-HU-SOL-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.3 - Castillo | 0.50 |
 
 **Subtotal HU-SOL-04:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -548,9 +552,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-DASH-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.50 |
 | TAR-HU-DASH-01-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 2.75 |
-| TAR-HU-DASH-01-06 | Probar de unidad | Test | Pend. | Des.5 - Colonia | 2.75 |
+| TAR-HU-DASH-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.5 - Colonia | 2.75 |
 | TAR-HU-DASH-01-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-DASH-01-08 | Desplegar en la web | Configuración | Pend. | Des.5 - Colonia | 1.50 |
+| TAR-HU-DASH-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.5 - Colonia | 1.50 |
 
 **Subtotal HU-DASH-01:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -561,9 +565,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-REP-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.50 |
 | TAR-HU-REP-01-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 2.75 |
-| TAR-HU-REP-01-06 | Probar de unidad | Test | Pend. | Des.2 - Nolasco | 2.75 |
+| TAR-HU-REP-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.2 - Nolasco | 2.75 |
 | TAR-HU-REP-01-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.50 |
-| TAR-HU-REP-01-08 | Desplegar en la web | Configuración | Pend. | Des.2 - Nolasco | 1.50 |
+| TAR-HU-REP-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.2 - Nolasco | 1.50 |
 
 **Subtotal HU-REP-01:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -574,9 +578,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-REP-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.00 |
 | TAR-HU-REP-02-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-REP-02-06 | Probar de unidad | Test | Pend. | Des.6 - Angeles | 1.50 |
+| TAR-HU-REP-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.6 - Angeles | 1.50 |
 | TAR-HU-REP-02-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.00 |
-| TAR-HU-REP-02-08 | Desplegar en la web | Configuración | Pend. | Des.6 - Angeles | 1.00 |
+| TAR-HU-REP-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.6 - Angeles | 1.00 |
 
 **Subtotal HU-REP-02:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -587,9 +591,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-SOL-05-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 2.50 |
 | TAR-HU-SOL-05-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 4.50 |
-| TAR-HU-SOL-05-06 | Probar de unidad | Test | Pend. | Des.1 - Velasquez | 4.50 |
+| TAR-HU-SOL-05-06 | Pruebas de unidad e integración | Test | Pend. | Des.1 - Velasquez | 4.50 |
 | TAR-HU-SOL-05-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 2.25 |
-| TAR-HU-SOL-05-08 | Desplegar en la web | Configuración | Pend. | Des.1 - Velasquez | 2.25 |
+| TAR-HU-SOL-05-08 | Verificación funcional y pase web | Configuración | Pend. | Des.1 - Velasquez | 2.25 |
 
 **Subtotal HU-SOL-05:** 9.25 h Construcción, 6.75 h Verificación. Total: 16.00 h.
 
@@ -600,9 +604,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-VEN-06-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 2.50 |
 | TAR-HU-VEN-06-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 4.50 |
-| TAR-HU-VEN-06-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 4.50 |
+| TAR-HU-VEN-06-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 4.50 |
 | TAR-HU-VEN-06-07 | Depuración | Test | Pend. | Des.6 - Angeles | 2.25 |
-| TAR-HU-VEN-06-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 2.25 |
+| TAR-HU-VEN-06-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 2.25 |
 
 **Subtotal HU-VEN-06:** 9.25 h Construcción, 6.75 h Verificación. Total: 16.00 h.
 
@@ -613,9 +617,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-VEN-07-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 0.75 |
 | TAR-HU-VEN-07-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-VEN-07-06 | Probar de unidad | Test | Pend. | Des.6 - Angeles | 1.00 |
+| TAR-HU-VEN-07-06 | Pruebas de unidad e integración | Test | Pend. | Des.6 - Angeles | 1.00 |
 | TAR-HU-VEN-07-07 | Depuración | Test | Pend. | Des.3 - Castillo | 0.75 |
-| TAR-HU-VEN-07-08 | Desplegar en la web | Configuración | Pend. | Des.6 - Angeles | 0.50 |
+| TAR-HU-VEN-07-08 | Verificación funcional y pase web | Configuración | Pend. | Des.6 - Angeles | 0.50 |
 
 **Subtotal HU-VEN-07:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -630,9 +634,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-AUTH-06-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.00 |
 | TAR-HU-AUTH-06-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-AUTH-06-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-AUTH-06-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-AUTH-06-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-AUTH-06-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-AUTH-06-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-AUTH-06:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -643,9 +647,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-LOG-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.00 |
 | TAR-HU-LOG-01-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-LOG-01-06 | Probar de unidad | Test | Pend. | Des.3 - Castillo | 1.50 |
+| TAR-HU-LOG-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.3 - Castillo | 1.50 |
 | TAR-HU-LOG-01-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.00 |
-| TAR-HU-LOG-01-08 | Desplegar en la web | Configuración | Pend. | Des.3 - Castillo | 1.00 |
+| TAR-HU-LOG-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.3 - Castillo | 1.00 |
 
 **Subtotal HU-LOG-01:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -656,9 +660,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAT-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 0.50 |
 | TAR-HU-CAT-03-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 0.50 |
-| TAR-HU-CAT-03-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-CAT-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 0.50 |
 | TAR-HU-CAT-03-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 0.25 |
-| TAR-HU-CAT-03-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.25 |
+| TAR-HU-CAT-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.25 |
 
 **Subtotal HU-CAT-03:** 1.25 h Construcción, 0.75 h Verificación. Total: 2.00 h.
 
@@ -669,9 +673,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROV-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 0.75 |
 | TAR-HU-PROV-03-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-PROV-03-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-PROV-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.00 |
 | TAR-HU-PROV-03-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 0.75 |
-| TAR-HU-PROV-03-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-PROV-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
 
 **Subtotal HU-PROV-03:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -682,9 +686,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-USR-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 1.00 |
 | TAR-HU-USR-03-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.50 |
-| TAR-HU-USR-03-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-USR-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-USR-03-07 | Depuración | Test | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-USR-03-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-USR-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-USR-03:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -695,9 +699,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CAT-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 0.75 |
 | TAR-HU-CAT-04-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 1.00 |
-| TAR-HU-CAT-04-06 | Probar de unidad | Test | Pend. | Des.1 - Velasquez | 1.00 |
+| TAR-HU-CAT-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.1 - Velasquez | 1.00 |
 | TAR-HU-CAT-04-07 | Depuración | Test | Pend. | Des.5 - Colonia | 0.75 |
-| TAR-HU-CAT-04-08 | Desplegar en la web | Configuración | Pend. | Des.1 - Velasquez | 0.50 |
+| TAR-HU-CAT-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.1 - Velasquez | 0.50 |
 
 **Subtotal HU-CAT-04:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -708,9 +712,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROD-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.00 |
 | TAR-HU-PROD-04-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-PROD-04-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-PROD-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-PROD-04-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.00 |
-| TAR-HU-PROD-04-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-PROD-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-PROD-04:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -721,9 +725,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROD-05-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 0.75 |
 | TAR-HU-PROD-05-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-PROD-05-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-PROD-05-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.00 |
 | TAR-HU-PROD-05-07 | Depuración | Test | Pend. | Des.6 - Angeles | 0.75 |
-| TAR-HU-PROD-05-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-PROD-05-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
 
 **Subtotal HU-PROD-05:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -734,9 +738,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-USR-05-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 0.75 |
 | TAR-HU-USR-05-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 1.00 |
-| TAR-HU-USR-05-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-USR-05-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.00 |
 | TAR-HU-USR-05-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 0.75 |
-| TAR-HU-USR-05-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-USR-05-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
 
 **Subtotal HU-USR-05:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -747,9 +751,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-PROD-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.50 |
 | TAR-HU-PROD-03-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 2.75 |
-| TAR-HU-PROD-03-06 | Probar de unidad | Test | Pend. | Des.2 - Nolasco | 2.75 |
+| TAR-HU-PROD-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.2 - Nolasco | 2.75 |
 | TAR-HU-PROD-03-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.50 |
-| TAR-HU-PROD-03-08 | Desplegar en la web | Configuración | Pend. | Des.2 - Nolasco | 1.50 |
+| TAR-HU-PROD-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.2 - Nolasco | 1.50 |
 
 **Subtotal HU-PROD-03:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -760,9 +764,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-DASH-05-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 0.75 |
 | TAR-HU-DASH-05-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 1.00 |
-| TAR-HU-DASH-05-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-DASH-05-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.00 |
 | TAR-HU-DASH-05-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 0.75 |
-| TAR-HU-DASH-05-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-DASH-05-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
 
 **Subtotal HU-DASH-05:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -773,9 +777,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-INV-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 0.75 |
 | TAR-HU-INV-04-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-INV-04-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-INV-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.00 |
 | TAR-HU-INV-04-07 | Depuración | Test | Pend. | Des.6 - Angeles | 0.75 |
-| TAR-HU-INV-04-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-INV-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
 
 **Subtotal HU-INV-04:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -786,9 +790,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-REP-06-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 0.75 |
 | TAR-HU-REP-06-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-REP-06-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-REP-06-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.00 |
 | TAR-HU-REP-06-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 0.75 |
-| TAR-HU-REP-06-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-REP-06-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
 
 **Subtotal HU-REP-06:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -799,9 +803,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-DASH-02-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.00 |
 | TAR-HU-DASH-02-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 1.50 |
-| TAR-HU-DASH-02-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-DASH-02-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-DASH-02-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.00 |
-| TAR-HU-DASH-02-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-DASH-02-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-DASH-02:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -812,9 +816,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-DASH-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 1.00 |
 | TAR-HU-DASH-04-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.50 |
-| TAR-HU-DASH-04-06 | Probar de unidad | Test | Pend. | Des.5 - Colonia | 1.50 |
+| TAR-HU-DASH-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.5 - Colonia | 1.50 |
 | TAR-HU-DASH-04-07 | Depuración | Test | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-DASH-04-08 | Desplegar en la web | Configuración | Pend. | Des.5 - Colonia | 1.00 |
+| TAR-HU-DASH-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.5 - Colonia | 1.00 |
 
 **Subtotal HU-DASH-04:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -825,9 +829,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-INV-05-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 0.75 |
 | TAR-HU-INV-05-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-INV-05-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-INV-05-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.00 |
 | TAR-HU-INV-05-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 0.75 |
-| TAR-HU-INV-05-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
+| TAR-HU-INV-05-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 0.50 |
 
 **Subtotal HU-INV-05:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -838,9 +842,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-INV-06-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 0.75 |
 | TAR-HU-INV-06-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-INV-06-06 | Probar de unidad | Test | Pend. | Des.5 - Colonia | 1.00 |
+| TAR-HU-INV-06-06 | Pruebas de unidad e integración | Test | Pend. | Des.5 - Colonia | 1.00 |
 | TAR-HU-INV-06-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 0.75 |
-| TAR-HU-INV-06-08 | Desplegar en la web | Configuración | Pend. | Des.5 - Colonia | 0.50 |
+| TAR-HU-INV-06-08 | Verificación funcional y pase web | Configuración | Pend. | Des.5 - Colonia | 0.50 |
 
 **Subtotal HU-INV-06:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -851,9 +855,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-REP-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 1.00 |
 | TAR-HU-REP-03-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.50 |
-| TAR-HU-REP-03-06 | Probar de unidad | Test | Pend. | Des.2 - Nolasco | 1.50 |
+| TAR-HU-REP-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.2 - Nolasco | 1.50 |
 | TAR-HU-REP-03-07 | Depuración | Test | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-REP-03-08 | Desplegar en la web | Configuración | Pend. | Des.2 - Nolasco | 1.00 |
+| TAR-HU-REP-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.2 - Nolasco | 1.00 |
 
 **Subtotal HU-REP-03:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -864,9 +868,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-REP-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 0.75 |
 | TAR-HU-REP-04-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-REP-04-06 | Probar de unidad | Test | Pend. | Des.3 - Castillo | 1.00 |
+| TAR-HU-REP-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.3 - Castillo | 1.00 |
 | TAR-HU-REP-04-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 0.75 |
-| TAR-HU-REP-04-08 | Desplegar en la web | Configuración | Pend. | Des.3 - Castillo | 0.50 |
+| TAR-HU-REP-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.3 - Castillo | 0.50 |
 
 **Subtotal HU-REP-04:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -877,9 +881,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-REP-07-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 1.50 |
 | TAR-HU-REP-07-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 2.75 |
-| TAR-HU-REP-07-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 2.75 |
+| TAR-HU-REP-07-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 2.75 |
 | TAR-HU-REP-07-07 | Depuración | Test | Pend. | Des.6 - Angeles | 1.50 |
-| TAR-HU-REP-07-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-REP-07-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.50 |
 
 **Subtotal HU-REP-07:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -890,9 +894,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-REP-08-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.00 |
 | TAR-HU-REP-08-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 1.50 |
-| TAR-HU-REP-08-06 | Probar de unidad | Test | Pend. | Des.2 - Nolasco | 1.50 |
+| TAR-HU-REP-08-06 | Pruebas de unidad e integración | Test | Pend. | Des.2 - Nolasco | 1.50 |
 | TAR-HU-REP-08-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.00 |
-| TAR-HU-REP-08-08 | Desplegar en la web | Configuración | Pend. | Des.2 - Nolasco | 1.00 |
+| TAR-HU-REP-08-08 | Verificación funcional y pase web | Configuración | Pend. | Des.2 - Nolasco | 1.00 |
 
 **Subtotal HU-REP-08:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -903,9 +907,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-VEN-04-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 1.00 |
 | TAR-HU-VEN-04-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 1.50 |
-| TAR-HU-VEN-04-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-VEN-04-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-VEN-04-07 | Depuración | Test | Pend. | Des.3 - Castillo | 1.00 |
-| TAR-HU-VEN-04-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-VEN-04-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-VEN-04:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -916,9 +920,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CLI-01-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.6 - Angeles | 0.75 |
 | TAR-HU-CLI-01-05 | Codificar | Codificación | Pend. | Des.6 - Angeles | 1.00 |
-| TAR-HU-CLI-01-06 | Probar de unidad | Test | Pend. | Des.2 - Nolasco | 1.00 |
+| TAR-HU-CLI-01-06 | Pruebas de unidad e integración | Test | Pend. | Des.2 - Nolasco | 1.00 |
 | TAR-HU-CLI-01-07 | Depuración | Test | Pend. | Des.6 - Angeles | 0.75 |
-| TAR-HU-CLI-01-08 | Desplegar en la web | Configuración | Pend. | Des.2 - Nolasco | 0.50 |
+| TAR-HU-CLI-01-08 | Verificación funcional y pase web | Configuración | Pend. | Des.2 - Nolasco | 0.50 |
 
 **Subtotal HU-CLI-01:** 2.50 h Construcción, 1.50 h Verificación. Total: 4.00 h.
 
@@ -929,9 +933,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-VEN-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.50 |
 | TAR-HU-VEN-03-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 2.75 |
-| TAR-HU-VEN-03-06 | Probar de unidad | Test | Pend. | Des.3 - Castillo | 2.75 |
+| TAR-HU-VEN-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.3 - Castillo | 2.75 |
 | TAR-HU-VEN-03-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-VEN-03-08 | Desplegar en la web | Configuración | Pend. | Des.3 - Castillo | 1.50 |
+| TAR-HU-VEN-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.3 - Castillo | 1.50 |
 
 **Subtotal HU-VEN-03:** 5.75 h Construcción, 4.25 h Verificación. Total: 10.00 h.
 
@@ -942,9 +946,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-CLI-03-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.3 - Castillo | 0.50 |
 | TAR-HU-CLI-03-05 | Codificar | Codificación | Pend. | Des.3 - Castillo | 0.50 |
-| TAR-HU-CLI-03-06 | Probar de unidad | Test | Pend. | Des.1 - Velasquez | 0.50 |
+| TAR-HU-CLI-03-06 | Pruebas de unidad e integración | Test | Pend. | Des.1 - Velasquez | 0.50 |
 | TAR-HU-CLI-03-07 | Depuración | Test | Pend. | Des.3 - Castillo | 0.25 |
-| TAR-HU-CLI-03-08 | Desplegar en la web | Configuración | Pend. | Des.1 - Velasquez | 0.25 |
+| TAR-HU-CLI-03-08 | Verificación funcional y pase web | Configuración | Pend. | Des.1 - Velasquez | 0.25 |
 
 **Subtotal HU-CLI-03:** 1.25 h Construcción, 0.75 h Verificación. Total: 2.00 h.
 
@@ -955,9 +959,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-REP-09-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.1 - Velasquez | 1.00 |
 | TAR-HU-REP-09-05 | Codificar | Codificación | Pend. | Des.1 - Velasquez | 1.50 |
-| TAR-HU-REP-09-06 | Probar de unidad | Test | Pend. | Des.3 - Castillo | 1.50 |
+| TAR-HU-REP-09-06 | Pruebas de unidad e integración | Test | Pend. | Des.3 - Castillo | 1.50 |
 | TAR-HU-REP-09-07 | Depuración | Test | Pend. | Des.1 - Velasquez | 1.00 |
-| TAR-HU-REP-09-08 | Desplegar en la web | Configuración | Pend. | Des.3 - Castillo | 1.00 |
+| TAR-HU-REP-09-08 | Verificación funcional y pase web | Configuración | Pend. | Des.3 - Castillo | 1.00 |
 
 **Subtotal HU-REP-09:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
@@ -968,9 +972,9 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 |---|---|---|---|---|---|
 | TAR-HU-VEN-08-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.00 |
 | TAR-HU-VEN-08-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 1.50 |
-| TAR-HU-VEN-08-06 | Probar de unidad | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-VEN-08-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
 | TAR-HU-VEN-08-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.00 |
-| TAR-HU-VEN-08-08 | Desplegar en la web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-VEN-08-08 | Verificación funcional y pase web | Configuración | Pend. | Des.4 - Alcalde | 1.00 |
 
 **Subtotal HU-VEN-08:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 

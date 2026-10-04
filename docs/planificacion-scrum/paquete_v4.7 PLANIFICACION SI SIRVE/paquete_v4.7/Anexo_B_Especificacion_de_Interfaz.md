@@ -2,7 +2,7 @@
 Código de documento: DOC-ANEXO-B
 Título: Anexo B - Especificación de Interfaz (UI, Microcopy y Comportamiento Visual)
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Colonia Infantas, Walter
 Revisado por: Angeles Pérez, Jhonny
 Estado: Aprobado
@@ -87,6 +87,14 @@ para ingresar de forma segura y ser redirigido a mi módulo de trabajo asignado.
     - `"La contraseña de tu cuenta fue cambiada. Vuelve a iniciar sesión."` (emitido al actualizar credenciales).
     - `"Un SuperAdmin cerró tu sesión."` (emitido ante cierre forzado administrativo).
 - **Mensajes de Validación y Error**:
+  - **Mensajes de Bloqueo por Intentos Fallidos (HU-AUTH-02):**
+    - Si el usuario acumula 5 intentos fallidos consecutivos de contraseña, el sistema bloquea el acceso temporalmente y despliega un banner rojo estructurado en `rounded-lg bg-red-50 px-4 py-2.5 text-sm text-red-700` con el mensaje exacto:
+      `"Cuenta suspendida temporalmente por 15 minutos debido a múltiples intentos fallidos."`
+    - Si el usuario intenta autenticarse durante la suspensión, se exhibe el tiempo restante:
+      `"Cuenta suspendida. Intenta nuevamente en {minutosRestantes} minuto(s)."`
+  - **Mensaje de Cuenta Desactivada (HU-AUTH-01 / HU-USR-04):**
+    - Si la cuenta del colaborador fue dada de baja o desactivada por el SuperAdmin, se despliega un banner rojo con el mensaje exacto:
+      `"Esta cuenta se encuentra inactiva. Contacte a la administración para habilitar su acceso."`
   - Si el servidor central rechaza las credenciales o falla la conexión, se muestra un banner rojo con estilo `rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600` con el mensaje exacto proveniente del servidor o el texto fallback `"Error al iniciar sesión"`.
 
 **CA-3: Indicadores de Estado, Badges y Grillas**
@@ -175,7 +183,7 @@ para restablecer el acceso a mi cuenta sin depender de intervención manual.
 **CA-2: Mensajes de Asistencia, Banners y Retroalimentación**
 - **Validaciones de Seguridad en Cliente (Banner Rojo `bg-red-50 text-red-600`)**:
   - Si las contraseñas no son idénticas: `"Las contraseñas no coinciden"`.
-  - Si tiene menos de 7 caracteres: `"Contraseña inválida: Debe tener al menos 7 caracteres"`.
+  - Si tiene menos de 7 caracteres: `"Contraseña inválida: Debe tener al menos 8 caracteres"`.
   - Si no incluye mayúscula: `"Contraseña inválida: Debe contener una mayúscula"`.
   - Si no incluye minúscula: `"Contraseña inválida: Debe contener una minúscula"`.
   - Si no incluye dígito: `"Contraseña inválida: Debe contener un dígito"`.
@@ -200,7 +208,7 @@ para restablecer el acceso a mi cuenta sin depender de intervención manual.
 - **Escenario 1**: Validación estricta de complejidad de contraseña
   - **Dado que** el usuario ingresó el código de autorización de 4 dígitos y escribe `"clave"` en `"Nueva contraseña"`
   - **Cuando** escribe `"clave"` en `"Confirmar contraseña"` y presiona `"Cambiar contraseña"`
-  - **Entonces** el sistema no debe enviar la petición y debe desplegar un banner rojo con el texto exacto `"Contraseña inválida: Debe tener al menos 7 caracteres"`.
+  - **Entonces** el sistema no debe enviar la petición y debe desplegar un banner rojo con el texto exacto `"Contraseña inválida: Debe tener al menos 8 caracteres"`.
 
 - **Escenario 2**: Transición a pantalla de éxito y redirección
   - **Dado que** el usuario ingresó un código de autorización válido y una contraseña que cumple con mayúscula, minúscula, número y >= 7 caracteres
@@ -276,7 +284,7 @@ para navegar fluidamente entre mis funciones autorizadas y no dejar arqueos hué
   - **Entonces** debe ver únicamente los enlaces `"Ventas"`, `"Historial Ventas"` y `"Mi Caja"`, quedando completamente ocultos `"Usuarios"`, `"Productos"`, `"Reportes"`, `"Configuración"` y `"Logs de Acceso"`.
 
 - **Escenario 2**: Cierre de sesión con advertencia de arqueo pendiente
-  - **Dado que** un cajero con rol `"Vendedor"` tiene una caja abierta
+  - **Dado que** un colaborador con rol `"Vendedor"` tiene una caja abierta
   - **Cuando** presiona el botón `"Cerrar sesión"` en el menú lateral
   - **Entonces** no se destruye la sesión de inmediato y se abre un diálogo modal de confirmación con el título `"Tienes un turno de caja abierto"` y el mensaje `"Todavía no cerraste tu turno en Mi Caja. ¿Seguro que quieres cerrar sesión sin cerrarlo?"`.
 
@@ -933,7 +941,7 @@ para dar de alta mercadería en el inventario y mantener la trazabilidad de cada
   2. `"Lote"` (número de lote o guion `"—"`)
   3. `"Proveedor"` (nombre de proveedor o guion `"—"`)
   4. `"Cantidad"` (Badge verde `rounded-full bg-green-100 text-green-700` con texto `"+{cantidad} und(s)"`)
-  5. `"Costo Unit."` (formato `"S/. {monto}"` o guion `"—"`)
+  5. `"Costo Unit."` (formato `"S/ {monto}"` o guion `"—"`)
   6. `"Vencimiento"` (fecha o guion `"—"`)
   7. `"Registrado por"` (nombre de usuario)
   8. `"Fecha"` (fecha y hora en formato legible `formatFechaHora(e.createdAt)`)
@@ -1190,7 +1198,7 @@ para coordinar formalmente las compras con los proveedores sin generar entradas 
 
 ## 5. Parte IV: EPIC-VEN — Terminal POS, Facturación SUNAT, Historial y Caja (UI-014 a UI-017)
 
-### Pantalla [UI-014] Terminal de Punto de Venta (POS) y Facturación Electrónica
+### Pantalla [UI-014] Terminal de Punto de Venta (POS) y Emisión de Comprobantes
 
 **Historias del plan que utilizan esta pantalla:** HU-VEN-01, HU-VEN-02, HU-VEN-04, HU-VEN-07, HU-CLI-02  
 
@@ -1224,7 +1232,7 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
     - Input numérico con `min="1"` y `max={stockVendible}`.
     - Botón incrementar `<Plus className="h-3 w-3" />` deshabilitado si `item.cantidad >= stockVendible`.
     - Botón eliminar fila con ícono de papelera roja `<Trash2 className="h-4 w-4" />`.
-  - Total del carrito: `"Total: S/. {total.toFixed(2)}"` (`text-right text-xl font-bold text-gray-800`).
+  - Total del carrito: `"Total: S/ {total.toFixed(2)}"` (`text-right text-xl font-bold text-gray-800`).
 - **Catálogo Plegable de Productos**:
   - Botón colapsable: `<ChevronDown / ChevronUp className="h-4 w-4" />` con etiqueta interactiva `"Mostrar lista de productos"` u `"Ocultar lista de productos"`.
   - Input de búsqueda: Placeholder `"Buscar producto por nombre o marca..."`.
@@ -1245,7 +1253,7 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
   - Tarjeta amarilla/ámbar con ícono `🔍`, título `"Modo consulta"` y microcopy `"Puedes navegar los productos, pero no realizar ventas."`.
 - **Resumen de Venta**:
   - Título: `"Resumen de Venta"`.
-  - Fila `"Subtotal"` y fila destacada `"Total"` con formato `S/. {total.toFixed(2)}`.
+  - Fila `"Subtotal"` y fila destacada `"Total"` con formato `S/ {total.toFixed(2)}`.
   - Selector `"Tipo de comprobante"`:
     - Opciones: `<option value="BoletaSimple">Boleta Simple</option>`, `<option value="BoletaDNI">Boleta con DNI</option>`, `<option value="Factura">Factura</option>`.
 - **Campos para Boleta con DNI**:
@@ -1270,20 +1278,20 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
   - Input con ícono `Banknote`: Placeholder `"Monto recibido"`.
   - Sanitización estricta: Bloquea teclas `'e'`, `'E'`, `'+'`, `'-'`, limita a 6 dígitos enteros y 2 decimales.
   - Cálculo de Vuelto / Faltante en tiempo real:
-    - Si `vuelto >= 0`: Etiqueta `"Vuelto"` y monto en verde `"S/. {vuelto.toFixed(2)}"`.
-    - Si `vuelto < 0`: Etiqueta `"Faltan"` y monto en rojo negrita `"S/. {Math.abs(vuelto).toFixed(2)}"`.
+    - Si `vuelto >= 0`: Etiqueta `"Vuelto"` y monto en verde `"S/ {vuelto.toFixed(2)}"`.
+    - Si `vuelto < 0`: Etiqueta `"Faltan"` y monto en rojo negrita `"S/ {Math.abs(vuelto).toFixed(2)}"`.
   - Alerta de Vuelto Insuficiente en Caja:
-    - Banner rojo con ícono `AlertTriangle`: `"Monto en caja insuficiente para el vuelto. Disponible: S/. {efectivoDisponible.toFixed(2)}"`.
-- **Flujo de Pago con Yape/Plin (IziPay)/Plin (IziPay) (POS Físico IziPay en 2 Pasos)**:
+    - Banner rojo con ícono `AlertTriangle`: `"Monto en caja insuficiente para el vuelto. Disponible: S/ {efectivoDisponible.toFixed(2)}"`.
+- **Flujo de Pago con Yape/Plin (IziPay) (POS Físico IziPay en 2 Pasos)**:
   - **Paso 1 (`pasoYape === 'inicio'`)**:
     - Contenedor con borde discontinuo violeta `border-dashed border-violet-200 bg-violet-50`.
     - Título: Indicador `"1"` con texto `"Generar cobro en IziPay"`.
     - Instrucción: `"Abre la app IziPay en el POS, ingresa el monto exacto y genera el QR de cobro."`.
-    - Monto destacado: Tarjeta blanca con `"Monto a ingresar en IziPay"` y número grande `"S/. {total.toFixed(2)}"` (`text-2xl font-bold text-violet-700`).
+    - Monto destacado: Tarjeta blanca con `"Monto a ingresar en IziPay"` y número grande `"S/ {total.toFixed(2)}"` (`text-2xl font-bold text-violet-700`).
     - Botón de avance: `<QrCode className="h-4 w-4" /> Ya generé el cobro en IziPay`.
   - **Paso 2 (`pasoYape === 'mostrando'`)**:
     - Título: Indicador `"2"` con texto `"Cliente escanea y paga"`.
-    - Instrucción: `"Muestra la pantalla de IziPay al cliente para que escanee con Yape/Plin (IziPay) o Plin y pague S/. {total.toFixed(2)}. Verifica en la app que el pago se haya completado antes de confirmar."`.
+    - Instrucción: `"Muestra la pantalla de IziPay al cliente para que escanee con Yape/Plin (IziPay) o Plin y pague S/ {total.toFixed(2)}. Verifica en la app que el pago se haya completado antes de confirmar."`.
     - Campo `N° de autorización *`: Input con `inputMode="numeric"`, `placeholder="Ej. 123456"`, `maxLength={6}`.
     - Validación en vivo: `"El N° de autorización debe tener 6 dígitos"` si la longitud es menor a 6.
     - Microcopy de ayuda: `"Cópialo de la pantalla de confirmación de IziPay: es lo único que permite ubicar este pago si hay que reclamarlo o conciliarlo después."`.
@@ -1292,7 +1300,7 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
     - Botón de confirmación: `<CheckCircle className="h-4 w-4" /> Pago confirmado en IziPay` (deshabilitado si no cumple 6 dígitos).
     - Botón de retroceso: `<X className="h-4 w-4" /> Volver`.
   - **Estado Confirmado (`yapeVerificado === true`)**:
-    - Tarjeta verde esmeralda con `CheckCircle`: `"Pago Yape/Plin (IziPay)/Plin (IziPay) confirmado — S/. {total.toFixed(2)}"` y `"N° de autorización: {nroAutorizacion}"`.
+    - Tarjeta verde esmeralda con `CheckCircle`: `"Pago Yape/Plin (IziPay) confirmado — S/ {total.toFixed(2)}"` y `"N° de autorización: {nroAutorizacion}"`.
 - **Acciones Finales de Venta**:
   - Botón principal `"Realizar Venta"` (`bg-[#6366f1] hover:bg-indigo-600`):
     - Estado de carga: Spinner `<Loader2 className="h-4 w-4 animate-spin" /> Procesando...`.
@@ -1304,42 +1312,42 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
   - Ícono central de éxito: `<CheckCircle className="mx-auto h-12 w-12 text-green-500" />`.
   - Título: `"¡Venta realizada!"`.
   - Subtítulo con correlativo: `"{Factura|Boleta} {numero}"`.
-  - Lista de productos vendidos: Nombre, cantidad `x{cantidad}` y subtotal `S/. {subtotal.toFixed(2)}`.
-  - Fila total: `"Total"` y `"S/. {monto_total.toFixed(2)}"`.
+  - Lista de productos vendidos: Nombre, cantidad `x{cantidad}` y subtotal `S/ {subtotal.toFixed(2)}`.
+  - Fila total: `"Total"` y `"S/ {monto_total.toFixed(2)}"`.
   - Badges semánticos agrupados:
     - Tipo: `"Factura"` (ámbar) / `"Boleta con DNI"` (índigo) / `"Boleta Simple"` (índigo).
     - Documento de cliente: `"DNI: {cliente_dni}"` o `"RUC: {cliente_ruc}"`.
     - Método: `"Yape/Plin (IziPay)"` (púrpura) / `"Efectivo"` (verde).
   - Razón social y dirección (si aplica para Factura).
-  - Desglose de vuelto en efectivo: `"Monto recibido: S/. {recibido} — Vuelto: S/. {vuelto}"`.
-  - Trazabilidad Yape/Plin (IziPay): `<CheckCircle className="mr-1 inline h-3 w-3" /> Yape/Plin (IziPay) verificado — S/. {total} — N° de autorización: {referencia_pago}`.
+  - Desglose de vuelto en efectivo: `"Monto recibido: S/ {recibido} — Vuelto: S/ {vuelto}"`.
+  - Trazabilidad Yape/Plin (IziPay): `<CheckCircle className="mr-1 inline h-3 w-3" /> Yape/Plin (IziPay) verificado — S/ {total} — N° de autorización: {referencia_pago}`.
   - Botón verde de descarga: `<FileText className="h-4 w-4" /> {esFactura ? 'Descargar Factura PDF' : 'Descargar Boleta PDF'}` (`bg-emerald-500 hover:bg-emerald-600`).
   - Botón índigo de reinicio: `"Nueva Venta"` (`bg-[#6366f1] hover:bg-indigo-600`).
 
 **CA-4: Escenarios de Aceptación (Gherkin BDD)**
 
 ```gherkin
-Escenario: Cajero intenta vender sin turno de caja abierto
-  Dado que el usuario autenticado tiene rol "Cajero" y no cuenta con un turno de caja activo
+Escenario: Vendedor intenta vender sin turno de caja abierto
+  Dado que el usuario autenticado tiene rol "Vendedor" y no cuenta con un turno de caja activo
   Cuando ingresa a la terminal de ventas en "/ventas"
   Entonces se muestra el banner de alerta "No puedes realizar ventas porque no tienes un turno de caja abierto. Abre un turno para continuar."
   Y el botón "Realizar Venta" permanece deshabilitado
   Y se muestra el botón de enlace "Ir a Mi Caja" apuntando a "/caja"
 
 Escenario: Cobro exitoso con Yape/Plin (IziPay) mediante verificación de código de autorización IziPay
-  Dado que el cajero agregó productos al carrito por un total de "S/. 45.00"
+  Dado que el vendedor agregó productos al carrito por un total de "S/ 45.00"
   Y seleccionó el método de pago "Yape/Plin (IziPay)"
   Cuando pulsa el botón "Ya generé el cobro en IziPay"
   Entonces avanza al paso 2 "Cliente escanea y paga" mostrando la solicitud del "N° de autorización *"
   Y cuando ingresa "839201" y hace clic en "Pago confirmado en IziPay"
-  Entonces se muestra la tarjeta verde "Pago Yape/Plin (IziPay)/Plin (IziPay) confirmado — S/. 45.00"
+  Entonces se muestra la tarjeta verde "Pago Yape/Plin (IziPay) confirmado — S/ 45.00"
   Y el botón "Realizar Venta" queda habilitado para procesar la transacción
 
 Escenario: Bloqueo de venta por vuelto en efectivo superior al disponible en gaveta
-  Dado que el turno de caja cuenta con un efectivo disponible de "S/. 50.00"
-  Y la venta tiene un total de "S/. 20.00"
-  Cuando el cajero ingresa un monto recibido de "S/. 100.00" calculando un vuelto de "S/. 80.00"
-  Entonces se muestra el mensaje de error "Monto en caja insuficiente para el vuelto. Disponible: S/. 50.00"
+  Dado que el turno de caja cuenta con un efectivo disponible de "S/ 50.00"
+  Y la venta tiene un total de "S/ 20.00"
+  Cuando el vendedor ingresa un monto recibido de "S/ 100.00" calculando un vuelto de "S/ 80.00"
+  Entonces se muestra el mensaje de error "Monto en caja insuficiente para el vuelto. Disponible: S/ 50.00"
   Y el botón "Realizar Venta" queda deshabilitado impidiendo descuadres físicos de caja
 ```
 
@@ -1350,9 +1358,9 @@ Escenario: Bloqueo de venta por vuelto en efectivo superior al disponible en gav
 **Historias del plan que utilizan esta pantalla:** HU-VEN-03, HU-VEN-05, HU-VEN-06  
 
 **Propósito de la pantalla:**  
-Como Administrador o Gerente,  
+Como Vendedor, Administrador o Gerente,  
 quiero consultar el historial de ventas paginado, filtrar por fechas o correlativo, descargar comprobantes PDF, reenviarlos por correo y anular ventas gestionando la reposición de stock individual,  
-para auditar las operaciones de cobro y corregir errores de facturación cumpliendo la trazabilidad de inventario.
+para consultar el historial de ventas paginado (restringido a las ventas del propio turno activo para el Vendedor según RN-07, o global para Administrador y Gerente), auditar las operaciones de cobro y corregir errores mediante anulación administrativa.
 
 #### Criterios de Aceptación (CA) - Interfaz y Comportamiento Visual:
 
@@ -1372,14 +1380,14 @@ para auditar las operaciones de cobro y corregir errores de facturación cumplie
 - **Columnas de la Grilla**:
   - `"N°"`: Formato `#{String(v.id).padStart(6, '0')}` en negrita.
   - `"Fecha / Hora"`: Fecha con `toLocaleDateString('es-PE')` y hora `toLocaleTimeString('es-PE')`.
-  - `"Cajero"`: Nombre del usuario o `"-"`.
+  - `"Vendedor"`: Nombre del usuario o `"-"`.
   - `"Método"`: Badge púrpura `<Smartphone /> Yape/Plin (IziPay)` o badge verde `<Banknote /> Efectivo`.
-  - `"Monto"`: `S/. {monto_total.toFixed(2)}`; si el estado es `'Anulada'`, se muestra tachado y en gris `text-gray-400 line-through`.
+  - `"Monto"`: `S/ {monto_total.toFixed(2)}`; si el estado es `'Anulada'`, se muestra tachado y en gris `text-gray-400 line-through`.
   - `"Yape/Plin (IziPay) Verif."`:
     - Si método es Yape/Plin (IziPay) y verificado: `<CheckCircle className="h-3.5 w-3.5" /> Sí` en esmeralda (`text-emerald-600`) con atributo tooltip nativo (`title`) indicando fecha y hora exacta: `"Verificado: DD/MM/AAAA, HH:mm:ss"`.
     - Si método es Yape/Plin (IziPay) y no verificado: `<XCircle className="h-3.5 w-3.5" /> Pendiente` en ámbar (`text-amber-600`).
     - Si método es Efectivo: Guion gris `"—"`.
-    - *Regla de especificación sobre convalidación de pago*: La grilla y el modal reflejan con precisión el estado del pago electrónico convalidado por el cajero o regularizado operativamente mediante el servicio de verificación de transacciones digitales.
+    - *Regla de especificación sobre convalidación de pago*: La grilla y el modal reflejan con precisión el estado del pago electrónico convalidado por el vendedor o regularizado operativamente mediante el servicio de verificación de transacciones digitales.
   - `"Estado"`:
     - Venta normal: Badge esmeralda `"Completada"` (`bg-emerald-100 text-emerald-700`).
     - Venta anulada: Badge rojo `<Ban className="h-3 w-3" /> Anulada` con tooltip del motivo.
@@ -1395,7 +1403,7 @@ para auditar las operaciones de cobro y corregir errores de facturación cumplie
 - **Modal de Detalle de Venta**:
   - Encabezado: Título `"Venta #{id}"` y subtítulo con serie/correlativo `"{Factura|Boleta} {serie}-{correlativo}"`.
   - Banner si está anulada: Bloque rojo con `"VENTA ANULADA"`, motivo de anulación, `"Por {anulado_por.nombre} el {fecha}"`.
-  - Cuadrícula de detalles: Fecha, Cajero, Método de pago, Monto total; si fue Efectivo: Recibido y Vuelto; si fue Yape/Plin (IziPay): Monto Yape/Plin (IziPay) (`S/. {monto_total}`), Verificado (`Sí` / `Pendiente`), Verificado el (`DD/MM/AAAA, HH:mm:ss`), N° de autorización IziPay (`{referencia_pago}`).
+  - Cuadrícula de detalles: Fecha, Vendedor, Método de pago, Monto total; si fue Efectivo: Recibido y Vuelto; si fue Yape/Plin (IziPay): Monto Yape/Plin (IziPay) (`S/ {monto_total}`), Verificado (`Sí` / `Pendiente`), Verificado el (`DD/MM/AAAA, HH:mm:ss`), N° de autorización IziPay (`{referencia_pago}`).
   - Lista de `"Productos"`: Nombre del producto, marca, cantidad `x{cantidad}` y subtotal.
   - Acciones inferiores (si no está anulada):
     - Botón verde: `<FileText className="h-4 w-4" /> Descargar Copia PDF`.
@@ -1470,7 +1478,7 @@ para asegurar que la gaveta cuente con cambio suficiente para vueltos y concilia
 **CA-2: Panel del Turno en Curso y Movimientos**
 - **Encabezado del Turno Activo (`turno.estado === 'Abierto'`)**:
   - Indicador vivo: Punto verde pulsante `<span className="h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" />` y texto `"Turno en curso"`.
-  - Datos del turno: Ícono `<Clock className="inline h-3.5 w-3.5 mr-1" /> Apertura: {fecha}` y `"Cajero: {cajero.nombre}"`.
+  - Datos del turno: Ícono `<Clock className="inline h-3.5 w-3.5 mr-1" /> Apertura: {fecha}` y `"Vendedor: {vendedor.nombre}"`.
   - Barra de botones superiores:
     - Botón verde: `<Plus className="h-4 w-4" /> Registrar Ingreso` (`bg-emerald-600 hover:bg-emerald-700`).
     - Botón ámbar: `<TrendingDown className="h-4 w-4" /> Registrar Egreso` (`bg-amber-500 hover:bg-amber-600`).
@@ -1502,10 +1510,10 @@ para asegurar que la gaveta cuente con cambio suficiente para vueltos y concilia
   - Botones: `"Cancelar"` y botón `"Registrar {Ingreso|Egreso}"` (cambia a `"Guardando..."`).
 - **Modal "Cerrar turno"**:
   - Título: `"Cerrar turno"`.
-  - Banner instructivo amarillo: `"Cuenta el efectivo y Yape/Plin (IziPay) físico antes de continuar."` (`bg-yellow-50 text-yellow-800`).
-  - Cuadrícula de conteo físico:
-    - Input `"Efectivo contado (S/)"`: Placeholder `"0.00"`, requerido.
-    - Input `"Yape/Plin (IziPay) contado (S/)"`: Placeholder `"0.00"`.
+  - Banner instructivo amarillo: `"Cuenta el efectivo en gaveta y concilia el total del reporte de liquidación del terminal digital antes de continuar."` (`bg-yellow-50 text-yellow-800`).
+  - Cuadrícula de conciliación de valores:
+    - Input `"Efectivo contado en gaveta (S/)"`: Placeholder `"0.00"`, requerido, microcopy `"Conteo físico de billetes y monedas en caja"`.
+    - Input `"Total liquidación digital IziPay (S/)"`: Placeholder `"0.00"`, requerido, microcopy `"Monto total del reporte de cierre del terminal POS / billeteras"`.
   - Campo `"Observaciones (opcional)"`: Textarea con placeholder `"Ej: faltaron 5 soles, billetes mojados, etc."`.
   - Botones: `"Cancelar"` y botón rojo `"Cerrar turno"` (cambia a `"Cerrando..."`).
 - **Vista de Resumen Post-Cierre (`ResumenCierre`)**:
@@ -1519,7 +1527,7 @@ para asegurar que la gaveta cuente con cambio suficiente para vueltos y concilia
 
 ```gherkin
 Escenario: Validación de fondo mínimo de apertura en caja
-  Dado que el cajero se encuentra en "/caja" sin turno activo
+  Dado que el vendedor se encuentra en "/caja" sin turno activo
   Cuando pulsa el botón "Abrir turno"
   E ingresa un monto inicial de "350.00"
   Y presiona "Abrir turno"
@@ -1528,7 +1536,7 @@ Escenario: Validación de fondo mínimo de apertura en caja
 
 Escenario: Registro de egreso manual para compra de insumos menores
   Dado que el turno de caja se encuentra en curso
-  Cuando el cajero pulsa "Registrar Egreso"
+  Cuando el vendedor pulsa "Registrar Egreso"
   E ingresa un monto de "45.00" con motivo "Compra de papel térmico para tickets POS"
   Y confirma la operación
   Entonces el modal se cierra y en "Movimientos del turno" se añade la fila con badge rojo "Egreso" y monto "-S/ 45.00"
@@ -1542,8 +1550,8 @@ Escenario: Registro de egreso manual para compra de insumos menores
 **Historias del plan que utilizan esta pantalla:** HU-CAJA-05, HU-CAJA-06, HU-CAJA-07  
 
 **Propósito de la pantalla:**  
-Como Administrador o Gerente,  
-quiero revisar el historial de turnos de caja de todos los cajeros, aprobar los cierres cuadrados y forzar el cierre de turnos olvidados que excedan las 16 horas,  
+Como Vendedor, Administrador o Gerente,  
+quiero revisar el historial de turnos de caja de todos los vendedores, aprobar los cierres cuadrados y forzar el cierre de turnos olvidados que excedan las 16 horas,  
 para garantizar el control de arqueos y evitar bloqueos en la apertura de nuevos turnos.
 
 #### Criterios de Aceptación (CA) - Interfaz y Comportamiento Visual:
@@ -1560,7 +1568,7 @@ para garantizar el control de arqueos y evitar bloqueos en la apertura de nuevos
 **CA-2: Grilla de Turnos y Conciliación de Arqueos**
 - **Columnas de la Grilla**:
   - `"Apertura"`: Fecha y hora formateada.
-  - `"Cajero"`: Nombre del responsable o `"—"`.
+  - `"Vendedor"`: Nombre del responsable o `"—"`.
   - `"Apertura (S/)"`: Monto inicial con formato `S/ {monto}`.
   - `"Efec. esperado"` y `"Yape/Plin (IziPay) esperado"`: Montos calculados por sistema.
   - `"Dif. efec."` y `"Dif. Yape/Plin (IziPay)"`: Renderizados con componente `BadgeDiff`:
@@ -1570,7 +1578,7 @@ para garantizar el control de arqueos y evitar bloqueos en la apertura de nuevos
   - `"Estado"`:
     - Si está cerrado: Badge gris `"Cerrado"` (`bg-gray-100 text-gray-600`).
     - Si está abierto: Badge verde `"Abierto"` (`bg-green-100 text-green-700`).
-    - Alerta de turno sospechoso (> 16 horas abierto): Chip ámbar `<AlertTriangle className="h-3 w-3" /> {N}h abierto` con tooltip `"El cajero podría haberse olvidado de cerrarlo"`.
+    - Alerta de turno sospechoso (> 16 horas abierto): Chip ámbar `<AlertTriangle className="h-3 w-3" /> {N}h abierto` con tooltip `"El vendedor podría haberse olvidado de cerrarlo"`.
   - `"Acción"`:
     - Si está Abierto:
       - Si es Administrador/Gerente (`puedeAprobar`): Botón rojo `"Cerrar turno"` (`bg-red-600 hover:bg-red-700`).
@@ -1578,7 +1586,7 @@ para garantizar el control de arqueos y evitar bloqueos en la apertura de nuevos
     - Si está Cerrado:
       - Ya aprobado: Ícono y texto verde `<CheckCircle className="h-3.5 w-3.5" /> {turno.aprobador.nombre}`.
       - Pendiente y usuario es Admin/Gerente: Botón índigo `"Aprobar"` (`bg-indigo-600 hover:bg-indigo-700`).
-      - Pendiente y usuario cajero: Texto gris `"Pendiente"`.
+      - Pendiente y usuario vendedor: Texto gris `"Pendiente"`.
   - Control de expansión: Ícono `<ChevronDown / ChevronUp className="h-4 w-4" />`.
 - **Detalle Expandido de Fila (Acordeón)**:
   - Título secundario: `"MOVIMIENTOS DEL TURNO"`.
@@ -1588,13 +1596,13 @@ para garantizar el control de arqueos y evitar bloqueos en la apertura de nuevos
     `"Cerrado forzosamente por {cerrado_por.nombre} — Motivo: {motivo_cierre_forzado}"`.
 
 **CA-3: Modal de Cierre Forzado por Administrador (`ModalCerrarForzado`)**
-- Encabezado: `"Cerrar turno de {cajero.nombre ?? 'otro cajero'}"`.
+- Encabezado: `"Cerrar turno de {vendedor.nombre ?? 'otro vendedor'}"`.
 - Banner de advertencia y responsabilidad:  
-  `"El cajero no cerró este turno. Cuenta el efectivo y Yape/Plin (IziPay) físicos de esa caja antes de continuar — este cierre queda registrado con tu usuario y el motivo."` (`bg-amber-50 text-amber-800`).
+  `"El vendedor no cerró este turno. Cuenta el efectivo físico y concilia el reporte digital de liquidación IziPay de esa caja antes de continuar — este cierre queda registrado con tu usuario y el motivo."` (`bg-amber-50 text-amber-800`).
 - Formulario de Arqueo Forzado:
   - Input `"Efectivo contado (S/)"`: Requerido, placeholder `"0.00"`.
   - Input `"Yape/Plin (IziPay) contado (S/)"`: Placeholder `"0.00"`.
-  - Input `"Motivo del cierre forzado *"`: Requerido, placeholder `"Ej: cajero no marcó salida, turno olvidado desde ayer"`.
+  - Input `"Motivo del cierre forzado *"`: Requerido, placeholder `"Ej: vendedor no marcó salida, turno olvidado desde ayer"`.
   - Textarea `"Observaciones (opcional)"`: Placeholder `"Ej: faltaron 5 soles, billetes mojados, etc."`.
 - Botones de acción: `"Cancelar"` y botón rojo `"Forzar cierre"` (cambia a `"Cerrando..."` con guardia en `enviandoRef`).
 
@@ -1603,11 +1611,11 @@ para garantizar el control de arqueos y evitar bloqueos en la apertura de nuevos
 ```gherkin
 Escenario: Administrador fuerza el cierre de un turno olvidado de más de 16 horas
   Dado que el usuario autenticado tiene rol "Administrador"
-  Y visualiza en el historial de cajas un turno con la etiqueta "18h abierto" del cajero "Juan Pérez"
+  Y visualiza en el historial de cajas un turno con la etiqueta "18h abierto" del vendedor "Juan Pérez"
   Cuando pulsa el botón "Cerrar turno" en la columna de acción
   Entonces se abre el modal "Cerrar turno de Juan Pérez" con la advertencia de responsabilidad
   Y cuando ingresa "S/ 620.00" en efectivo contado, "S/ 115.00" en Yape/Plin (IziPay) contado
-  Y completa el motivo obligatorio "Cajero finalizó guardia sin registrar cierre"
+  Y completa el motivo obligatorio "Vendedor finalizó guardia sin registrar cierre"
   Y presiona "Forzar cierre"
   Entonces el turno pasa a estado "Cerrado", se calculan las diferencias de arqueo y se registra al Administrador como autor del cierre forzado
 
@@ -1629,7 +1637,7 @@ Escenario: Aprobación formal de un arqueo cerrado
 **Historias del plan que utilizan esta pantalla:** HU-DASH-01, HU-DASH-02, HU-DASH-03, HU-DASH-04, HU-DASH-05  
 
 **Propósito de la pantalla:**  
-Como Administrador o Gerente,  
+Como Vendedor, Administrador o Gerente,  
 quiero visualizar indicadores clave de desempeño (KPIs) en tiempo real, tendencias de ventas en gráficos de área, productos más vendidos, alertas de turnos de caja olvidados y accesos rápidos con modal de desglose a cada métrica,  
 para tomar decisiones comerciales oportunas y supervisar la salud operativa del negocio.
 
@@ -1644,7 +1652,7 @@ para tomar decisiones comerciales oportunas y supervisar la salud operativa del 
 - **Banner de Alerta Operativa (Turnos de Caja Olvidados > 16 Horas)**:
   - Renderizado condicional en bloque ámbar `border-amber-200 bg-amber-50 text-amber-800`.
   - Ícono: `<AlertTriangle className="h-5 w-5 shrink-0 text-amber-500" />`.
-  - Mensaje singular: `"El turno de {cajero.nombre} lleva {N}h abierto — probablemente se olvidó de cerrarlo."`.
+  - Mensaje singular: `"El turno de {vendedor.nombre} lleva {N}h abierto — probablemente se olvidó de cerrarlo."`.
   - Mensaje plural: `"{N} turnos llevan más de 16h abiertos — probablemente se olvidaron de cerrarlos."`.
   - Botón de acción: `"Ir a Historial de Caja"` (`bg-amber-500 text-white hover:bg-amber-600`), que redirige a `/caja/historial?estado=Abierto`.
 - **Barra de Rango de Fechas**:
@@ -1674,7 +1682,7 @@ para tomar decisiones comerciales oportunas y supervisar la salud operativa del 
     - Eje X: Fechas formateadas como `DD/MM` sin trazo divisorio de eje.
     - Eje Y: Montos con prefijo `S/{v}`.
     - Cuadrícula: Trazos discontinuos `strokeDasharray="3 3"` color `#f0f0f0`.
-  - Tooltip personalizado (`CustomTooltip`): Tarjeta blanca sombreada con fecha `DD/MM` y monto en negrita `"S/. {monto.toFixed(2)}"`.
+  - Tooltip personalizado (`CustomTooltip`): Tarjeta blanca sombreada con fecha `DD/MM` y monto en negrita `"S/ {monto.toFixed(2)}"`.
   - Estado vacío: `"No hay ventas registradas aún"` (`h-60 flex items-center justify-center text-sm text-gray-400`).
 
 **CA-3: Secciones de Top Productos y Stock Crítico**
@@ -1723,7 +1731,7 @@ para tomar decisiones comerciales oportunas y supervisar la salud operativa del 
 ```gherkin
 Escenario: Administrador detecta turno de caja olvidado por más de 16 horas
   Dado que el usuario autenticado tiene rol "Administrador"
-  Y existe un turno de caja del cajero "Carlos Rojas" con 19 horas de apertura sin cierre
+  Y existe un turno de caja del vendedor "Carlos Rojas" con 19 horas de apertura sin cierre
   Cuando accede a "/dashboard"
   Entonces se visualiza en la parte superior el banner ámbar "El turno de Carlos Rojas lleva 19h abierto — probablemente se olvidó de cerrarlo."
   Y al hacer clic en el botón "Ir a Historial de Caja" el usuario es redirigido a "/caja/historial?estado=Abierto"
@@ -1743,7 +1751,7 @@ Escenario: Consulta del modal de detalle de Ticket Promedio
 **Historias del plan que utilizan esta pantalla:** HU-REP-01, HU-REP-02, HU-REP-03, HU-REP-04, HU-REP-05, HU-REP-06, HU-REP-07, HU-REP-08, HU-REP-09  
 
 **Propósito de la pantalla:**  
-Como Administrador o Gerente,  
+Como Vendedor, Administrador o Gerente,  
 quiero analizar reportes consolidados de ventas, márgenes brutos de ganancia por producto, mermas por motivo y stock crítico configurable,  
 para exportar un documento PDF profesional y evaluar la rentabilidad del minimarket.
 
@@ -1784,7 +1792,7 @@ para exportar un documento PDF profesional y evaluar la rentabilidad del minimar
 - **Grilla "Margen por Producto"**:
   - Cabecera esmeralda `bg-emerald-600 text-white`.
   - Subtítulo aclaratorio: `"Solo productos con costo registrado en sus lotes de compra"`.
-  - Columnas: `"Producto"`, `"Marca"`, `"Categoría"`, `"Vendido"`, `"Ingreso"`, `"Costo"`, `"Margen S/."`, `"Margen %"`.
+  - Columnas: `"Producto"`, `"Marca"`, `"Categoría"`, `"Vendido"`, `"Ingreso"`, `"Costo"`, `"Margen S/"`, `"Margen %"`.
   - Color semántico de margen:
     - Positivo: Monto verde `text-emerald-600` y badge `bg-emerald-100 text-emerald-700`.
     - Negativo: Monto rojo `text-red-600` y badge `bg-red-100 text-red-700`.
@@ -1924,7 +1932,7 @@ Escenario: Confirmación preventiva al modificar el RUC de la empresa
 
 | Regla de Interfaz | Descripción Operativa y Comportamiento Visual | Vista Funcional de Interfaz | Impacto en la Operación |
 | :--- | :--- | :--- | :--- |
-| **RN-UI-01: Control de Turno Previo en Ventas** | Bloquea la terminal POS con banner ámbar y botón directo a caja si el cajero no tiene turno activo | Vista de VentasPage | Operación garantizada bajo estándar de interfaz |
+| **RN-UI-01: Control de Turno Previo en Ventas** | Bloquea la terminal POS con banner ámbar y botón directo a caja si el vendedor no tiene turno activo | Vista de VentasPage | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-02: Blindaje de Vuelto vs Saldo Disponible** | Impide registrar ventas en efectivo si el vuelto supera el efectivo en gaveta con alerta roja | Vista de VentasPage | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-03: Trazabilidad Estricta IziPay / Yape/Plin (IziPay)** | Obliga a capturar el N° de autorización de 6 dígitos con advertencia antifraude antes de validar | Vista de VentasPage | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-04: Facturación SUNAT Offline Contingente** | Habilita campos manuales con borde ámbar ante caída (503) de los servicios de consulta SUNAT | Vista de VentasPage | Operación garantizada bajo estándar de interfaz |

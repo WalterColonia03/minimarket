@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-PREGUNTAS
 Título: Compendio de Preguntas, Decisiones y Definiciones de Negocio del Product Owner
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Equipo Scrum & Supervisión Metodológica
 Revisado por: Colonia Infantas, Walter (Product Owner)
 Estado: Aprobado
@@ -143,7 +143,7 @@ El presente compendio reúne, clasifica y resuelve formalmente la totalidad de d
 - **Dilema Operativo:**  
   Asignar construcción y verificación al mismo desarrollador reduce tiempos de coordinación; no obstante, genera sesgos de confirmación y permite que defectos no detectados pasen a producción.
 - **Resolución Oficial Adoptada (v4.8):**  
-  **Principio estricto de segregación "Construye no es igual a Verifica".** En [DOC-PLAN-07](file:///c:/Users/walte/Downloads/minimarket-main/minimarket-main/docs/planificacion-scrum/paquete_v4.7%20PLANIFICACION%20SI%20SIRVE/paquete_v4.7/07_Desglose_de_Tareas_Task_Breakdown.md), las tareas de Construcción (pasos 1 a 5 y 7; 296 h) y las tareas de Verificación QA (pasos 6 y 8; 206 h) se asignan a desarrolladores distintos, garantizando objetividad y rigor en la certificación del incremento.
+  **Principio estricto de segregación "Construye no es igual a Verifica".** En [DOC-PLAN-07](07_Desglose_de_Tareas_Task_Breakdown.md), las tareas de Construcción (pasos 1 a 5 y 7; 296 h) y las tareas de Verificación QA (pasos 6 y 8; 206 h) se asignan a desarrolladores distintos, garantizando objetividad y rigor en la certificación del incremento.
 
 ---
 
@@ -236,4 +236,4 @@ El presente compendio reúne, clasifica y resuelve formalmente la totalidad de d
 
 ## 7. Dictamen Final de Conformidad
 
-La recopilación de estas 32 preguntas y decisiones formaliza la gobernanza integral del sistema de minimarket. Cada definición adoptada en la versión 4.8 cuenta con respaldo en las 16 Reglas de Negocio ([DOC-PLAN-08](file:///c:/Users/walte/Downloads/minimarket-main/minimarket-main/docs/planificacion-scrum/paquete_v4.7%20PLANIFICACION%20SI%20SIRVE/paquete_v4.7/08_Reglas_de_Negocio_y_Glosario.md)), las Decisiones de Arquitectura ([DOC-PLAN-10](file:///c:/Users/walte/Downloads/minimarket-main/minimarket-main/docs/planificacion-scrum/paquete_v4.7%20PLANIFICACION%20SI%20SIRVE/paquete_v4.7/10_Registro_Deuda_Tecnica_y_Brechas.md)) y la Especificación de Interfaz ([DOC-ANEXO-B](file:///c:/Users/walte/Downloads/minimarket-main/minimarket-main/docs/planificacion-scrum/paquete_v4.7%20PLANIFICACION%20SI%20SIRVE/paquete_v4.7/Anexo_B_Especificacion_de_Interfaz.md)), blindando al equipo de desarrollo ante cualquier objeción durante la sustentación final del proyecto.
+La recopilación de estas 32 preguntas y decisiones formaliza la gobernanza integral del sistema de minimarket. Cada definición adoptada en la versión 4.8 cuenta con respaldo en las 16 Reglas de Negocio ([DOC-PLAN-08]()), las Decisiones de Arquitectura ([DOC-PLAN-10]()) y la Especificación de Interfaz ([DOC-ANEXO-B]()), blindando al equipo de desarrollo ante cualquier objeción durante la sustentación final del proyecto.

@@ -2,7 +2,7 @@
 Código de documento: DOC-PLAN-11
 Título: Matriz de Trazabilidad Historia de Usuario - Pantalla (UI)
 Versión: 4.8
-Fecha: 2026-10-03
+Fecha: 2026-09-28
 Elaborado por: Colonia Infantas, Walter
 Revisado por: Angeles Pérez, Jhonny
 Estado: Aprobado
@@ -115,7 +115,7 @@ Los conteos representan referencias descriptivas en el Anexo B que detallan cada
 | HU-VEN-07 | UI-014 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-SOL-04 | UI-013 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-PROV-04 | UI-008 | CA-UI (criterio final de interfaz) | Con especificación completa |
-| HU-AUTH-06 | — | — | La actualización de clave propia opera mediante el flujo de recuperación no asistida (UI-002) sin pantalla de perfil |
+| HU-AUTH-06 | UI-003 | CA-UI (criterio final de interfaz) | Diálogo modal emergente de cambio de contraseña accesible desde la barra superior (Decisión formal D7) |
 | HU-USR-03 | UI-004 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-USR-05 | UI-004 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-LOG-01 | UI-005 | CA-UI (criterio final de interfaz) | Con especificación completa |
@@ -173,7 +173,7 @@ Los conteos representan referencias descriptivas en el Anexo B que detallan cada
 
 Las 20 pantallas especificadas en el Anexo B cubren el 100 % de las interacciones visuales requeridas por las 72 historias de usuario del Product Backlog. Se ratifican los siguientes acuerdos operativos:
 
-1. **Gestión de credenciales propia:** La actualización de clave por el colaborador activo (HU-AUTH-06) opera mediante el flujo de recuperación no asistida con clave temporal OTP (UI-002), optimizando la navegación sin requerir una vista de perfil dedicada.
+1. **Gestión de credenciales propia:** La actualización de clave por el colaborador activo (HU-AUTH-06) opera mediante el diálogo modal emergente "Cambiar contraseña" integrado en la barra de navegación superior (UI-003, Decisión formal D7), exigiendo la clave actual y validando la robustez de la nueva clave (mínimo 8 caracteres) sin requerir una vista de perfil dedicada.
 2. **Aviso de sesión desplazada:** La notificación informativa ante un inicio de sesión concurrente en otro equipo (HU-AUTH-04) se presenta mediante el banner superior destacado en UI-001 conforme a la Decisión D1.
 3. **Validación de pagos móviles:** El registro del código de autorización de 6 dígitos emitido por el terminal de cobro para billeteras digitales Yape/Plin (IziPay) se encuentra plenamente formalizado en el Punto de Venta (UI-014) y en el Historial de Ventas (UI-015) conforme a la Decisión D8.
 4. **Supervisión de compras pendientes:** La visualización de solicitudes de reposición en estado pendiente se integra de forma interactiva en el panel gerencial (UI-018) permitiendo la revisión inmediata del stock crítico.
