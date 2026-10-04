@@ -34,7 +34,7 @@ paquete_v4.7/
 └── 📁 informes_auditoria/                            <- Subcarpeta oficial con los 31 informes consolidados v4.8
     ├── 60-informe-final-consolidado-paquete-v48.md   <- Informe maestro de cierre y certificación v4.8
     ├── 61-auditoria-compendio-preguntas-y-decisiones-po.md <- Certificación del compendio de preguntas y decisiones
-    ├── INFORME-AUDITORIA-TECNICA-CONSOLIDADA.md      <- Informe consolidado de auditoría técnica
+    ├── INFORME-AUDITORIA-TECNICA-CONSOLIDADA.md      <- Informe consolidado de aseguramiento de calidad v4.8
     ├── INTERNO_Evidencia_Tecnica.md                  <- Expediente confidencial de trazabilidad técnica
     └── (Informes oficiales consolidados 33 a 59 por fase y épica)
 ```

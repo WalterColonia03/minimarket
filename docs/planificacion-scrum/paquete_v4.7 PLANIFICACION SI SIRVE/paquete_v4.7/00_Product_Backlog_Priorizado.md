@@ -23,7 +23,7 @@ El 100 % de las 72 historias de usuario planificadas ha sido evaluado bajo los c
 | **Valuable (Valiosa)** | Conforme | Cada historia está formulada desde la perspectiva de un rol específico del minimarket con un beneficio comercial claro y medible, trazando de forma directa a uno de los 5 objetivos estratégicos del negocio (OBJ-01 a OBJ-05). |
 | **Estimable (Estimable)** | Conforme | La totalidad de las historias se encuentra estimada en puntos de historia utilizando la escala Fibonacci, tomando como referencia calibrada la historia pivote oficial `HU-CAT-01` = 1 pt = 2.0 h-hombre. |
 | **Small (Pequeña)** | Conforme | El 93.1 % del backlog (67 de 72 historias) posee un tamaño ≤ 5 pts. Las 5 historias complejas (≥ 8 pts) cuentan con análisis de cohesión funcional y estrategias de mitigación. Para `HU-VEN-01` (13 pts) se incorpora una nota metodológica de descomposición opcional. |
-| **Testable (Comprobable)** | Conforme | Cada historia dispone de al menos dos criterios de aceptación verificables en la experiencia del usuario y en la persistencia confiable de los registros, complementados por verificación independiente (`Construye ≠ Verifica`). Cada historia con pantalla incluye su criterio de interfaz (CA-UI) trazado al Anexo B. |
+| **Testable (Comprobable)** | Conforme | Cada historia dispone de pruebas automatizadas planificadas (paso 6 del desglose de tareas para lógica de dominio y validaciones) y al menos dos criterios de aceptación verificables en formato *Dado que / Cuando / Entonces*, complementados por la verificación funcional independiente de interfaz (`Construye ≠ Verifica`). Cada historia con pantalla incluye su criterio de interfaz (CA-UI) trazado al Anexo B. |
 
 ### Gestión y Mitigación de Historias Complejas (≥ 8 pts)
 

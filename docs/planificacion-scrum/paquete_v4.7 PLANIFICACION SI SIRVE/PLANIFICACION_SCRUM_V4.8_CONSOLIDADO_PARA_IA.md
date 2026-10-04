@@ -3,6 +3,7 @@
 > **Propósito de este archivo:** Documento unificado preparado para análisis integral por Inteligencia Artificial (Claude, ChatGPT, etc.).
 > **Versión:** 4.8 Definitiva Oficial · 0 términos prohibidos · Perspectiva a priori formal.
 > **Parámetros Inmutables:** 72 HUs activas (251 pts) · 3 Sprints (240 h/sprint) · 363 tareas (502 h) · Presupuesto S/ 22,500.00.
+> **Estrategia de Calidad y DoD:** Pruebas automatizadas aprobadas (paso 6) + verificación funcional independiente (Construye ≠ Verifica).
 
 ---
 
@@ -285,9 +286,10 @@ Un incremento de historia de usuario se considera terminado y potencialmente ope
 1. La funcionalidad puede operarse íntegramente en el navegador web conforme al flujo de negocio planificado, sin interrupciones visuales ni bloqueos durante la experiencia de usuario.
 2. Los registros ingresados o modificados se guardan de forma permanente, reflejándose de manera exacta al navegar entre pantallas, cambiar de módulo o recargar la vista.
 3. El control de seguridad restringe el acceso validando estrictamente que solo los colaboradores con los roles autorizados puedan ingresar a la pantalla y operar sus funciones.
-4. Se certificó el cumplimiento manual e independiente del 100 % de los criterios de aceptación bajo la regla obligatoria `Construye ≠ Verifica`.
-5. La interfaz cumple al 100 % la especificación de campos, textos de ayuda, etiquetas, alertas de color y estados vacíos documentados en el Anexo B (DOC-ANEXO-B), sin elementos visibles indocumentados.
-6. Se ejecutaron favorablemente las pruebas de verificación planificadas, los defectos identificados fueron subsanados y el incremento se encuentra disponible en el entorno web oficial para la demostración en la Sprint Review.
+4. Se ejecutan y aprueban favorablemente las pruebas automatizadas planificadas (pruebas unitarias y de integración sobre la lógica de negocio, validaciones fiscales, control de caja y consumo FEFO correspondientes al paso 6 del desglose de tareas) sin fallos pendientes.
+5. Se certificó la verificación funcional e independiente del 100 % de los criterios de aceptación en la interfaz web bajo la regla obligatoria `Construye ≠ Verifica` (el desarrollador asignado al rol de Verificador QA ejecuta la validación cruzada).
+6. La interfaz cumple al 100 % la especificación de campos, textos de ayuda, etiquetas, alertas de color y estados vacíos documentados en el Anexo B (DOC-ANEXO-B), sin elementos visibles indocumentados.
+7. Los defectos identificados durante la verificación fueron subsanados y el incremento integrado se encuentra disponible en el entorno web oficial para la demostración en la Sprint Review.
 
 ## Ceremonias Scrum y Cómputo de Capacidad
 
@@ -336,7 +338,7 @@ El 100 % de las 72 historias de usuario planificadas ha sido evaluado bajo los c
 | **Valuable (Valiosa)** | Conforme | Cada historia está formulada desde la perspectiva de un rol específico del minimarket con un beneficio comercial claro y medible, trazando de forma directa a uno de los 5 objetivos estratégicos del negocio (OBJ-01 a OBJ-05). |
 | **Estimable (Estimable)** | Conforme | La totalidad de las historias se encuentra estimada en puntos de historia utilizando la escala Fibonacci, tomando como referencia calibrada la historia pivote oficial `HU-CAT-01` = 1 pt = 2.0 h-hombre. |
 | **Small (Pequeña)** | Conforme | El 93.1 % del backlog (67 de 72 historias) posee un tamaño ≤ 5 pts. Las 5 historias complejas (≥ 8 pts) cuentan con análisis de cohesión funcional y estrategias de mitigación. Para `HU-VEN-01` (13 pts) se incorpora una nota metodológica de descomposición opcional. |
-| **Testable (Comprobable)** | Conforme | Cada historia dispone de al menos dos criterios de aceptación verificables en la experiencia del usuario y en la persistencia confiable de los registros, complementados por verificación independiente (`Construye ≠ Verifica`). Cada historia con pantalla incluye su criterio de interfaz (CA-UI) trazado al Anexo B. |
+| **Testable (Comprobable)** | Conforme | Cada historia dispone de pruebas automatizadas planificadas (paso 6 del desglose de tareas para lógica de dominio y validaciones) y al menos dos criterios de aceptación verificables en formato *Dado que / Cuando / Entonces*, complementados por la verificación funcional independiente de interfaz (`Construye ≠ Verifica`). Cada historia con pantalla incluye su criterio de interfaz (CA-UI) trazado al Anexo B. |
 
 ### Gestión y Mitigación de Historias Complejas (≥ 8 pts)
 
@@ -1114,7 +1116,7 @@ Los siguientes recorridos describen el flujo de interacción de los colaboradore
 - **Cierre Forzado de Sesión:** Acción administrativa ejecutada con carácter privativo por el SuperAdmin para revocar el acceso de una cuenta de usuario que se mantiene conectada en una estación remota.
 - **Cierre Forzado de Turno de Caja:** Acción de supervisión realizada por el Administrador o Gerente para concluir y liquidar formalmente un turno de caja que quedó abierto o en abandono por parte del vendedor responsable.
 - **Costo Promedio Ponderado:** Método de valorización de inventarios que promedia el costo de adquisición de las existencias actuales con el costo de las nuevas compras, determinando el costo unitario oficial de cada producto.
-- **Cuadre de Caja:** Balance financiero final de un turno que compara el saldo declarado por el cajero en su arqueo contra las ventas, cobranzas y egresos registrados en el sistema, reportando si la caja cuadró o si presenta faltante o sobrante.
+- **Cuadre de Caja:** Balance financiero final de un turno que compara el saldo declarado por el vendedor en su arqueo contra las ventas, cobranzas y egresos registrados en el sistema, reportando si la caja cuadró o si presenta faltante o sobrante.
 - **DNI (Documento Nacional de Identidad):** Documento oficial de 8 dígitos numéricos expedido por el RENIEC para la identificación personal de los ciudadanos en el territorio peruano.
 - **Épica:** Agrupador de alto nivel en la metodología ágil que consolida un conjunto de historias de usuario orientadas a cumplir un objetivo estratégico del negocio.
 - **Factura:** Comprobante fiscal emitido a personas jurídicas o personas naturales con negocio registradas ante SUNAT, identificadas con RUC, detallando el valor de venta y el desglose del Impuesto General a las Ventas (IGV).
@@ -1138,6 +1140,11 @@ Los siguientes recorridos describen el flujo de interacción de los colaboradore
 - **SUNAT:** Superintendencia Nacional de Aduanas y de Administración Tributaria. Ente regulador de la tributación interna y las normas de emisión de comprobantes de pago en el Perú.
 - **Terminal IziPay (Cobro Digital):** Dispositivo físico de punto de venta que procesa cobros electrónicos y pagos mediante billeteras móviles (Yape/Plin (IziPay)), generando un código de autorización de 6 dígitos numéricos.
 - **Turno de Caja:** Periodo de trabajo delimitado en el que un vendedor opera un punto de cobro, desde la apertura con fondo inicial hasta el arqueo y cierre respectivo.
+- **Vendedor (Cajero):** Rol operativo del personal de mostrador responsable de la atención al público en el Punto de Venta (POS), la apertura y arqueo de su turno de caja, el cobro en efectivo o pasarela digital y la emisión de comprobantes fiscales.
+- **Almacenero:** Rol logístico asignado a la recepción física de mercadería (entradas con lotes y vencimientos), registro de bajas justificadas por merma, ejecución de ajustes por conteo físico y generación de solicitudes de reposición.
+- **Administrador:** Rol de gestión comercial y supervisión que administra los catálogos de productos, proveedores y clientes, supervisa y aprueba cierres de caja, autoriza anulaciones de venta y configura los parámetros del negocio.
+- **Gerente:** Rol directivo enfocado en la toma de decisiones basada en datos, consulta de tableros de control y analítica de ventas, y aprobación o rechazo de solicitudes de reposición de mercadería.
+- **SuperAdmin:** Rol con el máximo privilegio de seguridad, facultado privativamente para la creación, modificación, desactivación y cierre forzado de sesión remota de cuentas de usuarios del sistema.
 
 ---
 

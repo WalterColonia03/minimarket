@@ -1195,8 +1195,8 @@ para coordinar formalmente las compras con los proveedores sin generar entradas 
 **Historias del plan que utilizan esta pantalla:** HU-VEN-01, HU-VEN-02, HU-VEN-04, HU-VEN-07, HU-CLI-02  
 
 **Propósito de la pantalla:**  
-Como Cajero o Administrador,  
-quiero operar una terminal de ventas rápida con escáner de código de barras, selección de comprobantes con validación RENIEC/SUNAT y registro de pagos en efectivo o Yape/Plin (IziPay)/IziPay,  
+Como Vendedor o Administrador,  
+quiero operar una terminal de ventas rápida con escáner de código de barras, selección de comprobantes con validación RENIEC/SUNAT y registro de pagos en efectivo o Yape/Plin (IziPay),  
 para registrar transacciones de clientes asegurando la integridad del stock y la caja.
 
 #### Criterios de Aceptación (CA) - Interfaz y Comportamiento Visual:
@@ -1445,7 +1445,7 @@ Escenario: Reenvío de comprobante por correo electrónico
 **Historias del plan que utilizan esta pantalla:** HU-CAJA-01, HU-CAJA-02, HU-CAJA-03, HU-CAJA-04, HU-CAJA-06  
 
 **Propósito de la pantalla:**  
-Como Cajero,  
+Como Vendedor,  
 quiero abrir mi turno de caja con un fondo inicial mínimo, registrar ingresos y egresos manuales de efectivo y cerrar el turno contando el dinero físico,  
 para asegurar que la gaveta cuente con cambio suficiente para vueltos y conciliar las diferencias entre lo esperado y lo real.
 

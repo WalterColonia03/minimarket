@@ -54,9 +54,10 @@ Un incremento de historia de usuario se considera terminado y potencialmente ope
 1. La funcionalidad puede operarse íntegramente en el navegador web conforme al flujo de negocio planificado, sin interrupciones visuales ni bloqueos durante la experiencia de usuario.
 2. Los registros ingresados o modificados se guardan de forma permanente, reflejándose de manera exacta al navegar entre pantallas, cambiar de módulo o recargar la vista.
 3. El control de seguridad restringe el acceso validando estrictamente que solo los colaboradores con los roles autorizados puedan ingresar a la pantalla y operar sus funciones.
-4. Se certificó el cumplimiento manual e independiente del 100 % de los criterios de aceptación bajo la regla obligatoria `Construye ≠ Verifica`.
-5. La interfaz cumple al 100 % la especificación de campos, textos de ayuda, etiquetas, alertas de color y estados vacíos documentados en el Anexo B (DOC-ANEXO-B), sin elementos visibles indocumentados.
-6. Se ejecutaron favorablemente las pruebas de verificación planificadas, los defectos identificados fueron subsanados y el incremento se encuentra disponible en el entorno web oficial para la demostración en la Sprint Review.
+4. Se ejecutan y aprueban favorablemente las pruebas automatizadas planificadas (pruebas unitarias y de integración sobre la lógica de negocio, validaciones fiscales, control de caja y consumo FEFO correspondientes al paso 6 del desglose de tareas) sin fallos pendientes.
+5. Se certificó la verificación funcional e independiente del 100 % de los criterios de aceptación en la interfaz web bajo la regla obligatoria `Construye ≠ Verifica` (el desarrollador asignado al rol de Verificador QA ejecuta la validación cruzada).
+6. La interfaz cumple al 100 % la especificación de campos, textos de ayuda, etiquetas, alertas de color y estados vacíos documentados en el Anexo B (DOC-ANEXO-B), sin elementos visibles indocumentados.
+7. Los defectos identificados durante la verificación fueron subsanados y el incremento integrado se encuentra disponible en el entorno web oficial para la demostración en la Sprint Review.
 
 ## Ceremonias Scrum y Cómputo de Capacidad
 
