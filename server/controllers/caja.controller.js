@@ -93,14 +93,21 @@ const aplicarCierre = (turno, { monto_contado_efectivo, monto_contado_yape, obse
 
   const { monto_esperado_efectivo, monto_esperado_yape } = calcularEsperados(turno.movimientos);
 
+  const diferenciaEfectivo = parseFloat((efectivoNum - monto_esperado_efectivo).toFixed(2));
+  const diferenciaYape = parseFloat((yapeNum     - monto_esperado_yape).toFixed(2));
+
+  if ((diferenciaEfectivo !== 0 || diferenciaYape !== 0) && (!observaciones || !String(observaciones).trim())) {
+    return 'Tolerancia cero en descuadres: cualquier discrepancia requiere justificación obligatoria en las observaciones';
+  }
+
   turno.estado                  = 'Cerrado';
   turno.fecha_cierre            = new Date();
   turno.monto_esperado_efectivo = monto_esperado_efectivo;
   turno.monto_esperado_yape     = monto_esperado_yape;
   turno.monto_contado_efectivo  = efectivoNum;
   turno.monto_contado_yape      = yapeNum;
-  turno.diferencia_efectivo     = parseFloat((efectivoNum - monto_esperado_efectivo).toFixed(2));
-  turno.diferencia_yape         = parseFloat((yapeNum     - monto_esperado_yape).toFixed(2));
+  turno.diferencia_efectivo     = diferenciaEfectivo;
+  turno.diferencia_yape         = diferenciaYape;
   turno.observaciones           = observaciones || null;
 
   return null;

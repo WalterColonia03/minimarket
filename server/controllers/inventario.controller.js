@@ -330,6 +330,10 @@ const registrarAjuste = async (req, res) => {
         throw { status: 400, mensaje: 'El conteo coincide con el stock del sistema; no se requiere ajuste' };
       }
 
+      if (!observaciones || !String(observaciones).trim()) {
+        throw { status: 400, mensaje: 'Debe ingresar una justificación para el ajuste' };
+      }
+
       // Un ajuste positivo crea un lote nuevo (ver crearLote más abajo), así
       // que si el producto maneja vencimiento necesita la misma fecha que
       // cualquier otro lote — de lo contrario quedaba un lote "fantasma" que

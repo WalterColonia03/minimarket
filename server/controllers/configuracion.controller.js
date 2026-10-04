@@ -1,4 +1,5 @@
 const { Configuracion } = require('../models');
+const { consultarRucSunat } = require('../services/consulta.service');
 
 const DEFAULTS = {
   nombre_empresa: 'EMPRESA DE PRUEBA',
@@ -34,6 +35,19 @@ const actualizar = async (req, res) => {
     // Solo RUC de persona jurídica (empieza en "20"): estos son los datos del
     // negocio, no de una persona natural (RUC "10"), así que "10..." se rechaza.
     if (!/^20\d{9}$/.test(ruc)) return res.status(400).json({ mensaje: 'El RUC debe tener 11 dígitos y empezar con 20 (persona jurídica)' });
+
+    try {
+      const datosRuc = await consultarRucSunat(ruc);
+      if (datosRuc.estado && datosRuc.estado.toUpperCase() !== 'ACTIVO') {
+        return res.status(400).json({ mensaje: `El RUC está dado de baja en SUNAT (estado: ${datosRuc.estado})` });
+      }
+      if (datosRuc.condicion && datosRuc.condicion.toUpperCase() !== 'HABIDO') {
+        return res.status(400).json({ mensaje: `El RUC no está HABIDO en SUNAT (condición: ${datosRuc.condicion})` });
+      }
+    } catch (err) {
+      return res.status(err.status || 502).json({ mensaje: err.mensaje || 'No se pudo verificar el RUC con SUNAT' });
+    }
+
     if (!direccion?.trim()) return res.status(400).json({ mensaje: 'La dirección es requerida' });
     if (!telefono?.trim()) return res.status(400).json({ mensaje: 'El teléfono es requerido' });
     if (!TELEFONO_REGEX.test(telefono.trim())) {

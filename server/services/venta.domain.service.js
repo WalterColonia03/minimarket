@@ -58,6 +58,10 @@ const RegistrarVentaUseCase = async (usuarioId, datosVenta) => {
     monto_total_prev += parseFloat(item.cantidad * producto.precio);
   }
 
+  if ((tipo_comprobante || 'Boleta') === 'Boleta' && !cliente_dni && monto_total_prev > 700) {
+    throw { status: 400, mensaje: 'Para boletas mayores a S/ 700.00 es obligatorio ingresar el DNI del cliente' };
+  }
+
   if (metodo_pago === 'Efectivo') {
     const montoRecibidoNum = parseFloat(monto_recibido);
     if (!Number.isFinite(montoRecibidoNum) || montoRecibidoNum < 0 || montoRecibidoNum > 999999.99) {
@@ -219,8 +223,8 @@ const AnularVentaUseCase = async (usuarioId, ventaId, motivo, decisiones) => {
     if (!decision) {
       throw { status: 400, mensaje: `Falta indicar si el producto de la línea #${detalle.id} vuelve a stock` };
     }
-    if (decision.reponer_stock === false && !MOTIVOS_PERDIDA_DEVOLUCION.includes(decision.motivo_perdida)) {
-      throw { status: 400, mensaje: 'El motivo de la pérdida no es válido para un producto que no vuelve a stock' };
+    if (decision.reponer_stock === false && !['Dañado', 'Vencido'].includes(decision.motivo_perdida)) {
+      throw { status: 400, mensaje: 'El motivo de la pérdida en devolución solo puede ser Dañado o Vencido' };
     }
   }
 

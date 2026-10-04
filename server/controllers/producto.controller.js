@@ -212,11 +212,12 @@ const crear = async (req, res) => {
       return res.status(400).json({ mensaje: 'Ya existe un producto con ese nombre y marca' });
     }
 
-    if (codigo_barras) {
-      const existe = await Producto.findOne({ where: { codigo_barras } });
-      if (existe) {
-        return res.status(400).json({ mensaje: 'El código de barras ya está registrado en otro producto' });
-      }
+    if (!codigo_barras || !codigo_barras.trim()) {
+      return res.status(400).json({ mensaje: 'El código de barras es requerido' });
+    }
+    const existe = await Producto.findOne({ where: { codigo_barras } });
+    if (existe) {
+      return res.status(400).json({ mensaje: 'El código de barras ya está registrado en otro producto' });
     }
 
     // Verificar que la categoría exista
@@ -283,6 +284,9 @@ const actualizar = async (req, res) => {
     }
 
     if (codigo_barras !== undefined) {
+      if (!codigo_barras || !codigo_barras.trim()) {
+        return res.status(400).json({ mensaje: 'El código de barras es requerido' });
+      }
       const existe = await Producto.findOne({ where: { codigo_barras, id: { [Op.ne]: producto.id } } });
       if (existe) {
         return res.status(400).json({ mensaje: 'El código de barras ya está registrado en otro producto' });

@@ -8,7 +8,7 @@ const {
   presentarMargenProducto,
   presentarMerma,
 } = require('../presenters/reporte.presenter');
-const { inicioDiaPeru, finDiaPeruExclusivo } = require('../utils/fechas');
+const { inicioDiaPeru, finDiaPeruExclusivo, hoyPeru } = require('../utils/fechas');
 
 // Mismo chequeo que ya hace venta.controller.js (listar) — antes acá un
 // rango invertido no explotaba pero devolvía silenciosamente un resultado
@@ -21,10 +21,15 @@ const validarRangoFecha = (fecha_inicio, fecha_hasta) => {
 };
 
 const armarWhereFecha = (req) => {
-  const { fecha_inicio, fecha_hasta } = req.query;
+  let { fecha_inicio, fecha_hasta } = req.query;
   const errorRango = validarRangoFecha(fecha_inicio, fecha_hasta);
   if (errorRango) throw { status: 400, mensaje: errorRango };
-  if (!fecha_inicio && !fecha_hasta) return {};
+  if (!fecha_inicio && !fecha_hasta) {
+    const hoyStr = hoyPeru();
+    const [y, m, d] = hoyStr.split('-');
+    fecha_inicio = `${parseInt(y) - 10}-${m}-${d}`;
+    fecha_hasta = hoyStr;
+  }
 
   if (fecha_inicio && fecha_hasta) {
     return { createdAt: { [Op.between]: [inicioDiaPeru(fecha_inicio), finDiaPeruExclusivo(fecha_hasta)] } };
@@ -81,7 +86,7 @@ const productosTop = async (req, res) => {
         ventaInclude,
       ],
       group: ['DetalleVenta.producto_id', 'producto.id', 'producto.nombre', 'producto.marca'],
-      order: [[sequelize.literal('total_vendido'), 'DESC']],
+      order: [[sequelize.literal('total_vendido'), 'DESC'], [sequelize.literal('ingreso_total'), 'DESC']],
       limit: parseInt(limite) || 10,
     });
 
@@ -217,9 +222,16 @@ const resumenInventario = async (req, res) => {
 
 const margenProductos = async (req, res) => {
   try {
-    const { fecha_inicio, fecha_hasta } = req.query;
+    let { fecha_inicio, fecha_hasta } = req.query;
     const errorRango = validarRangoFecha(fecha_inicio, fecha_hasta);
     if (errorRango) return res.status(400).json({ mensaje: errorRango });
+
+    if (!fecha_inicio && !fecha_hasta) {
+      const hoyStr = hoyPeru();
+      const [y, m, d] = hoyStr.split('-');
+      fecha_inicio = `${parseInt(y) - 10}-${m}-${d}`;
+      fecha_hasta = hoyStr;
+    }
 
     let condicionFecha = '';
     const reemplazos = {};
@@ -272,9 +284,16 @@ const margenProductos = async (req, res) => {
 
 const mermasPorMotivo = async (req, res) => {
   try {
-    const { fecha_inicio, fecha_hasta } = req.query;
+    let { fecha_inicio, fecha_hasta } = req.query;
     const errorRango = validarRangoFecha(fecha_inicio, fecha_hasta);
     if (errorRango) return res.status(400).json({ mensaje: errorRango });
+
+    if (!fecha_inicio && !fecha_hasta) {
+      const hoyStr = hoyPeru();
+      const [y, m, d] = hoyStr.split('-');
+      fecha_inicio = `${parseInt(y) - 10}-${m}-${d}`;
+      fecha_hasta = hoyStr;
+    }
 
     let condicionFecha = '';
     const reemplazos = {};

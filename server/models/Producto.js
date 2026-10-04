@@ -54,7 +54,7 @@ const Producto = sequelize.define('Producto', {
   codigo_barras: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: true,
+    allowNull: false,
   },
   activo: {
     type: DataTypes.BOOLEAN,
