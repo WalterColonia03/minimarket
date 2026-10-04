@@ -100,7 +100,7 @@ Las 5 historias con estimación igual o superior a 8 puntos de historia fueron a
 | 40 | HU-CAJA-04 | Caja – Ver resumen del turno activo | EPIC-VEN | Should have (3) | 2 | REL-2 | SPR-2 | HU-CAJA-01 |
 | 41 | HU-CAJA-06 | Caja – Aprobar cierre de turno | EPIC-VEN | Should have (3) | 2 | REL-2 | SPR-2 | HU-CAJA-02 |
 | 42 | HU-CAJA-07 | Caja – Forzar cierre de turno ajeno | EPIC-VEN | Should have (3) | 5 | REL-2 | SPR-2 | HU-CAJA-01 |
-| 43 | HU-VEN-07 | Ventas (POS) – Confirmar el código de autorización del pago digital | EPIC-VEN | Should have (3) | 2 | REL-2 | SPR-2 | HU-VEN-01 |
+| 43 | HU-VEN-07 | Ventas (POS) – Verificar recepción de pago Yape/Plin (IziPay) | EPIC-VEN | Should have (3) | 2 | REL-2 | SPR-2 | HU-VEN-01 |
 | 44 | HU-SOL-04 | Reposición – Rechazar solicitud de reposición | EPIC-INV | Should have (3) | 2 | REL-2 | SPR-2 | HU-SOL-01 |
 | 45 | HU-PROV-04 | Proveedores – Desactivar o reactivar proveedor | EPIC-CAT | Should have (3) | 2 | REL-2 | SPR-2 | HU-PROV-02 |
 | 46 | HU-AUTH-06 | Autenticación – Cambiar contraseña propia | EPIC-SEG | Should have (3) | 3 | REL-3 | SPR-3 | HU-AUTH-01 |

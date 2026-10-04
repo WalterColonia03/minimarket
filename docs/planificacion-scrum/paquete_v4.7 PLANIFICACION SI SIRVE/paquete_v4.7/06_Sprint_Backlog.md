@@ -80,26 +80,28 @@ El Sprint Backlog desagrega el Product Backlog del "Sistema de Gestión Integral
 | 2 | TAR-HU-VEN-01-04 · Desarrollar interfaces | Des.3 | 3.75 | 1.00 | 4.75 | 0.00 |
 | 3 | TAR-HU-VEN-01-05 · Codificar | Des.3 | 7.50 | 4.75 | 12.25 | 0.00 |
 | 4 | TAR-HU-VEN-01-07 · Depuración | Des.3 | 3.75 | 12.25 | 16.00 | 0.00 |
-| 5 | TAR-HU-VEN-01-08 · Desplegar en la web | Des.4 | 3.75 | 16.00 | 19.75 | 0.00 |
-| 6 | TAR-HU-VEN-02-08 · Desplegar en la web | Des.5 | 2.25 | 19.75 | 22.00 | 0.00 |
+| 5 | TAR-HU-VEN-01-08 · Verificación funcional y pase web | Des.4 | 3.75 | 16.00 | 19.75 | 0.00 |
+| 6 | TAR-HU-VEN-02-08 · Verificación funcional y pase web | Des.5 | 2.25 | 19.75 | 22.00 | 0.00 |
 | | **Total camino crítico lógico** | | **22.00** | | | |
 
-Tareas casi críticas: TAR-HU-VEN-01-06 · Probar de unidad (Des.4, 7.25 h, holgura 0.25 h) y TAR-HU-VEN-05-08 · Desplegar en la web (Des.4, 1.50 h, holgura 0.75 h).
+Tareas casi críticas: TAR-HU-VEN-01-06 · Pruebas de unidad e integración (Des.4, 7.25 h, holgura 0.25 h) y TAR-HU-VEN-05-08 · Verificación funcional y pase web (Des.4, 1.50 h, holgura 0.75 h).
 
 *Variante conservadora (si pruebas no se solapan con codificación, paso 6 tras paso 5):* **29.25 h** = AUTH-01-01 (1.00) + VEN-01-04 (3.75) + VEN-01-05 (7.50) + VEN-01-06 (7.25) + VEN-01-07 (3.75) + VEN-01-08 (3.75) + VEN-02-08 (2.25). Los pasos 4 al 8 de HU-VEN-01 suman 26.00 h; los 29.25 h incluyen además AUTH-01-01 y VEN-02-08.
 
-#### 3. Carga individual en el Sprint 1 (horas de tareas ÷ 4 h efectivas/día)
+#### 3. Carga individual en el Sprint 1 y Traspaso al Día 9
+Del Día 1 al Día 8 cada desarrollador dispone de **29.00 h de desarrollo efectivo** (1.0 h en el Día 1 tras 4.0 h de Sprint Planning, y 4.0 h netas diarias en los 7 días restantes). La carga de tareas de cada integrante y su distribución efectiva se detalla a continuación:
 
-| Developer | Horas S1 | Días efectivos necesarios | % de los 8 días planificados antes del colchón |
-|---|---:|---:|---:|
-| Des.1 Velasquez | 28.50 | 7.12 | 89.1 % |
-| Des.2 Nolasco | 30.25 | 7.56 | 94.5 % |
-| Des.3 Castillo | 30.75 | 7.69 | 96.1 % |
-| Des.4 Alcalde | 26.25 | 6.56 | 82.0 % |
-| Des.5 Colonia | 31.25 | 7.81 | 97.7 % |
-| Des.6 Angeles | 31.00 | 7.75 | 96.9 % |
+| Developer | Horas S1 | Horas ejecutadas D1–D8 | Horas residuales Día 9 | % Capacidad D1–D8 (de 29.0 h) | Estado al cierre Día 8 |
+|---|---:|---:|---:|---:|---|
+| Des.1 Velasquez | 28.50 | 28.50 | 0.00 | 98.3 % | Completado (0.50 h holgura) |
+| Des.2 Nolasco | 30.25 | 29.00 | 1.25 | 100.0 % | Pasa 1.25 h a lun 12-oct |
+| Des.3 Castillo | 30.75 | 29.00 | 1.75 | 100.0 % | Pasa 1.75 h a lun 12-oct |
+| Des.4 Alcalde (QA) | 26.25 | 26.25 | 0.00 | 90.5 % | Completado (2.75 h holgura) |
+| Des.5 Colonia | 31.25 | 29.00 | 2.25 | 100.0 % | Pasa 2.25 h a lun 12-oct |
+| Des.6 Angeles | 31.00 | 29.00 | 2.00 | 100.0 % | Pasa 2.00 h a lun 12-oct |
+| **TOTALES** | **178.00** | **170.75** | **7.25** | **95.9 %** | **Cierre en Día 9 (mañana)** |
 
-Hallazgo: Aunque el sprint usa el 74.2 % de la capacidad agregada (178 h de 240 h), Des.2, Des.3, Des.5 y Des.6 requieren entre 7.6 y 7.8 de los 8 días previos al colchón. Las dependencias secuenciales desplazan el cierre al día 9.
+*Hallazgo de balanceo individual:* Des.1 y Des.4 completan el 100 % de su trabajo en el Día 8 disponiendo de holgura. Des.2, Des.3, Des.5 y Des.6 trasladan exactamente **7.25 horas residuales** a la mañana del lunes 12 de octubre (Día 9), cerrando todas las tareas periféricas antes del mediodía y dejando el resto del día y el Día 10 íntegros como colchón de ensayo para la Sprint Review.
 
 #### 4. Cronograma por developer y día (asignaciones inmutables de DOC-PLAN-07)
 Cada celda indica HU y pasos de la plantilla (p. ej. VEN-01·4,5 = pasos 4 y 5 de HU-VEN-01). Días 9 (parcial) y 10 son colchón/regresión/ensayo; el día 10 (martes 13-oct) es la presentación en clase.
@@ -110,7 +112,7 @@ Cada celda indica HU y pasos de la plantilla (p. ej. VEN-01·4,5 = pasos 4 y 5 d
 | Des.2 Nolasco | PROD-02·4<br>CAJA-01·4 | AUTH-01·6<br>PROD-02·5 | PROD-02·5<br>CAJA-01·5<br>AUTH-01·8 | AUTH-01·8<br>PROD-02·7<br>CAJA-01·7<br>USR-02·4 | USR-02·4,5<br>INV-02·4 | USR-02·5<br>INV-02·5 | CLI-02·4,5<br>USR-02·7 | INV-02·7<br>CLI-02·7<br>CAT-01·6 | CAT-01·8 | — |
 | Des.3 Castillo | VEN-01·4 | VEN-01·4,5 | VEN-01·5 | VEN-01·5,7<br>CAT-02·6 | VEN-01·7<br>CAT-02·8<br>INV-03·4,5 | INV-03·5<br>CONF-02·4,5 | CONF-02·5<br>AUTH-03·4<br>CLI-02·6<br>INV-03·7 | AUTH-03·5,7<br>CONF-02·7<br>CLI-02·8 | — | — |
 | Des.4 Alcalde | — | VEN-01·6 | VEN-01·6 | CAJA-05·6<br>CAJA-02·6 | CAJA-02·6<br>USR-02·6 | USR-02·6<br>VEN-01·8 | VEN-01·8<br>USR-02·6<br>VEN-05·6<br>CAJA-02·8 | CAJA-02·8<br>USR-02·8<br>VEN-05·8<br>CAJA-05·8 | CAJA-05·8 | — |
-| Des.5 Colonia | AUTH-01·1,2,3,4 | AUTH-01·5<br>CAJA-01·6 | CAJA-01·6<br>AUTH-01·7<br>PROV-02·6<br>VEN-02·6 | VEN-02·6<br>PROV-02·8 | PROV-02·8<br>CAJA-01·8<br>VEN-05·4,5 | VEN-05·5<br>PROD-01·4,5 | PROD-01·5<br>AUTH-03·6<br>VEN-02·8<br>VEN-05·7 | VEN-05·7<br>VEN-02·8<br>PROD-01·7<br>AUTH-03·8 | — | — |
+| Des.5 Colonia | AUTH-01·1 | AUTH-01·5<br>CAJA-01·6 | CAJA-01·6<br>AUTH-01·7<br>PROV-02·6<br>VEN-02·6 | VEN-02·6<br>PROV-02·8 | PROV-02·8<br>CAJA-01·8<br>VEN-05·4,5 | VEN-05·5<br>PROD-01·4,5 | PROD-01·5<br>AUTH-03·6<br>VEN-02·8<br>VEN-05·7 | VEN-05·7<br>VEN-02·8<br>PROD-01·7<br>AUTH-03·8 | — | — |
 | Des.6 Angeles | CAT-02·4<br>PROV-02·4<br>PROD-02·6 | PROD-02·6<br>PROV-02·4<br>INV-01·6 | INV-01·6<br>CAT-02·5<br>PROV-02·5,7<br>CAJA-05·4 | PROV-02·7<br>CAJA-05·4,5<br>CAT-02·7<br>CAT-01·4,5 | PROD-02·8<br>INV-01·8 | INV-01·8<br>INV-03·6<br>AUTH-02·6 | AUTH-02·6<br>CONF-02·6<br>PROD-01·6<br>CAJA-05·7 | CAJA-05·7<br>INV-03·8<br>AUTH-02·8<br>CONF-02·8 | CONF-02·8<br>PROD-01·8<br>CAT-01·7 | — |
 
 #### 5. Burndown diario planificado
@@ -124,11 +126,11 @@ Cada celda indica HU y pasos de la plantilla (p. ej. VEN-01·4,5 = pasos 4 y 5 d
 | 5 | lun 05-oct | 6 | 24.00 | 76.00 | 5 | 20 | 69 |
 | 6 | mar 06-oct | 6 | 24.00 | 52.00 | 6 | 25 | 64 |
 | 7 | mié 07-oct | 6 | 24.00 | 28.00 | 7 | 38 | 51 |
-| 8 | vie 09-oct | 6 | 24.00 | 4.00 | 16 | 79 | 10 |
-| 9 | lun 12-oct | 7 | 4.00 | 0.00 | 20 | 89 | 0 |
+| 8 | vie 09-oct | 6 | 20.75 | 7.25 | 16 | 79 | 10 |
+| 9 | lun 12-oct | 7 | 7.25 | 0.00 | 20 | 89 | 0 |
 | 10 | mar 13-oct | 7 | 0.00 | 0.00 | 20 | 89 | 0 |
 
-*Nota de cuadratura horaria:* En el Día 1 (miércoles 30 de septiembre), cada uno de los 6 desarrolladores dedica 4.0 horas a la ceremonia oficial de Sprint Planning y 1.0 hora neta a tareas técnicas de arranque y configuración (6.0 h en total para el equipo), respetando estrictamente la jornada máxima de 5.0 h brutas diarias por persona sin sobreasignación. Del Día 2 al Día 8 se ejecutan 24.0 h diarias (4.0 h netas de desarrollo por persona con 1.0 h de margen para Daily/holgura).
+*Nota de cuadratura horaria:* En el Día 1 (miércoles 30 de septiembre), los 6 desarrolladores dedican 4.0 h a la ceremonia de Sprint Planning y 1.0 h a tareas técnicas de arranque (6.0 h en total para el equipo), respetando la jornada máxima de 5.0 h brutas diarias por persona. En los Días 2 al 7 se ejecutan 24.0 h diarias (4.0 h netas por desarrollador). En el Día 8 se ejecutan 20.75 h porque Des.4 (26.25 h) y Des.1 (28.50 h) completan anticipadamente su carga planificada. Las 7.25 h residuales son concluidas en la mañana del Día 9 por Des.2 (1.25 h), Des.3 (1.75 h), Des.5 (2.25 h) y Des.6 (2.00 h), dejando 16.75 h de holgura ese día y el Día 10 íntegro para estabilización, ensayo y presentación en clase.
 
 #### 6. Cierre de HU
 
@@ -155,7 +157,7 @@ Cada celda indica HU y pasos de la plantilla (p. ej. VEN-01·4,5 = pasos 4 y 5 d
 | HU-PROD-01 | 9 | lun 12-oct | 3 |
 | HU-CAT-01 | 9 | lun 12-oct | 1 |
 
-**Resultado verificado:** HU-VEN-01 (13 pts, camino crítico) cierra el día 7 (mié 07-oct) y HU-VEN-02 el día 8 (vie 09-oct). El sprint cierra formalmente el **día 9 (lun 12-oct) con 4.00 h residuales** en HU periféricas (HU-CONF-02, HU-CAJA-05, HU-PROD-01, HU-CAT-01). El colchón preventivo abarca el resto del lunes 12-oct (20.0 h de holgura) y el martes 13-oct previo a la clase de presentación del MVP.
+**Resultado verificado:** HU-VEN-01 (13 pts, camino crítico) cierra el día 7 (mié 07-oct) y HU-VEN-02 el día 8 (vie 09-oct). El sprint cierra formalmente en la mañana del **día 9 (lun 12-oct) con 7.25 h residuales** en HU periféricas (HU-CONF-02, HU-CAJA-05, HU-PROD-01, HU-CAT-01). El colchón preventivo abarca el resto del lunes 12-oct (16.75 h de holgura) y el martes 13-oct previo a la clase de presentación del MVP.
 
 #### 7. Sensibilidad del cierre del Sprint 1 (simulación con restricciones de precedencias)
 Formato: día de cierre (horas efectivas usadas ese día). Escenarios: **base**; **mar 6-oct a media jornada** (clase); **VEN-01 +30 %** de sobre-esfuerzo.
@@ -170,7 +172,7 @@ Formato: día de cierre (horas efectivas usadas ese día). Escenarios: **base**;
 #### 8. Disparadores de control y Plan B de alcance
 - **Punto de control 1 — cierre del día 5 (lun 05-oct):** Horas restantes planificadas = 76.00 h. Si las horas restantes reales superan **86 h** (desvío ≥ 10 h), se activa el Plan B.
 - **Plan B:** Mover al Sprint 2 las HU periféricas sin dependientes en Sprint 1: HU-CAT-01 (1 pt), HU-PROD-01 (3 pts), HU-CAJA-05 (3 pts) y HU-VEN-05 (5 pts) = **12 pts / 24 h**. El MVP queda en 77 pts (16 HU, todas Must have) y el Sprint 2 en 102 pts (85 % de la V.E. = 120), dentro de la capacidad.
-- **Punto de control 2 — cierre del día 7 (mié 07-oct):** Horas restantes planificadas = 28.00 h. Si las reales superan **36 h**, el equipo detiene la apertura de historias nuevas y enfoca todo el esfuerzo en cerrar la cadena central de ventas (HU-VEN-01, HU-VEN-02) y sus prerrequisitos.
+- **Punto de control 2 — cierre del día 7 (mié 07-oct):** Horas restantes planificadas = 28.00 h. Si las reales superan **38 h** (desvío ≥ 10 h), el equipo detiene la apertura de historias nuevas y enfoca todo el esfuerzo en cerrar la cadena central de ventas (HU-VEN-01, HU-VEN-02) y sus prerrequisitos.
 
 #### 9. Supuestos del cronograma
 - Sábado 03-oct laborado como compensación del feriado nacional del jueves 08-oct.

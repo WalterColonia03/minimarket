@@ -26,7 +26,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Como** Vendedor o Administrador del minimarket,  
 **quiero** abrir formalmente mi turno de caja registrando el fondo monetario inicial (efectivo en gaveta),  
-**para** habilitar las operaciones de venta en el terminal de punto de venta (POS) y establecer la fondo inicial de caja en efectivo obligatoria para el arqueo y cuadre al cierre de jornada.
+**para** habilitar las operaciones de venta en el terminal de punto de venta (POS) y establecer el fondo inicial de caja en efectivo obligatoria para el arqueo y cuadre al cierre de jornada.
 
 **Justificación de prioridad:** Funcionalidad crítica indispensable para el producto mínimo viable (Must have); sin un turno abierto con fondo verificado, el sistema bloquea cualquier transacción comercial, impidiendo ventas sin trazabilidad financiera y garantizando la custodia del dinero físico.
 
@@ -39,8 +39,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - RN-10 (Fondo Mínimo de Apertura de Caja)
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (inicio de sesión del vendedor) y `HU-CONF-02` (parámetros de tienda).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (sesión activa del vendedor para apertura).
 
 ---
 
@@ -68,8 +68,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Decisiones de arquitectura y negocio:**
 - **Decisión formal D1/D5 adoptada:** Modalidad de arqueo con saldo esperado visible en pantalla para orientar al vendedor en la conciliación del efectivo y la liquidación digital IziPay antes de confirmar el cierre.
 
-**Dependencias:** 
-- Requiere `HU-CAJA-01` (existencia de un turno abierto).
+**Dependencias:**
+- Requiere `HU-CAJA-01` (turno abierto previamente para procesar el cierre).
 
 ---
 
@@ -95,8 +95,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 - RN-11 (Tope Máximo para Movimientos Manuales)
 - RN-15 (Medio Exclusivo de Arqueo Manual)
 
-**Dependencias:** 
-- Requiere `HU-CAJA-01` (turno activo en estado Abierto).
+**Dependencias:**
+- Requiere `HU-CAJA-01` (turno abierto para registrar movimientos en efectivo).
 
 ---
 
@@ -124,8 +124,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 - **Decisión formal D1 adoptada:** Modalidad de arqueo con saldo esperado visible en pantalla.
 - **Decisión formal D2 adoptada:** Tolerancia cero en descuadres; cualquier discrepancia entre el saldo esperado y el arqueado genera alerta visual obligatoria y requiere justificación formal para su posterior revisión administrativa en HU-CAJA-06.
 
-**Dependencias:** 
-- Requiere `HU-CAJA-01` (turno activo en estado Abierto).
+**Dependencias:**
+- Requiere `HU-CAJA-01` (turno activo para consultar resumen).
 
 ---
 
@@ -149,8 +149,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-CAJA-01` y `HU-CAJA-02` (generación de turnos y cierres en Sprint 1).
+**Dependencias:**
+- Requiere `HU-CAJA-02` (turnos cerrados previamente para historial).
 
 ---
 
@@ -184,8 +184,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 - RN-02 (Protección contra Pagos Duplicados Yape/Plin (IziPay))
 - RN-03 (Prohibición de Comercialización de Vencidos)
 
-**Dependencias:** 
-- Requiere `HU-CAJA-01` (turno de caja abierto), `HU-PROD-02` (catálogo de productos) y `HU-INV-01` (existencia de stock físico).
+**Dependencias:**
+- Requiere `HU-CAJA-01` y `HU-INV-01` (turno de caja abierto y stock disponible).
 
 ### HU-CAJA-06 · Caja – Aprobar cierre de turno
 
@@ -207,8 +207,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-CAJA-02` (cierre de turnos por los vendedores).
+**Dependencias:**
+- Requiere `HU-CAJA-02` (turno cerrado para aprobación administrativa).
 
 ---
 
@@ -233,8 +233,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-CAJA-01` (existencia de un turno de caja abierto).
+**Dependencias:**
+- Requiere `HU-CAJA-01` (turno abierto en abandono para forzar cierre).
 
 ---
 
@@ -259,8 +259,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **Reglas de negocio aplicables:** 
 - RN-13 (Numeración Oficial e Ininterrumpida)
 
-**Dependencias:** 
-- Requiere `HU-VEN-01` (cobro de la transacción de venta en POS).
+**Dependencias:**
+- Requiere `HU-VEN-01` (transacción de venta en mostrador para emitir comprobante).
 
 ---
 
@@ -285,8 +285,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **Reglas de negocio aplicables:** 
 - RN-07 (Privacidad y Segregación de Ventas)
 
-**Dependencias:** 
-- Requiere `HU-VEN-01` y `HU-VEN-02` (ventas registradas con comprobante emitido).
+**Dependencias:**
+- Requiere `HU-VEN-01` (ventas registradas para consulta de historial).
 
 ---
 
@@ -312,8 +312,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 - RN-08 (Límite Temporal para Anulaciones)
 - RN-09 (Destino Físico de Mercadería Devuelta)
 
-**Dependencias:** 
-- Requiere `HU-VEN-05` (localización de la venta en el historial), `HU-CAJA-01` (turno de caja abierto) y `HU-INV-02` (mecanismo de registro de bajas por merma).
+**Dependencias:**
+- Requiere `HU-VEN-01` (venta concretada para autorización de anulación).
 
 ### HU-VEN-07 · Ventas (POS) – Verificar recepción de pago Yape/Plin (IziPay)
 
@@ -336,8 +336,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **Reglas de negocio aplicables:** 
 - RN-02 (Protección contra Pagos Duplicados Yape/Plin (IziPay))
 
-**Dependencias:** 
-- Requiere `HU-VEN-01` (cobro con billeteras digitales en POS).
+**Dependencias:**
+- Requiere `HU-VEN-01` (cobro digital iniciado para verificación de autorización).
 
 ---
 
@@ -362,8 +362,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **Reglas de negocio aplicables:** 
 - RN-13 (Numeración Oficial e Ininterrumpida)
 
-**Dependencias:** 
-- Requiere `HU-VEN-02` (emisión de comprobantes con numeración oficial) y `HU-VEN-05` (historial de ventas).
+**Dependencias:**
+- Requiere `HU-VEN-02` (comprobante emitido para generación de PDF o reenvío).
 
 ---
 
@@ -388,8 +388,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-VEN-01` (carrito de compras en POS) y `HU-PROD-03` (catálogo con código de barras registrado).
+**Dependencias:**
+- Requiere `HU-VEN-01` (punto de venta activo para escaneo de artículos).
 
 ---
 
@@ -414,8 +414,8 @@ Para fines de documentación y análisis granular del esfuerzo sin alterar los 1
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-VEN-05` (historial de ventas).
+**Dependencias:**
+- Requiere `HU-VEN-05` (historial de ventas para exportación a CSV).
 
 ---
 

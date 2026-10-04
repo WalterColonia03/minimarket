@@ -17,7 +17,7 @@ Documentos relacionados: DOC-ANEXO-B, DOC-PLAN-03-00, DOC-PLAN-10
 | Pantalla | Nombre de Pantalla | Módulo / Acceso | Vista de Interfaz | Épica | Historias del Plan | Textos Guía | Banners | Estados Vacíos | Badges | Modales | Validaciones |
 |---|---|---|---|---|---|:---:|:---:|:---:|:---:|:---:|:---:|
 | **UI-001** | Inicio de Sesión y Autenticación | Acceso Principal | Vista de Autenticación | EPIC-SEG | HU-AUTH-01, HU-AUTH-02, HU-AUTH-04 | 1 | 4 | 1 | 1 | 0 | 6 |
-| **UI-002** | Recuperación de Contraseña | Recuperación de Clave | Vista de Recuperación OTP | EPIC-SEG | HU-AUTH-05 | 0 | 3 | 1 | 1 | 0 | 6 |
+| **UI-002** | Recuperación de Contraseña | Recuperación de Clave | Vista de Recuperación de Clave Temporal | EPIC-SEG | HU-AUTH-05 | 0 | 3 | 1 | 1 | 0 | 6 |
 | **UI-003** | Navegación Global y Diálogos | Marco General | Marco de Navegación Lateral | EPIC-SEG | HU-AUTH-03 | 0 | 1 | 0 | 2 | 5 | 1 |
 | **UI-004** | Gestión de Usuarios del Sistema | Administración de Personal | Vista de Personal y Cuentas | EPIC-SEG | HU-USR-01, HU-USR-02, HU-USR-03, HU-USR-04, HU-USR-05, HU-USR-06 | 0 | 3 | 2 | 3 | 6 | 2 |
 | **UI-005** | Registro Histórico de Accesos | Monitoreo de Seguridad | Vista de Historial de Sesiones | EPIC-SEG | HU-LOG-01 | 0 | 2 | 3 | 2 | 0 | 4 |
@@ -56,13 +56,13 @@ Los conteos representan referencias descriptivas en el Anexo B que detallan cada
 - **UI-011 Bajas de Inventario y Mermas:** CA-1: Formulario y Elementos de Entrada; CA-2: Mensajes de Asistencia, Banners y Retroalimentación; CA-3: Indicadores de Estado, Badges y Grillas; CA-4: Acciones, Botones y Estados Vacíos (Empty States)
 - **UI-012 Ajustes de Conteo Físico:** CA-1: Formulario y Elementos de Entrada; CA-2: Mensajes de Asistencia, Banners y Retroalimentación; CA-3: Indicadores de Estado, Badges y Grillas; CA-4: Acciones, Botones y Estados Vacíos (Empty States)
 - **UI-013 Solicitudes de Reposición:** CA-1: Formulario y Elementos de Entrada; CA-2: Mensajes de Asistencia, Banners y Retroalimentación; CA-3: Indicadores de Estado, Badges y Grillas; CA-4: Acciones y Botones por Fila según Estado y Rol
-- **UI-014 Terminal de Punto de Venta (POS):** CA-1: Formulario, Escáner y Elementos de Venta; CA-2: Panel Lateral de Cobro y Facturación; CA-3: Modal de Comprobante de Pago (`ModalComprobante`); CA-4: Escenarios de Aceptación (Gherkin BDD)
-- **UI-015 Historial de Ventas y Anulaciones:** CA-1: Filtros de Búsqueda y Navegación; CA-2: Grilla del Historial y Estados; CA-3: Modales de Detalle, Reenvío de Correo y Anulación; CA-4: Escenarios de Aceptación (Gherkin BDD)
-- **UI-016 Turno de Caja y Arqueo Inicial:** CA-1: Vista sin Turno Abierto y Modal de Apertura; CA-2: Panel del Turno en Curso y Movimientos; CA-3: Modales de Movimiento Manual y Cierre de Turno; CA-4: Escenarios de Aceptación (Gherkin BDD)
-- **UI-017 Historial de Cajas y Cierres:** CA-1: Filtros de Historial de Cajas; CA-2: Grilla de Turnos y Conciliación de Arqueos; CA-3: Modal de Cierre Forzado por Administrador (`ModalCerrarForzado`); CA-4: Escenarios de Aceptación (Gherkin BDD)
-- **UI-018 Dashboard y KPIs Estratégicos:** CA-1: Encabezado, Detección de Turnos Olvidados y Filtro Temporal; CA-2: Tarjetas KPI Interactivas y Gráfico de Tendencia; CA-3: Secciones de Top Productos y Stock Crítico; CA-4: Modales de Detalle Bajo Demanda (`ModalDetalle`); CA-5: Escenarios de Aceptación (Gherkin BDD)
-- **UI-019 Reportes Analíticos y PDF:** CA-1: Encabezado, Exportación PDF y Filtros de Fecha; CA-2: Tarjetas de Resumen y Top 10 Productos Más Vendidos; CA-3: Margen por Producto, Ventas por Día y Método; CA-4: Stock Crítico Configurable y Mermas por Motivo; CA-5: Generación y Formato del PDF Consolidado; CA-6: Escenarios de Aceptación (Gherkin BDD)
-- **UI-020 Configuración Fiscal y SUNAT:** CA-1: Formulario de Datos del Negocio; CA-2: Confirmación de Cambio Crítico de RUC y Guardado; CA-3: Escenarios de Aceptación (Gherkin BDD)
+- **UI-014 Terminal de Punto de Venta (POS):** CA-1: Formulario, Escáner y Elementos de Venta; CA-2: Panel Lateral de Cobro y Facturación; CA-3: Modal de Comprobante de Pago (`ModalComprobante`); CA-4: Escenarios de Aceptación (escenarios formales Dado que / Cuando / Entonces)
+- **UI-015 Historial de Ventas y Anulaciones:** CA-1: Filtros de Búsqueda y Navegación; CA-2: Grilla del Historial y Estados; CA-3: Modales de Detalle, Reenvío de Correo y Anulación; CA-4: Escenarios de Aceptación (escenarios formales Dado que / Cuando / Entonces)
+- **UI-016 Turno de Caja y Arqueo Inicial:** CA-1: Vista sin Turno Abierto y Modal de Apertura; CA-2: Panel del Turno en Curso y Movimientos; CA-3: Modales de Movimiento Manual y Cierre de Turno; CA-4: Escenarios de Aceptación (escenarios formales Dado que / Cuando / Entonces)
+- **UI-017 Historial de Cajas y Cierres:** CA-1: Filtros de Historial de Cajas; CA-2: Grilla de Turnos y Conciliación de Arqueos; CA-3: Modal de Cierre Forzado por Administrador (`ModalCerrarForzado`); CA-4: Escenarios de Aceptación (escenarios formales Dado que / Cuando / Entonces)
+- **UI-018 Dashboard y KPIs Estratégicos:** CA-1: Encabezado, Detección de Turnos Olvidados y Filtro Temporal; CA-2: Tarjetas KPI Interactivas y Gráfico de Tendencia; CA-3: Secciones de Top Productos y Stock Crítico; CA-4: Modales de Detalle Bajo Demanda (`ModalDetalle`); CA-5: Escenarios de Aceptación (escenarios formales Dado que / Cuando / Entonces)
+- **UI-019 Reportes Analíticos y PDF:** CA-1: Encabezado, Exportación PDF y Filtros de Fecha; CA-2: Tarjetas de Resumen y Top 10 Productos Más Vendidos; CA-3: Margen por Producto, Ventas por Día y Método; CA-4: Stock Crítico Configurable y Mermas por Motivo; CA-5: Generación y Formato del PDF Consolidado; CA-6: Escenarios de Aceptación (escenarios formales Dado que / Cuando / Entonces)
+- **UI-020 Configuración Fiscal y SUNAT:** CA-1: Formulario de Datos del Negocio; CA-2: Confirmación de Cambio Crítico de RUC y Guardado; CA-3: Escenarios de Aceptación (escenarios formales Dado que / Cuando / Entonces)
 
 ---
 
@@ -112,7 +112,7 @@ Los conteos representan referencias descriptivas en el Anexo B que detallan cada
 | HU-CAJA-04 | UI-016 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-CAJA-06 | UI-016, UI-017 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-CAJA-07 | UI-017 | CA-UI (criterio final de interfaz) | Con especificación completa |
-| HU-VEN-07 | UI-014 | CA-UI (criterio final de interfaz) | Con especificación completa |
+| HU-VEN-07 | UI-014, UI-015 | CA-UI (criterio final de interfaz) | Con especificación completa en terminal POS y consulta en Historial |
 | HU-SOL-04 | UI-013 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-PROV-04 | UI-008 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-AUTH-06 | UI-003 | CA-UI (criterio final de interfaz) | Diálogo modal emergente de cambio de contraseña accesible desde la barra superior (Decisión formal D7) |

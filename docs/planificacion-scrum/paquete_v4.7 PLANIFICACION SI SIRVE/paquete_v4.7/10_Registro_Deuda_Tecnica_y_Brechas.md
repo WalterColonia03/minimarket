@@ -27,19 +27,19 @@ El propósito central radica en explicitar las reglas operativas, delimitaciones
 
 ## 10.2. Registro Consolidado de Decisiones de Negocio y Supuestos de Arquitectura (D1 a D12)
 
-### D1: Esquema de sesiones concurrentes e invalidación anticipada
+### D1: Esquema de sesiones de usuario únicas y política de sesión activa
 - **Declaración:** Se establece como principio de seguridad operativa la política de sesión única activa por cuenta de colaborador. Si un usuario inicia sesión desde una nueva terminal o estación de trabajo, cualquier sesión previamente abierta con las mismas credenciales queda invalidada de manera automática al efectuarse la siguiente interacción con el sistema. La interfaz de la sesión desplazada desplegará de forma visible un banner informativo de advertencia indicando textualmente: *"Se inició sesión con esta cuenta desde otro dispositivo."*, impidiendo cualquier operación posterior y canalizando al usuario hacia el formulario de ingreso.
 - **Justificación de negocio:** Evitar la suplantación de identidad entre cajeros y operadores, salvaguardar la privacidad de las operaciones de cobro y asegurar la no repudiabilidad de las transacciones comerciales registradas.
 - **Historias de usuario vinculadas:** `HU-AUTH-03`, `HU-AUTH-04`, `HU-USR-06`.
 - **Reglas de negocio asociadas:** Gobernanza de seguridad de cuentas y trazabilidad de accesos.
 
-### D2: Política de contraseñas y recuperación mediante clave numérica OTP de 4 dígitos
+### D2: Política de contraseñas y recuperación mediante código de verificación temporal de 4 dígitos
 - **Declaración:** Para la recuperación no asistida de credenciales de acceso, el sistema generará un código de autorización numérico temporal de 4 dígitos (rango 1000 a 9999) con una vigencia estricta de 15 minutos, remitido a la casilla de correo electrónico del colaborador solicitante. Como mecanismo de protección contra intentos no autorizados de adivinación, se fija un bloqueo temporal automático de la cuenta por 15 minutos tras acumularse 5 intentos fallidos consecutivos en el ingreso del código de autorización.
 - **Justificación de negocio:** Brindar un balance óptimo entre agilidad operativa en mostrador para la recuperación rápida de acceso por parte de personal de tienda y salvaguarda robusta contra accesos indebidos.
 - **Historias de usuario vinculadas:** `HU-AUTH-05`, `HU-AUTH-06`.
 - **Reglas de negocio asociadas:** RN-12 (Identidad unívoca de empleados).
 
-### D3: Manejo de catálogos y consultas reactivas
+### D3: Manejo de catálogos y consultas ágiles en mostrador
 - **Declaración:** Para el volumen operativo previsto del establecimiento comercial (estimado en hasta 5,000 productos activos, 1,000 proveedores y 10,000 registros de clientes habituales), las consultas de catálogos maestros y nóminas de usuarios se transmitirán de manera consolidada hacia la interfaz de usuario. Las búsquedas predictivas por descripción, filtros por categoría y ordenamiento se resolverán de forma reactiva instantánea en la estación de trabajo local sin latencias acumuladas de comunicación.
 - **Justificación de negocio:** Maximizar la agilidad y fluidez de atención en el punto de cobro y agilizar el registro diario de recepciones en el almacén, eliminando tiempos muertos para el cajero y el cliente.
 - **Historias de usuario vinculadas:** `HU-CAT-01`, `HU-PROD-01`, `HU-PROV-01`, `HU-CLI-01`, `HU-USR-01`.
@@ -63,7 +63,7 @@ El propósito central radica en explicitar las reglas operativas, delimitaciones
 - **Historias de usuario vinculadas:** `HU-VEN-06`, `HU-INV-02`, `HU-CAJA-02`.
 - **Reglas de negocio asociadas:** RN-08 (Restricción temporal de anulaciones) y RN-09 (Destino físico de mercadería devuelta).
 
-### D7: Lógica mono-producto y aprobación flexible de proveedores en reposición
+### D7: Solicitudes de reposición por producto único y flexibilidad de proveedores
 - **Declaración:** Las solicitudes de reposición de mercadería elaboradas por el Almacenero se formulan bajo un esquema atómico mono-producto por cada solicitud registrada, permitiendo un seguimiento granular de las necesidades de reabastecimiento. En la fase de autorización, la jefatura facultada (Administrador o Gerente) dispone de flexibilidad operativa para ratificar o modificar el proveedor propuesto (RN-16) evaluando conveniencia comercial, precios o plazos de entrega, fijando asimismo la fecha estimada de arribo al local.
 - **Justificación de negocio:** Racionalizar y agilizar el circuito de abastecimiento, brindando al nivel gerencial la capacidad de negociar mejores condiciones de compra sin burocracia documental ni necesidad de anular solicitudes operativas.
 - **Historias de usuario vinculadas:** `HU-SOL-01`, `HU-SOL-02`, `HU-SOL-03`, `HU-SOL-04`.
@@ -108,7 +108,7 @@ La siguiente matriz sintetiza la alineación entre las doce decisiones estratég
 | Decisión | Título Resumido | Reglas de Negocio Vinculadas | Épica Principal | Lanzamiento | Impacto Operativo Principal |
 |:---:|---|:---:|:---:|:---:|---|
 | **D1** | Sesiones concurrentes e invalidación | Gobernanza de Seguridad | EPIC-SEG | REL-2 | Sesión única por usuario; expulsión con banner informativo de aviso. |
-| **D2** | Clave OTP de 4 dígitos y bloqueo | RN-12 | EPIC-SEG | REL-2 | Recuperación de credenciales con código de autorización de 4 dígitos y bloqueo tras 5 fallos. |
+| **D2** | Clave código de verificación de 4 dígitos y bloqueo | RN-12 | EPIC-SEG | REL-2 | Recuperación de credenciales con código de autorización de 4 dígitos y bloqueo tras 5 fallos. |
 | **D3** | Catálogos y consultas reactivas | Glosario General | EPIC-CAT | REL-1 / REL-2 | Agilidad en mostrador mediante filtrado instantáneo en la estación local. |
 | **D4** | Comprobantes y contingencia SUNAT | RN-13 | EPIC-VEN / EPIC-REP | REL-1 | Emisión autónoma B001/F001 con IGV 18 % y contingencia ante corte externo. |
 | **D5** | Fondo de caja y movimientos manuales | RN-10, RN-11, RN-15 | EPIC-VEN | REL-1 | Fondo mínimo obligatorio de S/ 500.00; tope manual S/ 5,000.00 en efectivo. |

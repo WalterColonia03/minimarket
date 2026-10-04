@@ -43,8 +43,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Ninguna (historia base de acceso al sistema).
+**Dependencias:**
+- Ninguna (historia base o autoportante del backlog).
 
 ---
 
@@ -69,8 +69,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (planificada en el mismo Sprint 1).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (mecanismo base de inicio de sesión).
 
 ---
 
@@ -94,8 +94,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (planificada en el mismo Sprint 1).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (sesión activa para procesar el cierre).
 
 ---
 
@@ -119,8 +119,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` y `HU-AUTH-03` (ambas finalizadas en Sprint 1). Se complementa operativamente con la funcionalidad de cierre forzado de sesión (`HU-USR-06`, Sprint 2).
+**Dependencias:**
+- Requiere `HU-AUTH-01` y `HU-AUTH-03` (ciclo base de autenticación de usuario).
 
 ---
 
@@ -145,8 +145,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (completada en Sprint 1).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (pantalla de acceso y catálogo de usuarios).
 
 **Decisiones de Negocio Pendientes:**
 - `de 4 dígitos (Decisión formal D2/D3)`: Longitud y formato del código de autorización de recuperación por correo electrónico. Opciones en evaluación por el Product Owner: código de autorización numérico ágil de 4 dígitos (permite rápida digitación en terminales táctiles) frente a código de autorización numérico estandarizado de 6 dígitos (mayor robustez ante patrones de seguridad).
@@ -174,8 +174,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` y `HU-AUTH-03` (finalizadas en Sprint 1).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (sesión activa del usuario que cambia su propia clave).
 
 **Decisiones de arquitectura y negocio:**
 - **Decisión formal D7 adoptada:** Implementación mediante diálogo modal emergente accesible desde la barra de navegación superior (UI-003), garantizando cambio seguro de contraseña sin requerir una pantalla independiente.
@@ -200,8 +200,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (completada en Sprint 1).
+**Dependencias:**
+- Requiere `HU-USR-02` (existencia de colaboradores registrados).
 
 ---
 
@@ -225,8 +225,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - RN-12 (Identidad Unívoca de Empleados)
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (planificada en el mismo Sprint 1).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (precedencia lógica del backlog).
 
 ---
 
@@ -250,8 +250,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - RN-12 (Identidad Unívoca de Empleados)
 
-**Dependencias:** 
-- Requiere `HU-USR-01` y `HU-USR-02` (Sprints 1 y 2).
+**Dependencias:**
+- Requiere `HU-USR-02` (cuenta de empleado existente para modificar).
 
 ---
 
@@ -275,8 +275,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-USR-01` y `HU-USR-02` (Sprints 1 y 2). Se articula funcionalmente con el mecanismo de sesión única de `HU-AUTH-04`.
+**Dependencias:**
+- Requiere `HU-USR-02` (cuenta de empleado activa para desactivar).
 
 ---
 
@@ -300,8 +300,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-USR-04` (completada en Sprint 2).
+**Dependencias:**
+- Requiere `HU-USR-04` (cuenta previamente desactivada para reactivación).
 
 ---
 
@@ -325,8 +325,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-04` y `HU-USR-01` (planificadas en Sprint 2).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (sesión activa en terminal remoto).
 
 ---
 
@@ -350,5 +350,5 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` y `HU-AUTH-03` (finalizadas en Sprint 1).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (eventos de autenticación para auditoría).

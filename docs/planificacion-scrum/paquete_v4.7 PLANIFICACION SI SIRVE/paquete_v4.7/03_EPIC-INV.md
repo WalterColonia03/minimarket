@@ -40,8 +40,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 - RN-01 (Política de Ingreso Inicial y Abastecimiento por Solicitud)
 - RN-14 (Actualización de Valorización de Inventario)
 
-**Dependencias:** 
-- Requiere `HU-PROD-02` y `HU-PROV-02` (planificadas en el mismo Sprint 1).
+**Dependencias:**
+- Requiere `HU-PROD-02` y `HU-PROV-02` (artículo y proveedor registrados para recepción).
 
 ---
 
@@ -66,8 +66,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 - RN-04 (Registro Obligatorio de Mermas)
 - RN-05 (Restricción de Bajas por Vencimiento)
 
-**Dependencias:** 
-- Requiere `HU-INV-01` (planificada en el mismo Sprint 1).
+**Dependencias:**
+- Requiere `HU-INV-01` (existencia de stock físico de lote para registrar baja).
 
 ---
 
@@ -91,8 +91,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-INV-01` (planificada en el mismo Sprint 1).
+**Dependencias:**
+- Requiere `HU-INV-01` (existencia de inventario registrado para conciliar ajuste).
 
 ---
 
@@ -116,8 +116,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-INV-01` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-INV-01` (entradas previas para consultar historial).
 
 ---
 
@@ -141,8 +141,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-INV-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-INV-02` (bajas previas para consultar historial).
 
 ---
 
@@ -166,8 +166,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-INV-03` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-INV-03` (ajustes previos para consultar historial).
 
 ## 2. Sub-dominio: Reposición de Mercadería y Abastecimiento Comercial
 
@@ -191,8 +191,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-PROD-02` (alta de productos) y `HU-PROV-02` (alta de proveedores), ambas provistas en Sprint 1.
+**Dependencias:**
+- Requiere `HU-PROD-02` y `HU-PROV-02` (producto y proveedor registrados).
 
 ---
 
@@ -216,8 +216,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-SOL-01` (creación de solicitudes de reposición).
+**Dependencias:**
+- Requiere `HU-SOL-01` (solicitudes generadas previamente).
 
 ---
 
@@ -242,8 +242,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - RN-16 (Flexibilidad en Elección de Proveedores)
 
-**Dependencias:** 
-- Requiere `HU-SOL-01` (existencia de solicitudes pendientes) y `HU-PROV-02` (catálogo de proveedores habilitados).
+**Dependencias:**
+- Requiere `HU-SOL-01` (solicitud pendiente para aprobación).
 
 ---
 
@@ -267,8 +267,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-SOL-01` (existencia de solicitudes en estado Pendiente).
+**Dependencias:**
+- Requiere `HU-SOL-01` (solicitud pendiente para rechazo).
 
 ---
 
@@ -294,5 +294,5 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 - RN-01 (Política de Ingreso Inicial y Abastecimiento por Solicitud)
 - RN-14 (Actualización de Valorización de Inventario)
 
-**Dependencias:** 
-- Requiere `HU-SOL-03` (solicitudes aprobadas previamente) y `HU-INV-01` (mecanismo base de entrada física y costeo ponderado).
+**Dependencias:**
+- Requiere `HU-SOL-03` (solicitud formalmente aprobada para recibir mercadería).

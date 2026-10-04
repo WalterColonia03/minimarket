@@ -45,9 +45,9 @@ Alineada con la plantilla oficial de 8 pasos del docente, la historia pivote req
 |---|---|---|---|:---:|
 | TAR-HU-CAT-01-04 | Desarrollar interfaces | Diseño/Construcción | Des.6 - Angeles | 0.50 |
 | TAR-HU-CAT-01-05 | Codificar | Construcción | Des.6 - Angeles | 0.50 |
-| TAR-HU-CAT-01-06 | Probar de unidad | Verificación QA | Des.2 - Nolasco | 0.50 |
+| TAR-HU-CAT-01-06 | Pruebas de unidad e integración | Verificación QA | Des.2 - Nolasco | 0.50 |
 | TAR-HU-CAT-01-07 | Depuración | Construcción | Des.6 - Angeles | 0.25 |
-| TAR-HU-CAT-01-08 | Desplegar en la web | Verificación QA | Des.2 - Nolasco | 0.25 |
+| TAR-HU-CAT-01-08 | Verificación funcional y pase web | Verificación QA | Des.2 - Nolasco | 0.25 |
 | **Total Tareas** | **Plantilla de 5 pasos operativos (reutiliza pasos 1 a 3)** | | **Construye ≠ Verifica** | **2.00 h** |
 
 ### Matriz de Referencia Fibonacci Calibrada
@@ -169,7 +169,7 @@ Distribución de las 502.0 horas de tareas técnicas entre los 6 miembros del eq
 
 1. **Camino crítico de Ventas POS (`HU-VEN-01`, 13 pts) en Sprint 1:**
    - *Impacto:* Los pasos 4 al 8 de `HU-VEN-01` totalizan 26.00 h operativas; la secuencia de tareas requiere atención prioritaria para asegurar la demostración oportuna del MVP.
-   - *Mitigación:* Se adopta la estrategia de diseño y especificación previa de contratos de interfaz desde el día 1; la verificación funcional concluye en el día 7 y la emisión de comprobantes (`HU-VEN-02`) culmina en el día 8. El sprint finaliza en el día 9 con 2.50 h residuales, reservando holgura operativa y el día 10 para la presentación oficial en clase.
+   - *Mitigación:* Se adopta la estrategia de diseño y especificación previa de contratos de interfaz desde el día 1; la verificación funcional concluye en el día 7 y la emisión de comprobantes (`HU-VEN-02`) culmina en el día 8. El sprint finaliza formalmente en la mañana del día 9 con 7.25 h residuales (distribuidas entre 4 desarrolladores), reservando 16.75 h de holgura ese día y el día 10 íntegro para la presentación oficial en clase.
 2. **Concentración de la Verificación QA en Des.4 Alcalde:**
    - *Impacto:* Des.4 asume 87.50 horas de verificación independiente a lo largo de los 3 sprints (~29.17 h por sprint).
    - *Mitigación:* Distribución colaborativa planificada en DOC-PLAN-07: los otros 5 integrantes absorben 118.50 horas de verificación cruzada, asegurando que ninguna historia dependa de un único evaluador.

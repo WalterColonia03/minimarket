@@ -9,7 +9,7 @@ Bienvenido a la versión consolidada y definitiva del **Paquete Documental de Pl
 Todos los archivos vigentes, saneados y de última versión se encuentran centralizados en esta carpeta:
 
 ```
-paquete_v4.7/
+paquete_v4.8/
 ├── 📄 00_Portada_Indice_y_Control_Documental.md      <- Portada oficial, parámetros inmutables y directorio maestro
 ├── 📄 01_Vision_Alcance_y_Stakeholders.md            <- Propósito, objetivos de negocio (OBJ-01..05) y roles
 ├── 📄 02_Equipo_Roles_y_Ceremonias.md                <- 6 Developers, DoD, DoR, acuerdos y ceremonias Scrum
@@ -31,9 +31,10 @@ paquete_v4.7/
 │
 ├── 📋 Registro_de_Preguntas_y_Decisiones_Product_Owner.md  <- Compendio de 32 preguntas y decisiones PO
 │
-└── 📁 informes_auditoria/                            <- Subcarpeta oficial con los 32 informes consolidados v4.8
+└── 📁 informes_auditoria/                            <- Subcarpeta oficial con los 33 informes consolidados v4.8
     ├── 60-informe-final-consolidado-paquete-v48.md   <- Informe maestro de cierre y certificación v4.8
     ├── 61-auditoria-compendio-preguntas-y-decisiones-po.md <- Certificación del compendio de preguntas y decisiones
+    ├── 62-informe-resolucion-auditoria-programatica-v48.md <- Informe de resolución de auditoría programática
     ├── INFORME-AUDITORIA-TECNICA-CONSOLIDADA.md      <- Informe consolidado de aseguramiento de calidad v4.8
     ├── INTERNO_Evidencia_Tecnica.md                  <- Expediente confidencial de trazabilidad técnica
     └── (Informes oficiales consolidados 33 a 59 por fase y épica)
@@ -54,7 +55,7 @@ paquete_v4.7/
   - **REL-3:** Sprint 3, 27 HUs, 72 pts.
 - **Capacidad Neta del Equipo:** 6 Desarrolladores × 25 h/sem × 2 sem × 80 % = **240 horas netas/sprint** (720 h total).
 - **Esfuerzo Desglosado Oficial:** **502 horas en 363 tareas** (296 h Construcción [59.0 %] + 206 h Verificación QA [41.0 %]).
-- **Presupuesto Total Estimado:** **S/ 22,500.00** (100 % costo laboral directo, S/ 7,500.00 por sprint o release, S/ 25.00/h neta).
+- **Presupuesto Total Estimado:** **S/ 22,500.00** (100 % costo laboral directo, S/ 7,500.00 por sprint o release, S/ 25.00/h bruta laboral (S/ 625/sem ÷ 25 h) y S/ 31.25/h neta de desarrollo efectivo (S/ 7,500 ÷ 240 h)).
 - **Especificación de Interfaz:** **20 pantallas** con 82 apartados de criterios de aceptación de interfaz en [Anexo B](Anexo_B_Especificacion_de_Interfaz.md) y trazadas en [DOC-PLAN-11](11_Matriz_Trazabilidad_UI.md).
 
 ---

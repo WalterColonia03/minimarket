@@ -38,8 +38,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-CAT-02` (planificada en el mismo Sprint 1).
+**Dependencias:**
+- Requiere `HU-CAT-02` (categoría creada previamente).
 
 ---
 
@@ -63,8 +63,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (completada en Sprint 1).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (precedencia lógica del backlog).
 
 ---
 
@@ -88,8 +88,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-CAT-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-CAT-02` (categoría existente para edición).
 
 ---
 
@@ -113,8 +113,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-CAT-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-CAT-02` (categoría sin artículos asociados para eliminación).
 
 ---
 
@@ -140,8 +140,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-PROV-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-PROV-02` (proveedor registrado en catálogo).
 
 ---
 
@@ -166,8 +166,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (completada en Sprint 1).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (control de acceso administrativo).
 
 ### HU-PROV-03 · Proveedores – Editar datos de un proveedor
 
@@ -189,8 +189,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-PROV-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-PROV-02` (proveedor registrado para edición).
 
 ---
 
@@ -214,8 +214,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-PROV-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-PROV-02` (proveedor registrado para cambio de estado).
 
 ---
 
@@ -241,8 +241,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-CLI-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-CLI-02` (clientes registrados previamente en el punto de venta).
 
 ---
 
@@ -267,8 +267,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-VEN-01` (planificada en el mismo Sprint 1).
+**Dependencias:**
+- Requiere `HU-VEN-01` (transacción de venta en mostrador para captura de cliente).
 
 ---
 
@@ -292,8 +292,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-CLI-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-CLI-02` (cliente registrado para actualización de datos).
 
 ## 4. Sub-dominio: Catálogo Maestro de Productos
 
@@ -317,8 +317,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-PROD-02` (planificada en el mismo Sprint 1).
+**Dependencias:**
+- Requiere `HU-PROD-02` (productos registrados en catálogo).
 
 ---
 
@@ -343,8 +343,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - RN-06 (Alerta de Stock Mínimo)
 
-**Dependencias:** 
-- Requiere `HU-CAT-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-CAT-02` (categoría base para clasificar el producto).
 
 ---
 
@@ -369,8 +369,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-PROD-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-PROD-02` (producto registrado para captura de código).
 
 ---
 
@@ -394,8 +394,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-PROD-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-PROD-02` (ficha de producto para modificación).
 
 ---
 
@@ -419,8 +419,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A
 
-**Dependencias:** 
-- Requiere `HU-PROD-02` (Sprint 1).
+**Dependencias:**
+- Requiere `HU-PROD-02` (producto registrado para cambio de estado).
 
 ---
 
@@ -444,5 +444,5 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - RN-03 (Prohibición de Comercialización de Vencidos)
 
-**Dependencias:** 
-- Requiere `HU-INV-01` (ingreso de mercadería con lotes, Sprint 1).
+**Dependencias:**
+- Requiere `HU-INV-01` (lotes ingresados con fechas de vencimiento).

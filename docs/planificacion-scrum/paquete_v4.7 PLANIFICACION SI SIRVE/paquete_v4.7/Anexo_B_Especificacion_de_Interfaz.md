@@ -95,10 +95,10 @@ para ingresar de forma segura y ser redirigido a mi módulo de trabajo asignado.
   - **Mensaje de Cuenta Desactivada (HU-AUTH-01 / HU-USR-04):**
     - Si la cuenta del colaborador fue dada de baja o desactivada por el SuperAdmin, se despliega un banner rojo con el mensaje exacto:
       `"Esta cuenta se encuentra inactiva. Contacte a la administración para habilitar su acceso."`
-  - Si el servidor central rechaza las credenciales o falla la conexión, se muestra un banner rojo con estilo `rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600` con el mensaje exacto proveniente del servidor o el texto fallback `"Error al iniciar sesión"`.
+  - Si el servicio central central rechaza las credenciales o falla la conexión, se muestra un banner rojo con estilo `rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600` con el mensaje exacto proveniente del servicio central o el texto fallback `"Error al iniciar sesión"`.
 
 **CA-3: Indicadores de Estado, Badges y Grillas**
-- **Indicadores de Carga**: Durante el envío del formulario, el botón de acción principal reemplaza su texto por un spinner animado `Loader2 className="h-4 w-4 animate-spin"` seguido del texto `"Iniciando..."`.
+- **Indicadores de Carga**: Durante el envío del formulario, el botón de acción principal reemplaza su texto por un spinner animado `Loader2 ` seguido del texto `"Iniciando..."`.
 - **Columnas de Datos**: No aplica (pantalla de autenticación sin grillas).
 
 **CA-4: Acciones, Botones y Estados Vacíos (Empty States)**
@@ -122,7 +122,7 @@ para ingresar de forma segura y ser redirigido a mi módulo de trabajo asignado.
 
 - **Escenario 3**: Notificación de error por credenciales incorrectas
   - **Dado que** el usuario ingresó credenciales no válidas
-  - **Cuando** presiona el botón `"Iniciar Sesión"` y el servidor responde con error
+  - **Cuando** presiona el botón `"Iniciar Sesión"` y el servicio central responde con error
   - **Entonces** el sistema debe mostrar un contenedor con fondo rojo claro `bg-red-50` y texto rojo `text-red-600` con el mensaje devuelto por la API o `"Error al iniciar sesión"`.
 
 - **Escenario 4**: Notificación visual al ser expulsado por inicio de sesión en otro dispositivo (HU-AUTH-04)
@@ -183,12 +183,12 @@ para restablecer el acceso a mi cuenta sin depender de intervención manual.
 **CA-2: Mensajes de Asistencia, Banners y Retroalimentación**
 - **Validaciones de Seguridad en Cliente (Banner Rojo `bg-red-50 text-red-600`)**:
   - Si las contraseñas no son idénticas: `"Las contraseñas no coinciden"`.
-  - Si tiene menos de 7 caracteres: `"Contraseña inválida: Debe tener al menos 8 caracteres"`.
+  - Si tiene menos de 8 caracteres: `"Contraseña inválida: Debe tener al menos 8 caracteres"`.
   - Si no incluye mayúscula: `"Contraseña inválida: Debe contener una mayúscula"`.
   - Si no incluye minúscula: `"Contraseña inválida: Debe contener una minúscula"`.
   - Si no incluye dígito: `"Contraseña inválida: Debe contener un dígito"`.
 - **Mensajes de Error del Servidor**:
-  - Error al solicitar código de autorización: Texto de API o fallback `"Error al enviar código de autorización de autorización"`.
+  - Error al solicitar código de autorización: Texto de API o fallback `"Error al Enviar código de verificación"`.
   - Error al cambiar clave o código de autorización expirado: Texto de API o fallback `"Error al cambiar contraseña"`.
 
 **CA-3: Indicadores de Estado, Badges y Grillas**
@@ -198,11 +198,11 @@ para restablecer el acceso a mi cuenta sin depender de intervención manual.
 
 **CA-4: Acciones, Botones y Estados Vacíos (Empty States)**
 - **Acciones en Paso 1**:
-  - Botón primario: `"enviar código de autorización de autorización"` (`bg-[#6366f1] text-white hover:bg-indigo-600`).
+  - Botón primario: `"Enviar código de verificación"` .
   - Enlace de retorno: Icono `ArrowLeft` (`h-3 w-3`) con texto `"Volver al login"` que dirige a `/login`.
 - **Acciones en Paso 2**:
-  - Botón primario: `"Cambiar contraseña"` (`bg-[#6366f1] text-white hover:bg-indigo-600`).
-  - Botón de retroceso / reenviar: Icono `ArrowLeft` (`h-3 w-3`) con texto `"Reenviar código de autorización de autorización de autorización"` que limpia inputs y regresa a Paso 1.
+  - Botón primario: `"Cambiar contraseña"` .
+  - Botón de retroceso / reenviar: Icono `ArrowLeft` (`h-3 w-3`) con texto `"ReEnviar código de verificación de autorización"` que limpia inputs y regresa a Paso 1.
 
 #### Criterios de Aceptación en Formato Gherkin (Comportamiento de UI):
 - **Escenario 1**: Validación estricta de complejidad de contraseña
@@ -211,8 +211,8 @@ para restablecer el acceso a mi cuenta sin depender de intervención manual.
   - **Entonces** el sistema no debe enviar la petición y debe desplegar un banner rojo con el texto exacto `"Contraseña inválida: Debe tener al menos 8 caracteres"`.
 
 - **Escenario 2**: Transición a pantalla de éxito y redirección
-  - **Dado que** el usuario ingresó un código de autorización válido y una contraseña que cumple con mayúscula, minúscula, número y >= 7 caracteres
-  - **Cuando** presiona `"Cambiar contraseña"` y el servidor responde satisfactoriamente
+  - **Dado que** el usuario ingresó un código de verificación válido y una contraseña que cumple con mayúscula, minúscula, número y >= 8 caracteres
+  - **Cuando** presiona `"Cambiar contraseña"` y el servicio central responde satisfactoriamente
   - **Entonces** el formulario desaparece y se muestra el icono `CheckCircle2` verde con el título `"Contraseña actualizada"`, el texto `"Serás redirigido al inicio de sesión..."` y redirige a `"/login"` tras 2 segundos.
 
 ---
@@ -237,7 +237,7 @@ para navegar fluidamente entre mis funciones autorizadas y no dejar arqueos hué
   - Icono modal: `AlertTriangle` (`h-6 w-6 text-amber-500` sobre círculo `bg-amber-100`).
   - Título modal exacto: `"Tienes un turno de caja abierto"`.
   - Mensaje modal exacto: `"Todavía no cerraste tu turno en Mi Caja. ¿Seguro que quieres cerrar sesión sin cerrarlo?"`.
-  - Botón cancelar: `"Cancelar"` (`bg-gray-100 hover:bg-gray-200 text-gray-700`).
+  - Botón cancelar: `"Cancelar"` .
   - Botón confirmar: `"Confirmar"` con color índigo personalizado `#6366f1`.
 
 **CA-3: Indicadores de Estado, Badges y Grillas**
@@ -271,7 +271,7 @@ para navegar fluidamente entre mis funciones autorizadas y no dejar arqueos hué
 - **Control de Colapso del Menú**:
   - Botón con icono `ChevronLeft` (expandido) o `ChevronRight` (colapsado).
   - Atributo title/tooltip: `"Colapsar"` si está expandido, `"Expandir"` si está colapsado.
-  - Persistencia: Se almacena en `localStorage` bajo la clave `'sidebar_collapsed'`.
+  - Persistencia: Se almacena en `memoria de sesión local` bajo la clave `'sidebar_collapsed'`.
 - **Pie de Menú y Cierre de Sesión**:
   - Bloque de usuario (expandido): `usuario?.nombre` (`text-white`) y `usuario?.rol` (`text-[#9ca3af]`).
   - Botón Cerrar Sesión: Icono `LogOut`, texto literal `"Cerrar sesión"` (oculto en modo colapsado), tooltip `"Cerrar sesión"`.
@@ -318,7 +318,7 @@ para garantizar el gobierno de identidades y accesos del minimarket.
     - `"Todos los estados"` (valor `'Todos'`)
     - `"Activo"`
     - `"Inactivo"`
-- **Modal "Nuevo Usuario" / "Editar Usuario" (`ModalUsuario`)**:
+- **Modal "Nuevo Usuario" / "Editar Usuario" (cuadro de diálogo de gestión de usuario)**:
   - Título dinámico: `"Nuevo Usuario"` (al crear) o `"Editar Usuario"` (al editar).
   - Botón de cierre: Icono `X` (`h-5 w-5 text-gray-400 hover:text-gray-600`).
   - Campo Nombre:
@@ -350,8 +350,8 @@ para garantizar el gobierno de identidades y accesos del minimarket.
     - Título: `"Desactivar usuario"`.
     - Mensaje: `"¿Deseas desactivar a {nombre}?"`.
     - Color botón confirmar: `#ef4444` (Rojo peligro).
-  - interfaz webivar usuario:
-    - Título: `"interfaz webivar usuario"`.
+  - Reactivar usuario:
+    - Título: `"Reactivar usuario"`.
     - Mensaje: `"¿Deseas reactivar a {nombre}?"`.
     - Color botón confirmar: `#10b981` (Verde éxito).
   - Forzar cierre de sesión:
@@ -383,11 +383,11 @@ para garantizar el gobierno de identidades y accesos del minimarket.
 - **Botones de Acción por Fila** (Visibles solo para SuperAdmin; usuarios estándar ven un guion `"—"`):
   - Editar: Icono `Pencil` (`text-[#6366f1] hover:bg-indigo-50`), tooltip `"Editar"`.
   - Desactivar: Icono `UserX` (`text-red-500 hover:bg-red-50`), tooltip `"Desactivar"` (solo en filas activas de otros usuarios).
-  - interfaz webivar: Icono `UserCheck` (`text-green-500 hover:bg-green-50`), tooltip `"interfaz webivar"` (solo en filas inactivas de otros usuarios).
+  - Reactivar: Icono `UserCheck` (`text-green-500 hover:bg-green-50`), tooltip `"Reactivar"` (solo en filas inactivas de otros usuarios).
   - Forzar Cierre de Sesión: Icono `LogOut` (`text-amber-600 hover:bg-amber-50`), tooltip `"Forzar cierre de sesión"` (solo para otros usuarios).
 - **Botones en Modal Usuario**:
-  - Cancelar: `"Cancelar"` (`bg-gray-100 text-gray-700 hover:bg-gray-200`).
-  - Guardar: `"Guardar"` (`bg-[#6366f1] text-white hover:bg-indigo-600`), muestra spinner animado `animate-spin rounded-full border-2 border-white` en estado de carga.
+  - Cancelar: `"Cancelar"` .
+  - Guardar: `"Guardar"` , muestra spinner animado `animate-spin rounded-full border-2 border-white` en estado de carga.
 - **Pantalla sin datos (Empty State)**:
   - Título/Texto: `"No hay usuarios registrados"`.
   - Estilo: Contenedor centrado `flex h-64 items-center justify-center text-sm text-gray-400`.
@@ -451,7 +451,7 @@ para auditar la seguridad operativa y detectar patrones de acceso inusuales.
   - Alerta visible en barra de filtros: Párrafo de error a ancho completo `w-full text-xs text-red-500` con el texto exacto `"La fecha \"Desde\" no puede ser posterior a la fecha \"Hasta\""`.
   - Efecto colateral visual: El botón `"Filtrar"` se desactiva visualmente (`disabled:opacity-50 disabled:cursor-not-allowed`).
 - **Banner de Error en Carga**:
-  - Si la llamada a la API falla: Mensaje en contenedor `px-6 py-4 text-sm text-red-600` con el texto devuelto o fallback `"Error al cargar los logs de acceso"`.
+  - Si la consulta al servicio falla: Mensaje en contenedor `px-6 py-4 text-sm text-red-600` con el texto devuelto o fallback `"Error al cargar los logs de acceso"`.
 
 **CA-3: Indicadores de Estado, Badges y Grillas**
 - **Columnas de la Grilla de Logs** (Cabecera `border-b border-gray-100 bg-gray-50 text-gray-600`):
@@ -480,7 +480,7 @@ para auditar la seguridad operativa y detectar patrones de acceso inusuales.
   - Indicador numérico de página: `"{paginaActual} / {totalPaginas}"`.
   - Botón Siguiente: Icono `ChevronRight` (`h-4 w-4`), deshabilitado con `opacity-40` si está en la última página.
 - **Estado de Carga (Loading State)**:
-  - Spinner central `Loader2 className="h-8 w-8 animate-spin text-indigo-500"` sobre contenedor de altura `py-20`.
+  - Spinner central `Loader2 ` sobre contenedor de altura `py-20`.
 - **Pantalla sin datos (Empty State)**:
   - Título/Texto central: `"No se encontraron registros"`.
   - Estilo: Contenedor con relleno vertical amplio `py-16 text-center text-sm text-gray-400`.
@@ -557,8 +557,8 @@ para clasificar los artículos del minimarket y estructurar los inventarios.
   - Botón Editar: Icono `Pencil` (`text-[#6366f1] hover:bg-indigo-50`), tooltip `"Editar"`.
   - Botón Eliminar: Icono `Trash2` (`text-red-500 hover:bg-red-50`), tooltip `"Eliminar"`. Restricción: Visible **únicamente** para usuarios con rol `Administrador` mediante `rolSatisface(usuario?.rol, ['Administrador'])`.
 - **Botones en Modal Categoria**:
-  - Cancelar: `"Cancelar"` (`bg-gray-100 text-gray-700 hover:bg-gray-200`).
-  - Guardar: `"Guardar"` (`bg-[#6366f1] text-white hover:bg-indigo-600`), muestra spinner animado `animate-spin rounded-full border-2 border-white` en estado de carga.
+  - Cancelar: `"Cancelar"` .
+  - Guardar: `"Guardar"` , muestra spinner animado `animate-spin rounded-full border-2 border-white` en estado de carga.
 - **Estado de Carga Inicial**:
   - Componente: `<Spinner texto="Cargando categorías..." />`.
 - **Pantalla sin datos (Empty State)**:
@@ -574,7 +574,7 @@ para clasificar los artículos del minimarket y estructurar los inventarios.
 - **Escenario 2**: Validación de unicidad de nombre de categoría en la interfaz visual
   - **Dado que** ya existe registrada la categoría `"Bebidas"`
   - **Cuando** el usuario hace clic en `"Nueva Categoría"`, escribe `"bebidas"` y presiona `"Guardar"`
-  - **Entonces** el modal no realiza la petición HTTP y despliega un banner de alerta con el texto `"Ya existe una categoría con ese nombre"`.
+  - **Entonces** el modal no realiza la comunicación con el servicio y despliega un banner de alerta con el texto `"Ya existe una categoría con ese nombre"`.
 
 ---
 
@@ -619,7 +619,7 @@ para evitar quiebres de inventario y pérdidas por expiración de mercadería.
   - Campo `"Categoría"`: Select con opción inicial `"Seleccionar..."` y listado de categorías activas.
   - Campo `"Precio"`:
     - Etiqueta `"Precio"`.
-    - Prefijo visual: `"S./"` incrustado a la izquierda.
+    - Prefijo visual: `"S/"` incrustado a la izquierda.
     - Modo y sanitización: `inputMode="decimal"`, intercepta y bloquea caracteres como `'e'`, `'E'`, `'+'`, `'-'`, limitando el valor a 6 dígitos enteros y 2 decimales.
   - Checkbox `"Este producto maneja fecha de vencimiento"`:
     - Checkbox checked por defecto.
@@ -657,10 +657,10 @@ para evitar quiebres de inventario y pérdidas por expiración de mercadería.
 
 **CA-3: Indicadores de Estado, Badges y Grillas**
 - **Barra Superior de Alertas Dinámicas** (Renderizada si algún conteo es mayor a cero):
-  - Alerta Agotado: Botón redondeado con icono `AlertTriangle` y texto `"{N} producto(s) agotado(s)"` (`bg-red-100 text-red-700`).
-  - Alerta Stock Bajo: Botón redondeado con icono `AlertTriangle` y texto `"{N} producto(s) con stock bajo"` (`bg-amber-100 text-amber-700`).
-  - Alerta Vencido: Botón redondeado con icono `AlertTriangle` y texto `"{N} producto(s) vencido(s)"` (`bg-red-100 text-red-700`).
-  - Alerta Por Vencer: Botón redondeado con icono `AlertTriangle` y texto `"{N} producto(s) por vencer"` (`bg-yellow-100 text-yellow-700`).
+  - Alerta Agotado: Botón redondeado con icono `AlertTriangle` y texto `"{N} producto(s) agotado(s)"` .
+  - Alerta Stock Bajo: Botón redondeado con icono `AlertTriangle` y texto `"{N} producto(s) con stock bajo"` .
+  - Alerta Vencido: Botón redondeado con icono `AlertTriangle` y texto `"{N} producto(s) vencido(s)"` .
+  - Alerta Por Vencer: Botón redondeado con icono `AlertTriangle` y texto `"{N} producto(s) por vencer"` .
 - **Columnas de la Grilla de Productos** (Cabecera `bg-[#6366f1] text-white`):
   1. `"Nombre"`
   2. `"Marca"`
@@ -683,7 +683,7 @@ para evitar quiebres de inventario y pérdidas por expiración de mercadería.
 - **Botones de Acción por Fila**:
   - Editar: Icono `Pencil` (`text-[#6366f1]`), tooltip `"Editar"`.
   - Ver Lotes: Icono `Layers` (`text-gray-500`), tooltip `"Ver lotes"`.
-  - Desactivar / interfaz webivar: Icono `EyeOff` / `Eye`, tooltip `"Desactivar"` / `"interfaz webivar"`.
+  - Desactivar / Reactivar: Icono `EyeOff` / `Eye`, tooltip `"Desactivar"` / `"Reactivar"`.
   - Dar de baja: Icono `Trash2` (`text-red-500`), tooltip `"Dar de baja"` (visible solo para Almacenero y Administrador).
   - Solicitar reposición: Icono `Package` (`text-amber-600`), tooltip `"Solicitar reposición"` (visible si está activo y `stock <= 5`).
 - **Modal "Lotes de {producto}" (`ModalLotes`)**:
@@ -695,7 +695,7 @@ para evitar quiebres de inventario y pérdidas por expiración de mercadería.
     - `"Vencido"`: `bg-red-100 text-red-700`
     - `"Vigente"`: `bg-green-100 text-green-700`
   - Pie explicativo: `"Suma de restantes: {totalRestante} — el orden de la grilla es el que usa el sistema al vender (FEFO)"`.
-  - Botón: `"Cerrar"` (`bg-gray-100 text-gray-700`).
+  - Botón: `"Cerrar"` .
 - **Paginador Inferior**:
   - Botón `"Anterior"`, texto `"Pág. {paginaActual} de {totalPaginas}"` y botón `"Siguiente"`.
 - **Estados Vacíos**:
@@ -765,7 +765,7 @@ para asegurar compras formales y mitigar riesgos tributarios con empresas no hab
 - **Validación de Unicidad**:
   - Si el nombre ya existe en la lista: `"Ya existe un proveedor con ese nombre"`.
 - **Modal de Confirmación de Cambio de Estado (`ConfirmDialog`)**:
-  - Título dinámico: `"Desactivar proveedor"` o `"interfaz webivar proveedor"`.
+  - Título dinámico: `"Desactivar proveedor"` o `"Reactivar proveedor"`.
   - Mensaje exacto: `"¿Deseas desactivar a {nombre}?"` o `"¿Deseas reactivar a {nombre}?"`.
   - Color de botón confirmar: Rojo `#ef4444` para desactivar; Verde `#10b981` para reactivar.
 - **Toasts de Notificación**:
@@ -787,10 +787,10 @@ para asegurar compras formales y mitigar riesgos tributarios con empresas no hab
   - Texto: `"Nuevo Proveedor"` con icono `Plus` (`h-4 w-4`).
 - **Botones de Acción en Fila**:
   - Botón Editar: Icono `Pencil` (`text-[#6366f1] hover:bg-indigo-50`), tooltip `"Editar"`.
-  - Botón Desactivar / interfaz webivar: Icono `UserX` (rojo) o `UserCheck` (verde). Visible **solo** para Administrador mediante `rolSatisface(usuario?.rol, ['Administrador'])`.
+  - Botón Desactivar / Reactivar: Icono `UserX` (rojo) o `UserCheck` (verde). Visible **solo** para Administrador mediante `rolSatisface(usuario?.rol, ['Administrador'])`.
 - **Botones en Modal Proveedor**:
-  - Cancelar: `"Cancelar"` (`bg-gray-100 text-gray-700`).
-  - Guardar: `"Guardar"` (`bg-[#6366f1] text-white`). Restricción: Deshabilitado (`disabled`) si `loading`, si `!rucValidado` o si persiste algún error en el campo de contacto.
+  - Cancelar: `"Cancelar"` .
+  - Guardar: `"Guardar"` . Restricción: Deshabilitado (`disabled`) si `loading`, si `!rucValidado` o si persiste algún error en el campo de contacto.
 - **Pantalla sin datos (Empty State)**:
   - Título/Texto: `"No hay proveedores registrados"`.
 - **Estado de Carga Inicial**:
@@ -800,7 +800,7 @@ para asegurar compras formales y mitigar riesgos tributarios con empresas no hab
 - **Escenario 1**: Rechazo preventivo de RUC de persona natural
   - **Dado que** el usuario abre el modal `"Nuevo Proveedor"`
   - **Cuando** escribe un RUC de 11 dígitos que comienza con `"10"` y presiona el botón de consulta SUNAT
-  - **Entonces** no se envía la petición al servidor SUNAT y el sistema despliega el mensaje de error en texto rojo `"RUC de persona natural (10) no válido para proveedor; debe ser RUC de empresa (20)"`.
+  - **Entonces** no se envía la petición al servicio central SUNAT y el sistema despliega el mensaje de error en texto rojo `"RUC de persona natural (10) no válido para proveedor; debe ser RUC de empresa (20)"`.
 
 - **Escenario 2**: Verificación exitosa y bloqueo de razón social
   - **Dado que** el usuario digita un RUC que inicia con `"20"` perteneciente a una empresa activa y habida
@@ -910,7 +910,7 @@ para dar de alta mercadería en el inventario y mantener la trazabilidad de cada
     - Etiqueta: `"Cantidad"`.
     - Restricción visual: `type="number"`, `min="1"`, required. Bloquea en teclado caracteres no numéricos como `'e'`, `'E'`, `'+'`, `'-'`.
   - Campo `"Vencimiento"`:
-    - Etiqueta: `"Vencimiento"` con asterisco rojo `<span className="text-red-500">*</span>` únicamente si el producto maneja fecha de vencimiento.
+    - Etiqueta: `"Vencimiento"` con asterisco rojo `<span >*</span>` únicamente si el producto maneja fecha de vencimiento.
     - Input de fecha con límite inferior en el día actual `min={fechaHoy}`.
     - Comportamiento no perecedero: Si `productoSeleccionado.maneja_vencimiento === false`, el input se desactiva (`disabled`), se colorea en gris `bg-gray-50 text-gray-400` y muestra el microcopy: `"Este producto no maneja fecha de vencimiento."`.
   - Campo `"Número de lote"`:
@@ -930,7 +930,7 @@ para dar de alta mercadería en el inventario y mantener la trazabilidad de cada
 
 **CA-3: Indicadores de Estado, Badges y Grillas**
 - **Barra de Filtros del Historial** (`mb-4 flex flex-wrap items-end gap-3 rounded-xl bg-gray-50 p-3`):
-  - Etiqueta e icono: `Filter className="h-4 w-4"` `"Filtrar:"`.
+  - Etiqueta e icono: `Filter ` `"Filtrar:"`.
   - Input `"Desde"` (`type="date"`).
   - Input `"Hasta"` (`type="date"`).
   - Select `"Producto"`: Opción inicial `"Todos"` + listado de productos.
@@ -988,7 +988,7 @@ para sanear el inventario disponible y asegurar que no se vendan productos no ap
   - Título: `"Registrar Baja"`.
   - Campo `"Producto"`: Select con formato `"{p.nombre} - {p.marca} (stock: {p.stock})"`.
   - Campo `"Lote"`:
-    - Etiqueta dinámica: Si motivo es `'Dañado'`, muestra asterisco rojo `<span className="text-red-500">*</span>`; en otros motivos muestra `"(opcional)"`.
+    - Etiqueta dinámica: Si motivo es `'Dañado'`, muestra asterisco rojo `<span >*</span>`; en otros motivos muestra `"(opcional)"`.
     - Opción por defecto según motivo:
       - Si motivo === 'Dañado': `"Selecciona el lote dañado..."`.
       - Si motivo === 'Vencido': `"Automático (solo lotes vencidos)"`.
@@ -1063,7 +1063,7 @@ para conciliar el inventario contable contra la existencia física real en tiend
   - Campo `"Stock actual del sistema"`: Input deshabilitado de solo lectura que refleja el inventario registrado `"{stock} und(s)"` o `"—"`.
   - Campo `"Cantidad Contada"`: Input numérico, `min="0"`, required.
   - Campo Condicional `"Vencimiento del sobrante"` (solo se renderiza en pantalla si `diferenciaAjuste > 0`):
-    - Etiqueta: `"Vencimiento del sobrante"` con asterisco rojo `<span className="text-red-500">*</span>` si el producto es perecedero.
+    - Etiqueta: `"Vencimiento del sobrante"` con asterisco rojo `<span >*</span>` si el producto es perecedero.
     - Input de fecha con `min={fechaHoy}`. Si no maneja vencimiento, queda deshabilitado con microcopy: `"Este producto no maneja fecha de vencimiento."`.
   - Campo `"Observaciones"`: Etiqueta `"Observaciones (opcional)"`, placeholder `"Ej: Conteo mensual de anaquel"`, ocupa ancho de 2 columnas.
 
@@ -1166,7 +1166,7 @@ para coordinar formalmente las compras con los proveedores sin generar entradas 
 - **Badges Semánticos de Estado** (`BADGE_COLORS`):
   - `Pendiente`: Fondo ámbar `bg-[#fef3c7] text-[#92400e]`
   - `Aprobada`: Fondo verde `bg-[#d1fae5] text-[#065f46]`
-  - `Rechazada`: Fondo rojo `bg-[#fee2e2] text-[#991b1b]`. En la celda, debajo del badge, se imprime en letra cursiva gris el motivo del rechazo: `<p className="mt-1 text-xs text-gray-400 italic">{s.motivo_rechazo}</p>`.
+  - `Rechazada`: Fondo rojo `bg-[#fee2e2] text-[#991b1b]`. En la celda, debajo del badge, se imprime en letra cursiva gris el motivo del rechazo: `<p >{s.motivo_rechazo}</p>`.
   - `Completada`: Fondo gris `bg-[#f3f4f6] text-[#6b7280]`
 
 **CA-4: Acciones y Botones por Fila según Estado y Rol**
@@ -1212,8 +1212,8 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
 **CA-1: Formulario, Escáner y Elementos de Venta**
 - **Encabezado y Control de Acceso**:
   - Título principal: `"Nueva Venta"` (`text-2xl font-bold text-gray-800`).
-  - Badge `"Modo consulta"` en encabezado si el rol es `Gerente` (`bg-amber-100 text-amber-700`).
-  - Enlace rápido superior al historial: `<FileText className="h-4 w-4" /> Historial de ventas` hacia `/ventas/historial`.
+  - Badge `"Modo consulta"` en encabezado si el rol es `Gerente` .
+  - Enlace rápido superior al historial: `<FileText  /> Historial de ventas` hacia `/ventas/historial`.
 - **Banner de Bloqueo por Falta de Turno**:
   - Si el usuario no tiene turno abierto (`sinTurno === true`), se renderiza un banner ámbar superior:  
     `"No puedes realizar ventas porque no tienes un turno de caja abierto. Abre un turno para continuar."`.  
@@ -1222,19 +1222,19 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
   - Contenedor con borde verde interactivo cuando tiene foco (`border-emerald-400 ring-2 ring-emerald-100`).
   - Placeholder dinámico: `"Escanea o escribe el código de barras..."` si el input está enfocado, o `"Haz clic aquí para escanear un producto"` si no tiene foco.
   - Indicador de estado del escáner:
-    - Si está consultando: `<Loader2 className="h-4 w-4 animate-spin text-indigo-500" />`.
-    - Si está enfocado: Punto verde parpadeante `<span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />` y texto `"Listo para escanear"`.
+    - Si está consultando: `<Loader2  />`.
+    - Si está enfocado: Punto verde parpadeante `<span  />` y texto `"Listo para escanear"`.
 - **Grilla del Carrito de Compras**:
   - Columnas de cabecera: `"Producto"`, `"Precio Unit."`, `"Cantidad"`, `"Subtotal"`, `"Acciones"`.
-  - Estado vacío: Ícono `<ShoppingCart className="mx-auto h-8 w-8 text-gray-300" />` y texto `"Escanea un producto para agregarlo al carrito"`.
+  - Estado vacío: Ícono `<ShoppingCart  />` y texto `"Escanea un producto para agregarlo al carrito"`.
   - Control de cantidad en cada fila:
-    - Botón decrementar `<Minus className="h-3 w-3" />`.
+    - Botón decrementar `<Minus  />`.
     - Input numérico con `min="1"` y `max={stockVendible}`.
-    - Botón incrementar `<Plus className="h-3 w-3" />` deshabilitado si `item.cantidad >= stockVendible`.
-    - Botón eliminar fila con ícono de papelera roja `<Trash2 className="h-4 w-4" />`.
+    - Botón incrementar `<Plus  />` deshabilitado si `item.cantidad >= stockVendible`.
+    - Botón eliminar fila con ícono de papelera roja `<Trash2  />`.
   - Total del carrito: `"Total: S/ {total.toFixed(2)}"` (`text-right text-xl font-bold text-gray-800`).
 - **Catálogo Plegable de Productos**:
-  - Botón colapsable: `<ChevronDown / ChevronUp className="h-4 w-4" />` con etiqueta interactiva `"Mostrar lista de productos"` u `"Ocultar lista de productos"`.
+  - Botón colapsable: `<ChevronDown / ChevronUp  />` con etiqueta interactiva `"Mostrar lista de productos"` u `"Ocultar lista de productos"`.
   - Input de búsqueda: Placeholder `"Buscar producto por nombre o marca..."`.
   - Selector de categoría: Opción por defecto `"Todas las categorías"`.
   - Contador de resultados: `"{N} producto(s)"`.
@@ -1288,7 +1288,7 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
     - Título: Indicador `"1"` con texto `"Generar cobro en IziPay"`.
     - Instrucción: `"Abre la app IziPay en el POS, ingresa el monto exacto y genera el QR de cobro."`.
     - Monto destacado: Tarjeta blanca con `"Monto a ingresar en IziPay"` y número grande `"S/ {total.toFixed(2)}"` (`text-2xl font-bold text-violet-700`).
-    - Botón de avance: `<QrCode className="h-4 w-4" /> Ya generé el cobro en IziPay`.
+    - Botón de avance: `<QrCode  /> Ya generé el cobro en IziPay`.
   - **Paso 2 (`pasoYape === 'mostrando'`)**:
     - Título: Indicador `"2"` con texto `"Cliente escanea y paga"`.
     - Instrucción: `"Muestra la pantalla de IziPay al cliente para que escanee con Yape/Plin (IziPay) o Plin y pague S/ {total.toFixed(2)}. Verifica en la app que el pago se haya completado antes de confirmar."`.
@@ -1297,19 +1297,19 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
     - Microcopy de ayuda: `"Cópialo de la pantalla de confirmación de IziPay: es lo único que permite ubicar este pago si hay que reclamarlo o conciliarlo después."`.
     - Banner preventivo ámbar contra fraudes:  
       `"No inventes ni copies el número de otra venta: debe ser exactamente el que muestra IziPay para este pago. Un número incorrecto rompe la trazabilidad y no se podrá ubicar ni verificar esta operación después."`.
-    - Botón de confirmación: `<CheckCircle className="h-4 w-4" /> Pago confirmado en IziPay` (deshabilitado si no cumple 6 dígitos).
-    - Botón de retroceso: `<X className="h-4 w-4" /> Volver`.
+    - Botón de confirmación: `<CheckCircle  /> Pago confirmado en IziPay` (deshabilitado si no cumple 6 dígitos).
+    - Botón de retroceso: `<X  /> Volver`.
   - **Estado Confirmado (`yapeVerificado === true`)**:
     - Tarjeta verde esmeralda con `CheckCircle`: `"Pago Yape/Plin (IziPay) confirmado — S/ {total.toFixed(2)}"` y `"N° de autorización: {nroAutorizacion}"`.
 - **Acciones Finales de Venta**:
-  - Botón principal `"Realizar Venta"` (`bg-[#6366f1] hover:bg-indigo-600`):
-    - Estado de carga: Spinner `<Loader2 className="h-4 w-4 animate-spin" /> Procesando...`.
+  - Botón principal `"Realizar Venta"` :
+    - Estado de carga: Spinner `<Loader2  /> Procesando...`.
     - Guardia síncrona: `enviandoVentaRef.current` previene doble clic en el mismo tick.
   - Botón secundario: `"Vaciar carrito"` con borde gris (`hover:bg-gray-50`).
 
 **CA-3: Modal de Comprobante de Pago (`ModalComprobante`)**
 - Renderizado modal superpuesto (`fixed inset-0 z-50 bg-black/50`):
-  - Ícono central de éxito: `<CheckCircle className="mx-auto h-12 w-12 text-green-500" />`.
+  - Ícono central de éxito: `<CheckCircle  />`.
   - Título: `"¡Venta realizada!"`.
   - Subtítulo con correlativo: `"{Factura|Boleta} {numero}"`.
   - Lista de productos vendidos: Nombre, cantidad `x{cantidad}` y subtotal `S/ {subtotal.toFixed(2)}`.
@@ -1320,9 +1320,9 @@ para registrar transacciones de clientes asegurando la integridad del stock y la
     - Método: `"Yape/Plin (IziPay)"` (púrpura) / `"Efectivo"` (verde).
   - Razón social y dirección (si aplica para Factura).
   - Desglose de vuelto en efectivo: `"Monto recibido: S/ {recibido} — Vuelto: S/ {vuelto}"`.
-  - Trazabilidad Yape/Plin (IziPay): `<CheckCircle className="mr-1 inline h-3 w-3" /> Yape/Plin (IziPay) verificado — S/ {total} — N° de autorización: {referencia_pago}`.
-  - Botón verde de descarga: `<FileText className="h-4 w-4" /> {esFactura ? 'Descargar Factura PDF' : 'Descargar Boleta PDF'}` (`bg-emerald-500 hover:bg-emerald-600`).
-  - Botón índigo de reinicio: `"Nueva Venta"` (`bg-[#6366f1] hover:bg-indigo-600`).
+  - Trazabilidad Yape/Plin (IziPay): `<CheckCircle  /> Yape/Plin (IziPay) verificado — S/ {total} — N° de autorización: {referencia_pago}`.
+  - Botón verde de descarga: `<FileText  /> {esFactura ? 'Descargar Factura PDF' : 'Descargar Boleta PDF'}` .
+  - Botón índigo de reinicio: `"Nueva Venta"` .
 
 **CA-4: Escenarios de Aceptación (Gherkin BDD)**
 
@@ -1372,8 +1372,8 @@ para consultar el historial de ventas paginado (restringido a las ventas del pro
   - Filtro `"Hasta"`: Input de fecha con límite mínimo condicional `min={fechaInicio || undefined}`.
   - Filtro `"Buscar por DNI/RUC o Correlativo"`: Input de texto con placeholder `"ej. F001-00000012"`; permite presionar `Enter` para filtrar.
   - Filtro `"Método de pago"`: Selector con opciones `"Todos"`, `"Efectivo"`, `"Yape/Plin (IziPay)"`.
-  - Botón `"Filtrar"`: `<Search className="mr-1 inline h-4 w-4" /> Filtrar` (`bg-indigo-600 hover:bg-indigo-700`). Deshabilitado si `fechaInicio > fechaHasta`.
-  - Botón `"Limpiar"`: `<X className="mr-1 inline h-4 w-4" /> Limpiar`.
+  - Botón `"Filtrar"`: `<Search  /> Filtrar` . Deshabilitado si `fechaInicio > fechaHasta`.
+  - Botón `"Limpiar"`: `<X  /> Limpiar`.
   - Mensaje de validación de fechas: `"La fecha "Desde" no puede ser posterior a la fecha "Hasta""` (`text-xs text-red-500`).
 
 **CA-2: Grilla del Historial y Estados**
@@ -1384,16 +1384,16 @@ para consultar el historial de ventas paginado (restringido a las ventas del pro
   - `"Método"`: Badge púrpura `<Smartphone /> Yape/Plin (IziPay)` o badge verde `<Banknote /> Efectivo`.
   - `"Monto"`: `S/ {monto_total.toFixed(2)}`; si el estado es `'Anulada'`, se muestra tachado y en gris `text-gray-400 line-through`.
   - `"Yape/Plin (IziPay) Verif."`:
-    - Si método es Yape/Plin (IziPay) y verificado: `<CheckCircle className="h-3.5 w-3.5" /> Sí` en esmeralda (`text-emerald-600`) con atributo tooltip nativo (`title`) indicando fecha y hora exacta: `"Verificado: DD/MM/AAAA, HH:mm:ss"`.
-    - Si método es Yape/Plin (IziPay) y no verificado: `<XCircle className="h-3.5 w-3.5" /> Pendiente` en ámbar (`text-amber-600`).
+    - Si método es Yape/Plin (IziPay) y verificado: `<CheckCircle  /> Sí` en esmeralda (`text-emerald-600`) con atributo tooltip nativo (`title`) indicando fecha y hora exacta: `"Verificado: DD/MM/AAAA, HH:mm:ss"`.
+    - Si método es Yape/Plin (IziPay) y no verificado: `<XCircle  /> Pendiente` en ámbar (`text-amber-600`).
     - Si método es Efectivo: Guion gris `"—"`.
     - *Regla de especificación sobre convalidación de pago*: La grilla y el modal reflejan con precisión el estado del pago electrónico convalidado por el vendedor o regularizado operativamente mediante el servicio de verificación de transacciones digitales.
   - `"Estado"`:
-    - Venta normal: Badge esmeralda `"Completada"` (`bg-emerald-100 text-emerald-700`).
-    - Venta anulada: Badge rojo `<Ban className="h-3 w-3" /> Anulada` con tooltip del motivo.
+    - Venta normal: Badge esmeralda `"Completada"` .
+    - Venta anulada: Badge rojo `<Ban  /> Anulada` con tooltip del motivo.
   - `"Acción"`:
-    - Botón `"Detalle"`: `<Eye className="h-3.5 w-3.5" /> Detalle` (`text-indigo-600 hover:bg-indigo-50`).
-    - Botón `"Anular"`: `<Ban className="h-3.5 w-3.5" /> Anular` (`text-red-600 hover:bg-red-50`). Visible **únicamente** para Administrador o Gerente (`puedeAnular`) en ventas no anuladas.
+    - Botón `"Detalle"`: `<Eye  /> Detalle` (`text-indigo-600 hover:bg-indigo-50`).
+    - Botón `"Anular"`: `<Ban  /> Anular` (`text-red-600 hover:bg-red-50`). Visible **únicamente** para Administrador o Gerente (`puedeAnular`) en ventas no anuladas.
 - **Paginación y Estados Vacíos**:
   - Sin resultados: `"No se encontraron ventas"`.
   - Leyenda de paginación: `"Mostrando {desde}–{hasta} de {total} ventas"`.
@@ -1406,8 +1406,8 @@ para consultar el historial de ventas paginado (restringido a las ventas del pro
   - Cuadrícula de detalles: Fecha, Vendedor, Método de pago, Monto total; si fue Efectivo: Recibido y Vuelto; si fue Yape/Plin (IziPay): Monto Yape/Plin (IziPay) (`S/ {monto_total}`), Verificado (`Sí` / `Pendiente`), Verificado el (`DD/MM/AAAA, HH:mm:ss`), N° de autorización IziPay (`{referencia_pago}`).
   - Lista de `"Productos"`: Nombre del producto, marca, cantidad `x{cantidad}` y subtotal.
   - Acciones inferiores (si no está anulada):
-    - Botón verde: `<FileText className="h-4 w-4" /> Descargar Copia PDF`.
-    - Botón índigo: `<Mail className="h-4 w-4" /> Reenviar por Correo`.
+    - Botón verde: `<FileText  /> Descargar Copia PDF`.
+    - Botón índigo: `<Mail  /> Reenviar por Correo`.
 - **Modal Reenviar Comprobante por Correo**:
   - Título: `"Reenviar Comprobante"`.
   - Microcopy instructivo: `"Ingresa el correo electrónico al cual deseas reenviar el comprobante de pago."`.
@@ -1462,10 +1462,10 @@ para asegurar que la gaveta cuente con cambio suficiente para vueltos y concilia
 **CA-1: Vista sin Turno Abierto y Modal de Apertura**
 - **Estado Inicial Sin Turno (`!turno`)**:
   - Contenedor con borde discontinuo gris: `border-2 border-dashed border-gray-300 bg-white p-12 text-center`.
-  - Ícono: `<DollarSign className="mx-auto h-12 w-12 text-gray-400" />`.
+  - Ícono: `<DollarSign  />`.
   - Título: `"No tienes un turno abierto"` (`text-lg font-semibold text-gray-700`).
   - Microcopy: `"Abre tu turno para comenzar a registrar ventas en caja."` (`text-sm text-gray-500`).
-  - Botón: `<Plus className="h-4 w-4" /> Abrir turno` (`bg-indigo-600 hover:bg-indigo-700`).
+  - Botón: `<Plus  /> Abrir turno` .
 - **Modal "Abrir turno"**:
   - Título: `"Abrir turno"`.
   - Etiqueta del campo: `"Monto inicial en caja (S/)"`.
@@ -1477,12 +1477,12 @@ para asegurar que la gaveta cuente con cambio suficiente para vueltos y concilia
 
 **CA-2: Panel del Turno en Curso y Movimientos**
 - **Encabezado del Turno Activo (`turno.estado === 'Abierto'`)**:
-  - Indicador vivo: Punto verde pulsante `<span className="h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" />` y texto `"Turno en curso"`.
-  - Datos del turno: Ícono `<Clock className="inline h-3.5 w-3.5 mr-1" /> Apertura: {fecha}` y `"Vendedor: {vendedor.nombre}"`.
+  - Indicador vivo: Punto verde pulsante `<span  />` y texto `"Turno en curso"`.
+  - Datos del turno: Ícono `<Clock  /> Apertura: {fecha}` y `"Vendedor: {vendedor.nombre}"`.
   - Barra de botones superiores:
-    - Botón verde: `<Plus className="h-4 w-4" /> Registrar Ingreso` (`bg-emerald-600 hover:bg-emerald-700`).
-    - Botón ámbar: `<TrendingDown className="h-4 w-4" /> Registrar Egreso` (`bg-amber-500 hover:bg-amber-600`).
-    - Botón rojo: `<X className="h-4 w-4" /> Cerrar turno` (`bg-red-600 hover:bg-red-700`).
+    - Botón verde: `<Plus  /> Registrar Ingreso` .
+    - Botón ámbar: `<TrendingDown  /> Registrar Egreso` .
+    - Botón rojo: `<X  /> Cerrar turno` .
 - **Tarjetas de Totales en Tiempo Real**:
   - Tarjeta 1: `"APERTURA"` con monto en formato `S/ {monto_apertura}`.
   - Tarjeta 2: `"EFECTIVO ACUMULADO"` con monto grande en verde `text-2xl font-bold text-green-600`.
@@ -1510,18 +1510,18 @@ para asegurar que la gaveta cuente con cambio suficiente para vueltos y concilia
   - Botones: `"Cancelar"` y botón `"Registrar {Ingreso|Egreso}"` (cambia a `"Guardando..."`).
 - **Modal "Cerrar turno"**:
   - Título: `"Cerrar turno"`.
-  - Banner instructivo amarillo: `"Cuenta el efectivo en gaveta y concilia el total del reporte de liquidación del terminal digital antes de continuar."` (`bg-yellow-50 text-yellow-800`).
+  - Banner instructivo amarillo: `"Cuenta el efectivo en gaveta y concilia el total del reporte de liquidación del terminal digital antes de continuar."` .
   - Cuadrícula de conciliación de valores:
     - Input `"Efectivo contado en gaveta (S/)"`: Placeholder `"0.00"`, requerido, microcopy `"Conteo físico de billetes y monedas en caja"`.
     - Input `"Total liquidación digital IziPay (S/)"`: Placeholder `"0.00"`, requerido, microcopy `"Monto total del reporte de cierre del terminal POS / billeteras"`.
   - Campo `"Observaciones (opcional)"`: Textarea con placeholder `"Ej: faltaron 5 soles, billetes mojados, etc."`.
   - Botones: `"Cancelar"` y botón rojo `"Cerrar turno"` (cambia a `"Cerrando..."`).
 - **Vista de Resumen Post-Cierre (`ResumenCierre`)**:
-  - Título: `<CheckCircle className="h-5 w-5 text-green-600" /> Turno cerrado`.
-  - Badge de aprobación si fue visado: `"Aprobado por {aprobador.nombre}"` (`bg-green-100 text-green-700`).
+  - Título: `<CheckCircle  /> Turno cerrado`.
+  - Badge de aprobación si fue visado: `"Aprobado por {aprobador.nombre}"` .
   - Grilla de conciliación: Columnas `"Concepto"`, `"Esperado"`, `"Contado"`, `"Diferencia"`.
     - Fila Efectivo y Fila Yape/Plin (IziPay) con diferenciación de color: Verde si `diferencia > 0` (`+{fmt}`), rojo si `diferencia < 0`, gris si es `0`.
-  - Botón: `<Plus className="h-4 w-4" /> Abrir nuevo turno`.
+  - Botón: `<Plus  /> Abrir nuevo turno`.
 
 **CA-4: Escenarios de Aceptación (Gherkin BDD)**
 
@@ -1562,7 +1562,7 @@ para garantizar el control de arqueos y evitar bloqueos en la apertura de nuevos
   - Filtro `"Hasta"`: Input de fecha con `min={filtroFechaInicio || undefined}`.
   - Filtro `"Estado"`: Selector con opciones `"Todos"`, `"Abierto"`, `"Cerrado"`.
   - Botón `"Buscar"`: `bg-indigo-600 hover:bg-indigo-700`.
-  - Botón `"Limpiar filtros"`: `<X className="h-3.5 w-3.5" /> Limpiar filtros` visible solo si hay filtros activos.
+  - Botón `"Limpiar filtros"`: `<X  /> Limpiar filtros` visible solo si hay filtros activos.
   - Validación de rango: `"La fecha "Desde" no puede ser posterior a la fecha "Hasta"."`.
 
 **CA-2: Grilla de Turnos y Conciliación de Arqueos**
@@ -1571,23 +1571,23 @@ para garantizar el control de arqueos y evitar bloqueos en la apertura de nuevos
   - `"Vendedor"`: Nombre del responsable o `"—"`.
   - `"Apertura (S/)"`: Monto inicial con formato `S/ {monto}`.
   - `"Efec. esperado"` y `"Yape/Plin (IziPay) esperado"`: Montos calculados por sistema.
-  - `"Dif. efec."` y `"Dif. Yape/Plin (IziPay)"`: Renderizados con componente `BadgeDiff`:
+  - `"Dif. efec."` y `"Dif. Yape/Plin (IziPay)"`: Renderizados con componente etiqueta visual de diferencia monetaria:
     - Positivo: Monto verde con signo `+S/ {valor}`.
     - Negativo: Monto rojo con signo `-S/ {valor}`.
     - Neutro: Texto gris `"S/ 0.00"`.
   - `"Estado"`:
-    - Si está cerrado: Badge gris `"Cerrado"` (`bg-gray-100 text-gray-600`).
-    - Si está abierto: Badge verde `"Abierto"` (`bg-green-100 text-green-700`).
-    - Alerta de turno sospechoso (> 16 horas abierto): Chip ámbar `<AlertTriangle className="h-3 w-3" /> {N}h abierto` con tooltip `"El vendedor podría haberse olvidado de cerrarlo"`.
+    - Si está cerrado: Badge gris `"Cerrado"` .
+    - Si está abierto: Badge verde `"Abierto"` .
+    - Alerta de turno sospechoso (> 16 horas abierto): Chip ámbar `<AlertTriangle  /> {N}h abierto` con tooltip `"El vendedor podría haberse olvidado de cerrarlo"`.
   - `"Acción"`:
     - Si está Abierto:
-      - Si es Administrador/Gerente (`puedeAprobar`): Botón rojo `"Cerrar turno"` (`bg-red-600 hover:bg-red-700`).
+      - Si es Administrador/Gerente (`puedeAprobar`): Botón rojo `"Cerrar turno"` .
       - Si es otro rol: Guion `"—"`.
     - Si está Cerrado:
-      - Ya aprobado: Ícono y texto verde `<CheckCircle className="h-3.5 w-3.5" /> {turno.aprobador.nombre}`.
-      - Pendiente y usuario es Admin/Gerente: Botón índigo `"Aprobar"` (`bg-indigo-600 hover:bg-indigo-700`).
+      - Ya aprobado: Ícono y texto verde `<CheckCircle  /> {turno.aprobador.nombre}`.
+      - Pendiente y usuario es Admin/Gerente: Botón índigo `"Aprobar"` .
       - Pendiente y usuario vendedor: Texto gris `"Pendiente"`.
-  - Control de expansión: Ícono `<ChevronDown / ChevronUp className="h-4 w-4" />`.
+  - Control de expansión: Ícono `<ChevronDown / ChevronUp  />`.
 - **Detalle Expandido de Fila (Acordeón)**:
   - Título secundario: `"MOVIMIENTOS DEL TURNO"`.
   - Subgrilla de movimientos con columnas `"Tipo"`, `"Descripción"`, `"Método"`, `"Monto"`, `"Hora"`.
@@ -1598,7 +1598,7 @@ para garantizar el control de arqueos y evitar bloqueos en la apertura de nuevos
 **CA-3: Modal de Cierre Forzado por Administrador (`ModalCerrarForzado`)**
 - Encabezado: `"Cerrar turno de {vendedor.nombre ?? 'otro vendedor'}"`.
 - Banner de advertencia y responsabilidad:  
-  `"El vendedor no cerró este turno. Cuenta el efectivo físico y concilia el reporte digital de liquidación IziPay de esa caja antes de continuar — este cierre queda registrado con tu usuario y el motivo."` (`bg-amber-50 text-amber-800`).
+  `"El vendedor no cerró este turno. Cuenta el efectivo físico y concilia el reporte digital de liquidación IziPay de esa caja antes de continuar — este cierre queda registrado con tu usuario y el motivo."` .
 - Formulario de Arqueo Forzado:
   - Input `"Efectivo contado (S/)"`: Requerido, placeholder `"0.00"`.
   - Input `"Yape/Plin (IziPay) contado (S/)"`: Placeholder `"0.00"`.
@@ -1648,13 +1648,13 @@ para tomar decisiones comerciales oportunas y supervisar la salud operativa del 
   - Breadcrumb: `"Inicio"` (`/dashboard`), separador `"/"`, ítem terminal activo `"Dashboard"`.
   - Título principal: `"Dashboard"` (`text-2xl font-bold text-gray-800`).
   - Mensaje de bienvenida contextual: `"Bienvenido, {usuario.nombre} — {fechaActual}"` con formato `toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' })`.
-  - Botón de actualización rápida: `<RefreshCw className="h-4 w-4" /> Actualizar` con animación `animate-spin` durante la recarga. Auto-recarga reactiva al recuperar el foco de la ventana (`window.addEventListener('focus')`).
+  - Botón de actualización rápida: `<RefreshCw  /> Actualizar` con animación `animate-spin` durante la recarga. Auto-recarga reactiva al recuperar el foco de la ventana (`window.addEventListener('focus')`).
 - **Banner de Alerta Operativa (Turnos de Caja Olvidados > 16 Horas)**:
   - Renderizado condicional en bloque ámbar `border-amber-200 bg-amber-50 text-amber-800`.
-  - Ícono: `<AlertTriangle className="h-5 w-5 shrink-0 text-amber-500" />`.
+  - Ícono: `<AlertTriangle  />`.
   - Mensaje singular: `"El turno de {vendedor.nombre} lleva {N}h abierto — probablemente se olvidó de cerrarlo."`.
   - Mensaje plural: `"{N} turnos llevan más de 16h abiertos — probablemente se olvidaron de cerrarlos."`.
-  - Botón de acción: `"Ir a Historial de Caja"` (`bg-amber-500 text-white hover:bg-amber-600`), que redirige a `/caja/historial?estado=Abierto`.
+  - Botón de acción: `"Ir a Historial de Caja"` , que redirige a `/caja/historial?estado=Abierto`.
 - **Barra de Rango de Fechas**:
   - Contenedor: `rounded-xl border border-gray-100 bg-white p-4 shadow-sm`.
   - Input `"Desde"`: Tipo `date`, rango acotado entre `fechaMinima` (10 años atrás) y `fechaHastaInput || fechaHoy`.
@@ -1668,10 +1668,10 @@ para tomar decisiones comerciales oportunas y supervisar la salud operativa del 
 
 **CA-2: Tarjetas KPI Interactivas y Gráfico de Tendencia**
 - **Rejilla de 6 Tarjetas KPI (`KpiCard`)**:
-  - Estructura común: Borde izquierdo temático de 4px, hover con elevación `shadow-md`, ícono circular superior derecho y microcopy inferior que aparece en hover: `"Ver detalle"` con `<ChevronRight className="h-3 w-3" />`.
+  - Estructura común: Borde izquierdo temático de 4px, hover con elevación `shadow-md`, ícono circular superior derecho y microcopy inferior que aparece en hover: `"Ver detalle"` con `<ChevronRight  />`.
   - **KPI 1 - Ventas**: Título dinámico `Total Ventas {del Mes|del Período}` (valor numérico entero), ícono `<ShoppingCart />`, color índigo `#6366f1`.
-  - **KPI 2 - Ingresos**: Título dinámico `Ingresos {del Mes|del Período}`, prefijo `"S./"`, valor decimal con 2 dígitos, ícono `<DollarSign />`, color verde esmeralda `#10b981`.
-  - **KPI 3 - Ticket Promedio**: Título `"Ticket Promedio"`, prefijo `"S./"`, valor con 2 decimales, ícono `<TrendingUp />`, color ámbar `#f59e0b`.
+  - **KPI 2 - Ingresos**: Título dinámico `Ingresos {del Mes|del Período}`, prefijo `"S/"`, valor decimal con 2 dígitos, ícono `<DollarSign />`, color verde esmeralda `#10b981`.
+  - **KPI 3 - Ticket Promedio**: Título `"Ticket Promedio"`, prefijo `"S/"`, valor con 2 decimales, ícono `<TrendingUp />`, color ámbar `#f59e0b`.
   - **KPI 4 - Catálogo**: Título `"Productos Activos"`, total de productos vigentes, ícono `<Package />`, color azul `#3b82f6`.
   - **KPI 5 - Ruptura de Stock**: Título `"Sin Stock"`, total de productos con stock 0, ícono `<AlertTriangle />`, color rojo `#ef4444`.
   - **KPI 6 - Abastecimiento**: Título `"Solicitudes Pendientes"`, número de órdenes de reposición pendientes, ícono `<ClipboardList />`, color violeta `#8b5cf6`.
@@ -1682,7 +1682,7 @@ para tomar decisiones comerciales oportunas y supervisar la salud operativa del 
     - Eje X: Fechas formateadas como `DD/MM` sin trazo divisorio de eje.
     - Eje Y: Montos con prefijo `S/{v}`.
     - Cuadrícula: Trazos discontinuos `strokeDasharray="3 3"` color `#f0f0f0`.
-  - Tooltip personalizado (`CustomTooltip`): Tarjeta blanca sombreada con fecha `DD/MM` y monto en negrita `"S/ {monto.toFixed(2)}"`.
+  - Tooltip personalizado (recuadro informativo flotante): Tarjeta blanca sombreada con fecha `DD/MM` y monto en negrita `"S/ {monto.toFixed(2)}"`.
   - Estado vacío: `"No hay ventas registradas aún"` (`h-60 flex items-center justify-center text-sm text-gray-400`).
 
 **CA-3: Secciones de Top Productos y Stock Crítico**
@@ -1690,17 +1690,17 @@ para tomar decisiones comerciales oportunas y supervisar la salud operativa del 
   - Título: `"Top 5 productos"`.
   - Lista de barras de progreso:
     - Nombre del producto en negrita y marca en gris suave.
-    - Badge con cantidad vendida: `"{p.total_vendido} und."` (`bg-[#6366f1] text-white text-xs`).
+    - Badge con cantidad vendida: `"{p.total_vendido} und."` .
     - Barra horizontal con ancho proporcional respecto al líder de ventas `(total_vendido / topVendido) * 100%`.
   - Estado vacío: `"No hay ventas registradas"`.
 - **Panel "Stock crítico"**:
-  - Título: `"Stock crítico"` con enlace `"Ver todos en Productos"` acompañado de `<ChevronRight className="h-3 w-3" />` que navega a `/productos?alerta=critico`.
+  - Título: `"Stock crítico"` con enlace `"Ver todos en Productos"` acompañado de `<ChevronRight  />` que navega a `/productos?alerta=critico`.
   - Lista de hasta 5 productos en alerta:
     - Clic en el producto navega a Productos filtrando por alerta y nombre: `/productos?alerta={agotado|stockBajo}&buscar={nombre}`.
     - Badges de alerta:
-      - Si stock es 0: Badge rojo `"Sin stock"` (`bg-red-100 text-red-700`).
-      - Si stock está por debajo del mínimo: Badge amarillo `"{p.stock} und."` (`bg-yellow-100 text-yellow-700`).
-  - Estado vacío: Ícono verde `<span className="text-lg">✓</span> Todo el stock está en orden`.
+      - Si stock es 0: Badge rojo `"Sin stock"` .
+      - Si stock está por debajo del mínimo: Badge amarillo `"{p.stock} und."` .
+  - Estado vacío: Ícono verde `<span >✓</span> Todo el stock está en orden`.
 
 **CA-4: Modales de Detalle Bajo Demanda (`ModalDetalle`)**
 - Estructura modal compartida: Panel flotante `max-w-2xl bg-white shadow-xl` con ícono temático coloreado, título y botón de cierre `X`.
@@ -1721,7 +1721,7 @@ para tomar decisiones comerciales oportunas y supervisar la salud operativa del 
 - **Modal Sin Stock (`modalActivo === 'sinStock'`)**:
   - Título: `"Productos Sin Stock"`.
   - Filtro estricto `p.stock === 0`.
-  - Botón inferior de acción: `"Ver y gestionar en Productos"` con `<ChevronRight className="h-3.5 w-3.5" />` redirigiendo a `/productos?alerta=agotado`. Estado vacío: `"No hay productos sin stock. ✓"`.
+  - Botón inferior de acción: `"Ver y gestionar en Productos"` con `<ChevronRight  />` redirigiendo a `/productos?alerta=agotado`. Estado vacío: `"No hay productos sin stock. ✓"`.
 - **Modal Solicitudes Pendientes (`modalActivo === 'solicitudes'`)**:
   - Título: `"Solicitudes Pendientes"`.
   - Columnas: `"Producto"`, `"Cantidad"`, `"Proveedor sugerido"`, `"Solicitante"`, `"Fecha"`. Estado vacío: `"No hay solicitudes pendientes. ✓"`.
@@ -1737,7 +1737,7 @@ Escenario: Administrador detecta turno de caja olvidado por más de 16 horas
   Y al hacer clic en el botón "Ir a Historial de Caja" el usuario es redirigido a "/caja/historial?estado=Abierto"
 
 Escenario: Consulta del modal de detalle de Ticket Promedio
-  Dado que el dashboard muestra un Ticket Promedio de "S./ 42.50"
+  Dado que el dashboard muestra un Ticket Promedio de "S/ 42.50"
   Cuando el usuario hace clic sobre la tarjeta de "Ticket Promedio"
   Entonces se abre el modal "Ticket Promedio" con ícono de tendencia ámbar
   Y se lista la grilla de ventas completadas ordenadas de mayor a menor monto
@@ -1762,11 +1762,11 @@ para exportar un documento PDF profesional y evaluar la rentabilidad del minimar
   - Breadcrumb: `"Inicio"` (`/dashboard`), separador `"/"`, ítem terminal activo `"Reportes"`.
   - Título: `"Reporte de Ventas"`.
   - Subtítulo: `"Genera reportes detallados de ventas en PDF"`.
-  - Botón de exportación: `<Download className="h-4 w-4" /> Descargar Reporte PDF` (`bg-[#6366f1] text-white hover:bg-indigo-600`). Durante la compilación muestra `<Loader2 className="h-4 w-4 animate-spin" /> Generando...` y se bloquea.
+  - Botón de exportación: `<Download  /> Descargar Reporte PDF` . Durante la compilación muestra `<Loader2  /> Generando...` y se bloquea.
 - **Barra de Filtros**:
   - Input `"Desde"`: Tipo `date`, límites `min={fechaMinima}` y `max={fechaHasta || fechaHoy}`.
   - Input `"Hasta"`: Tipo `date`, límites `min={fechaInicio || fechaMinima}` y `max={fechaHoy}`.
-  - Botón `"Aplicar filtros"`: Con spinner `Loader2` durante el refresco (`bg-[#6366f1]`).
+  - Botón `"Aplicar filtros"`: Con spinner `Loader2` durante el refresco .
   - Botón `"Limpiar"`: Borde gris, restablece los campos de fecha a vacío.
   - Mensajes de error en fechas:
     - `"La fecha "Desde" no puede ser posterior a la fecha "Hasta""`.
@@ -1778,7 +1778,7 @@ para exportar un documento PDF profesional y evaluar la rentabilidad del minimar
   - Tarjeta 2: `"Ingresos Totales"` con monto en formato `S/ {monto_total.toFixed(2)}` e ícono `<DollarSign />`.
   - Tarjeta 3: `"Ticket Promedio"` con monto en formato `S/ {promedio_venta.toFixed(2)}` e ícono `<TrendingUp />`.
 - **Grilla "Top 10 productos más vendidos"**:
-  - Título: `"Top 10 productos más vendidos"` acompañado de badge gris `<FileText className="h-4 w-4" /> Se incluirá en el PDF`.
+  - Título: `"Top 10 productos más vendidos"` acompañado de badge gris `<FileText  /> Se incluirá en el PDF`.
   - Cabecera violeta índigo `bg-[#6366f1] text-white` con columnas: `"#"` , `"Producto"`, `"Marca"`, `"Unidades vendidas"`, `"Ingresos totales"`.
   - Podio de medallas en la columna `#`:
     - Posición 1: Círculo dorado `bg-yellow-400 text-white font-bold` con número `1`.
@@ -1808,15 +1808,15 @@ para exportar un documento PDF profesional y evaluar la rentabilidad del minimar
 
 **CA-4: Stock Crítico Configurable y Mermas por Motivo**
 - **Panel "Stock Crítico" con Umbral Dinámico**:
-  - Encabezado con ícono `<AlertTriangle className="h-5 w-5 text-amber-500" />` y título `"Stock Crítico"`.
+  - Encabezado con ícono `<AlertTriangle  />` y título `"Stock Crítico"`.
   - Control horizontal de umbral: Etiqueta `"Umbral:"`, input numérico centrado (por defecto `5`) y botón `"Actualizar"` con ícono `RefreshCw` o spinner `Loader2`.
   - Columnas: `"Producto"`, `"Marca"`, `"Categoría"`, `"Stock actual"`, `"Mínimo aplicado"`.
   - Badges de stock actual:
     - `"Sin stock"`: Badge rojo `bg-red-100 text-red-700`.
-    - Stock bajo: Badge ámbar `"{stock} und(s)"` (`bg-amber-100 text-amber-700`).
+    - Stock bajo: Badge ámbar `"{stock} und(s)"` .
   - Microcopy explicativo al pie de grilla:  
     `"Mostrando productos cuyo stock está por debajo de su propio "Stock Mínimo" (si está definido) o del umbral global de {umbral} en caso contrario."`.
-  - Estado vacío: Tarjeta esmeralda `<CheckCircle className="h-5 w-5" /> ✓ Todo el stock está en orden`.
+  - Estado vacío: Tarjeta esmeralda `<CheckCircle  /> ✓ Todo el stock está en orden`.
 - **Grilla "Mermas por Motivo"**:
   - Cabecera roja `bg-red-500 text-white`.
   - Columnas: `"Motivo"`, `"N° Bajas"`, `"Cantidad Total"`, `"Costo Valorizado"` con formato `S/ {monto.toFixed(2)}`.
@@ -1864,17 +1864,17 @@ para emitir comprobantes de pago legalmente válidos y mantener sincronizada la 
 
 **CA-1: Formulario de Datos del Negocio**
 - **Encabezado y Microcopy Normativo**:
-  - Ícono y título: `<Settings className="h-6 w-6 text-indigo-500" /> Datos del Negocio` (`text-xl font-bold text-gray-800`).
+  - Ícono y título: `<Settings  /> Datos del Negocio` (`text-xl font-bold text-gray-800`).
   - Párrafo de advertencia inicial:  
     `"Estos datos aparecen en las boletas y facturas generadas por el sistema. Actualízalos con la información real del negocio antes de salir a producción."` (`text-sm text-gray-500`).
 - **Campo "Nombre de la empresa"**:
-  - Etiqueta: `"Nombre de la empresa"` con asterisco rojo `<span className="text-red-500">*</span>`.
+  - Etiqueta: `"Nombre de la empresa"` con asterisco rojo `<span >*</span>`.
   - Comportamiento SUNAT: Si el nombre provino de una consulta exitosa a SUNAT (`nombreDesdeSunat === true`), el input se bloquea en modo solo lectura (`readOnly bg-gray-50 text-gray-600`), mostrando el microcopy:  
     `"Nombre oficial según SUNAT — no editable. "` con botón enlace `"Editar manualmente"` para desbloquearlo si el usuario lo necesita.
 - **Campo "RUC"**:
   - Etiqueta: `RUC *`.
   - Input: Placeholder `"20123456789"`, `maxLength={11}`, sanitizado solo números.
-  - Botón de consulta SUNAT: `<Search className="h-4 w-4" />` o `<Loader2 className="h-4 w-4 animate-spin" />` con título `"Consultar SUNAT"`. Habilitado solo si tiene 11 dígitos y empieza con `20` (`/^20\d{9}$/`).
+  - Botón de consulta SUNAT: `<Search  />` o `<Loader2  />` con título `"Consultar SUNAT"`. Habilitado solo si tiene 11 dígitos y empieza con `20` (`/^20\d{9}$/`).
   - Validaciones en vivo:
     - Si longitud > 0 y < 11: `"El RUC debe tener 11 dígitos"` (`text-xs text-red-500`).
     - Si longitud es 11 pero no inicia con 20: `"El RUC debe empezar con 20 (persona jurídica): estos son datos de una empresa, no de una persona natural"`.
@@ -1900,11 +1900,11 @@ para emitir comprobantes de pago legalmente válidos y mantener sincronizada la 
     - Título: `"¿Este RUC ({form.ruc}) es el de tu negocio?"` (`font-medium text-yellow-800`).
     - Mensaje de responsabilidad legal:  
       `"Vas a reemplazar el RUC actual ({rucOriginal}) por uno distinto. El sistema no puede verificar la titularidad, así que confirma antes de continuar."`.
-    - Botón de confirmación: `"Sí, guardar este RUC"` (`bg-yellow-600 hover:bg-yellow-700 text-white`).
+    - Botón de confirmación: `"Sí, guardar este RUC"` .
     - Botón de cancelación: `"Cancelar"` (`border-yellow-300 text-yellow-800 hover:bg-yellow-100`, restablece el RUC al original).
 - **Botón de Guardado y Feedback**:
   - Botón principal: `"Guardar cambios"` (`w-full bg-[#6366f1] text-white hover:bg-indigo-600`). Cambia a `"Guardando..."` y se deshabilita durante la petición.
-  - Banner verde de éxito: `"Configuración guardada correctamente"` (`bg-green-50 text-green-600`).
+  - Banner verde de éxito: `"Configuración guardada correctamente"` .
   - Sincronización en caliente: Ejecuta `notificarConfiguracionActualizada()` para que módulos activos como `/ventas` actualicen sus series de comprobante e IGV en tiempo real sin requerir recargar la página.
 
 **CA-3: Escenarios de Aceptación (Gherkin BDD)**

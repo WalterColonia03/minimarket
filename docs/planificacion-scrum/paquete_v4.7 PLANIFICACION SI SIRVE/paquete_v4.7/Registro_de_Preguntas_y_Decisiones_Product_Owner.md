@@ -4,7 +4,8 @@ Título: Compendio de Preguntas, Decisiones y Definiciones de Negocio del Produc
 Versión: 4.8
 Fecha: 2026-09-28
 Elaborado por: Equipo Scrum & Supervisión Metodológica
-Revisado por: Colonia Infantas, Walter (Product Owner)
+Elaborado por: Colonia Infantas, Walter (Lead Developer / Representante Técnico)
+Revisado y Aprobado por: Dueño del Minimarket (Product Owner)
 Estado: Aprobado
 Propósito: Consolidar, categorizar y documentar la totalidad de las preguntas, dilemas operativos y decisiones clave surgidas durante el ciclo de inspección metodológica y planificación del sistema de minimarket, detallando su formulación, impacto funcional y resolución adoptada en la versión oficial 4.8
 Documentos relacionados: DOC-PLAN-00, DOC-PLAN-08, DOC-PLAN-10, DOC-PLAN-11, DOC-ANEXO-B
@@ -25,9 +26,89 @@ El presente compendio reúne, clasifica y resuelve formalmente la totalidad de d
 
 ---
 
-## 2. Categoría I: Decisiones Fundamentales de Negocio y Arquitectura (D1 a D12)
+## 2. Categoría I: Decisiones Fundamentales de Negocio y Arquitectura (D1 a D12 Oficiales v4.8)
 
-### D1: Expiración de Productos y Comercialización el Día de Caducidad
+### D1: Esquema de Sesiones de Usuario Únicas y Política de Sesión Activa
+- **Formulación de la Pregunta:**  
+  *Si un colaborador inicia sesión en una terminal física teniendo una sesión activa previa en otro dispositivo, ¿debe el sistema impedir el nuevo acceso, permitir ambas sesiones simultáneas, o cerrar la sesión anterior notificando al usuario?*
+- **Dilema Operativo:**  
+  Permitir sesiones simultáneas vulnera la trazabilidad de transacciones en mostrador (un vendedor podría operar bajo la cuenta de otro). Bloquear el nuevo acceso puede dejar varado a un colaborador si olvidó cerrar sesión en otra terminal.
+- **Resolución Oficial Adoptada (v4.8):**  
+  **Cierre de sesión anterior con notificación visual inmediata.** El sistema permite el nuevo inicio de sesión y desactiva en tiempo real la sesión previa, desplegando un banner informativo ámbar en la terminal desconectada indicando que el acceso fue revocado por un inicio de sesión concurrente (`HU-AUTH-04` y regla `RN-UI-01`).
+
+---
+
+### D2: Política de Contraseñas y Recuperación por Código de Verificación Temporal de 4 Dígitos
+- **Formulación de la Pregunta:**  
+  *Para la recuperación no asistida de contraseñas de colaboradores, ¿qué mecanismo de validación resulta óptimo en el mostrador: un enlace alfanumérico extenso por correo o un código de verificación numérico temporal de corta longitud?*
+- **Dilema Operativo:**  
+  Los enlaces largos son difíciles de manipular en terminales de caja o teléfonos de mostrador; los códigos breves requieren un tiempo de caducidad estricto para evitar intentos no autorizados.
+- **Resolución Oficial Adoptada (v4.8):**  
+  **Código de verificación temporal de 4 dígitos numéricos con expiración de 15 minutos y longitud mínima de contraseña de 8 caracteres.** Se unificó en `HU-AUTH-05` un código de verificación de 4 dígitos numéricos, limitando los intentos fallidos a un máximo de 5 antes de invalidar la solicitud y exigir asistencia gerencial. Asimismo, toda contraseña de usuario debe contener al menos 8 caracteres combinando mayúsculas, minúsculas y números.
+
+---
+
+### D3: Atribuciones de Catálogo y Consultas Ágiles en Salón
+- **Formulación de la Pregunta:**  
+  *¿Debe el rol Almacenero tener facultades para dar de alta nuevos productos en el catálogo maestro (`HU-PROD-02`), o esta atribución debe reservarse exclusivamente a la Administración y Gerencia?*
+- **Dilema Operativo:**  
+  Permitir que el Almacenero cree productos agiliza la recepción de mercadería no registrada previamente; sin embargo, puede generar duplicidades en nombres, categorías incorrectas o precios de venta errados sin aprobación comercial.
+- **Resolución Oficial Adoptada (v4.8):**  
+  **Segregación de funciones.** La creación, categorización y fijación de precios en el catálogo maestro corresponde exclusivamente a Administrador y Gerente. El Almacenero tiene atribuciones operativas para registrar el ingreso físico de unidades (`UI-010`) y formular solicitudes de reposición (`UI-013`), pero no para alterar la estructura del catálogo. Las búsquedas en mostrador operan mediante consulta ágil por código de barras o descripción.
+
+---
+
+### D4: Emisión Local de Comprobantes SUNAT en Modo Autónomo
+- **Formulación de la Pregunta:**  
+  *¿El sistema debe contemplar la transmisión telemática sincrónica remota hacia los servidores de SUNAT / OSE en cada venta, o debe enfocarse en la generación local estructurada continua?*
+- **Dilema Operativo:**  
+  La transmisión telemática sincrónica depende de servicios web externos que sufren caídas frecuentes, paralizando las colas de cobro en el minimarket si no hay conexión; no cumplir con las normas tributarias acarrea sanciones fiscales.
+- **Resolución Oficial Adoptada (v4.8):**  
+  **Generación local estructurada continua con parámetros SUNAT.** En `HU-VEN-02` y regla **RN-13**, el sistema genera comprobantes locales oficiales (Boletas con serie B001 y Facturas con serie F001) con cálculo del 18 % de IGV y numeración correlativa atómica ininterrumpida. La solución garantiza continuidad operativa total incluso sin conexión a internet, generando los documentos imprimibles y exportables en formato estándar.
+
+---
+
+### D5: Fondo Mínimo Obligatorio para Apertura de Caja y Modalidad de Arqueo
+- **Formulación de la Pregunta:**  
+  *¿Es necesario fijar un monto mínimo obligatorio de dinero en efectivo para que un vendedor pueda habilitar un turno de cobro en mostrador, y cuál es la modalidad de arqueo al cierre?*
+- **Dilema Operativo:**  
+  Permitir aperturas con fondo cero o montos insignificantes paraliza la atención comercial ante la incapacidad de entregar vuelto en efectivo; un arqueo a ciegas retrasa la conciliación de turno al final del día.
+- **Resolución Oficial Adoptada (v4.8):**  
+  **Fondo mínimo normativo de S/ 500.00 y arqueo con saldo visible orientativo.** En la regla **RN-10** y pantalla `UI-016`, el sistema valida que el monto inicial declarado en efectivo no sea inferior a S/ 500.00, alertando visualmente y bloqueando la apertura si no se alcanza dicho umbral. Al cierre, el vendedor declara el recuento físico de efectivo en gaveta y la conciliación del reporte del terminal digital con saldo esperado visible para agilizar el cuadre.
+
+---
+
+### D6: Restricción de Anulación de Ventas a Turnos Abiertos y Reincorporación de Mercadería
+- **Formulación de la Pregunta:**  
+  *¿Bajo qué condiciones puede anularse una venta previamente cobrada y cuál debe ser el destino operativo de los productos devueltos por el cliente?*
+- **Dilema Operativo:**  
+  Si se anulan ventas de turnos ya liquidados o cerrados, se descuadra la contabilidad financiera y fiscal del día; si la mercadería devuelta se reingresa automáticamente al inventario, se corre el riesgo de vender productos rotos o manipulados.
+- **Resolución Oficial Adoptada (v4.8):**  
+  **Anulación restringida a turnos abiertos con destino selectivo.** Según las reglas **RN-08** y **RN-09**, solo Administrador y Gerente pueden anular ventas, y únicamente mientras el turno de caja del cobro permanezca en estado 'Abierto'. El supervisor debe seleccionar obligatoriamente el destino de cada ítem devuelto: retorno al stock disponible o pase directo a bajas por merma/daño (`UI-015`).
+
+---
+
+### D7: Solicitudes de Reposición por Producto Único y Flexibilidad de Proveedores
+- **Formulación de la Pregunta:**  
+  *Las solicitudes de reposición de mercadería emitidas por el almacén, ¿deben estructurarse por producto individual o como pedidos multiproducto asociados a un proveedor obligatorio?*
+- **Dilema Operativo:**  
+  Exigir proveedor obligatorio en la solicitud de reposición limita al personal de almacén si desconoce las negociaciones comerciales de la administración; un modelo complejo dilata la aprobación rápida de compras urgentes.
+- **Resolución Oficial Adoptada (v4.8):**  
+  **Modelo por producto individual con proveedor sugerido.** En `HU-SOL-01` a `HU-SOL-05`, cada solicitud se formula por producto y cantidad requerida, con proveedor sugerido opcional. La Administración evalúa y aprueba cada requerimiento de forma ágil, asignando formalmente el proveedor más conveniente en el momento de la adquisición comercial (RN-16).
+
+---
+
+### D8: Validación de Cobros Digitales Yape/Plin (IziPay) y Código de 6 Dígitos
+- **Formulación de la Pregunta:**  
+  *Al procesar un cobro mediante billetera digital (Yape/Plin) a través de la pasarela física IziPay, ¿debe el sistema exigir la captura del código de autorización emitido por el terminal y verificar que no se duplique en el historial de ventas?*
+- **Dilema Operativo:**  
+  Omitir la captura del código de autorización expone al minimarket a fraudes por comprobantes reutilizados; exigir validación manual externa demora la fila de atención.
+- **Resolución Oficial Adoptada (v4.8):**  
+  **Captura obligatoria y validación de unicidad en tiempo real.** En la regla **RN-02** y pantalla `UI-014`, el sistema exige ingresar los 6 dígitos numéricos del comprobante de autorización emitido por el terminal IziPay, validando en tiempo real que no haya sido registrado previamente en ninguna venta de la historia del establecimiento (`HU-VEN-01` y `HU-VEN-07`).
+
+---
+
+### D9: Control Estricto de Perecibles y Exclusión de Comercialización de Caducados
 - **Formulación de la Pregunta:**  
   *Un lote de producto perecedero cuya fecha de caducidad coincide exactamente con la fecha del día (`fecha_vencimiento == hoy`), ¿debe ser considerado comercializable durante las horas hábiles de esa jornada, o debe ser bloqueado automáticamente en el punto de venta desde la apertura del turno comercial?*
 - **Dilema Operativo:**  
@@ -37,113 +118,33 @@ El presente compendio reúne, clasifica y resuelve formalmente la totalidad de d
 
 ---
 
-### D2: Esquema de Sesiones Concurrentes y Política de Expulsión
-- **Formulación de la Pregunta:**  
-  *Si un colaborador inicia sesión en una terminal física teniendo una sesión activa previa en otro dispositivo, ¿debe el sistema impedir el nuevo acceso, permitir ambas sesiones simultáneas, o invalidar la sesión anterior notificando al usuario expulsado?*
-- **Dilema Operativo:**  
-  Permitir sesiones concurrentes vulnera la trazabilidad de transacciones en mostrador (un cajero podría operar bajo la cuenta de otro). Bloquear el nuevo acceso puede dejar varado a un colaborador si olvidó cerrar sesión en otra terminal.
-- **Resolución Oficial Adoptada (v4.8):**  
-  **Invalidación de sesión anterior con notificación visual inmediata.** El sistema permite el nuevo inicio de sesión y desactiva en tiempo real la sesión previa, desplegando un banner informativo ámbar en la terminal desconectada indicando que el acceso fue revocado por un inicio de sesión concurrente (`HU-AUTH-04` y regla `RN-UI-01`).
-
----
-
-### D3: Recuperación de Credenciales de Acceso mediante Clave Temporal OTP
-- **Formulación de la Pregunta:**  
-  *Para la recuperación no asistida de contraseñas de colaboradores, ¿qué mecanismo de validación resulta óptimo en el mostrador: un enlace alfanumérico extenso por correo o un código de autorización numérico temporal de corta longitud?*
-- **Dilema Operativo:**  
-  Los enlaces largos son difíciles de manipular en terminales de caja o smartphones de mostrador; los códigos breves requieren un tiempo de caducidad estricto para evitar ataques de fuerza bruta.
-- **Resolución Oficial Adoptada (v4.8):**  
-  **Clave temporal OTP de 4 dígitos numéricos con expiración de 15 minutos.** Se unificó en `HU-AUTH-05` un código de autorización de 4 dígitos numéricos, limitando los intentos fallidos a un máximo de 3 antes de invalidar la solicitud y exigir asistencia gerencial.
-
----
-
-### D4: Validación de Cobros Digitales Yape/Plin (IziPay) y Control Antifraude
-- **Formulación de la Pregunta:**  
-  *Al procesar un cobro mediante billetera digital (Yape/Plin (IziPay)) a través de la pasarela física IziPay, ¿debe el sistema exigir la captura del código de autorización emitido por el terminal y verificar que no se duplique en el historial de ventas?*
-- **Dilema Operativo:**  
-  Omitir la captura del código de autorización expone al minimarket a fraudes por capturas de pantalla falsificadas o reutilización del mismo comprobante por clientes inescrupulosos; exigir validación manual externa demora la fila de atención.
-- **Resolución Oficial Adoptada (v4.8):**  
-  **Captura obligatoria y validación de unicidad en tiempo real.** En la regla **RN-02** y pantalla `UI-014`, el sistema exige ingresar los 6 dígitos numéricos del comprobante de autorización emitido por el terminal IziPay, validando en tiempo real que no haya sido registrado previamente en ninguna venta de la historia del establecimiento (`HU-VEN-01` y `HU-VEN-07`).
-
----
-
-### D5: Atribuciones para el Registro de Productos en Catálogo Maestro
-- **Formulación de la Pregunta:**  
-  *¿Debe el rol Almacenero tener facultades para dar de alta nuevos productos en el catálogo maestro (`HU-PROD-02`), o esta atribución debe reservarse exclusivamente a la Administración y Gerencia?*
-- **Dilema Operativo:**  
-  Permitir que el Almacenero cree productos agiliza la recepción de mercadería no registrada previamente; sin embargo, puede generar duplicidades en nombres, categorías incorrectas o precios de venta errados sin aprobación comercial.
-- **Resolución Oficial Adoptada (v4.8):**  
-  **Segregación de funciones.** La creación, categorización y fijación de precios en el catálogo maestro corresponde exclusivamente a Administrador y Gerente. El Almacenero tiene atribuciones operativas para registrar el ingreso físico de unidades (`UI-010`) y formular solicitudes de reposición (`UI-013`), pero no para alterar la estructura del catálogo.
-
----
-
-### D6: Fondo Mínimo Obligatorio para Apertura de Caja
-- **Formulación de la Pregunta:**  
-  *¿Es necesario fijar un monto mínimo obligatorio de dinero en efectivo para que un cajero pueda habilitar un turno de cobro en mostrador?*
-- **Dilema Operativo:**  
-  Permitir aperturas con fondo cero o montos irrisorios paraliza la atención comercial ante la incapacidad de entregar vuelto en efectivo; exigir un monto excesivo inmoviliza capital innecesario en gavetas.
-- **Resolución Oficial Adoptada (v4.8):**  
-  **Fondo mínimo normativo de S/ 500.00.** En la regla **RN-10** y pantalla `UI-016`, el sistema valida que el monto inicial declarado en efectivo no sea inferior a S/ 500.00, alertando visualmente al cajero y bloqueando la apertura si no se alcanza dicho umbral de fluidez operativa.
-
----
-
-### D7: Restricción de Anulación de Ventas y Reincorporación de Mercadería
-- **Formulación de la Pregunta:**  
-  *¿Bajo qué condiciones puede anularse una venta previamente cobrada y cuál debe ser el destino operativo de los productos devueltos por el cliente?*
-- **Dilema Operativo:**  
-  Si se anulan ventas de turnos ya liquidados o cerrados, se descuadra la contabilidad financiera y fiscal del día; si la mercadería devuelta se reingresa ciegamente al inventario, se corre el riesgo de vender productos rotos o manipulados.
-- **Resolución Oficial Adoptada (v4.8):**  
-  **Anulación restringida a turnos abiertos con destino selectivo.** Según las reglas **RN-08** y **RN-09**, solo Administrador y Gerente pueden anular ventas, y únicamente mientras el turno de caja del cobro permanezca en estado 'Abierto'. El supervisor debe seleccionar obligatoriamente el destino de cada ítem devuelto: retorno al stock disponible o pase directo a bajas por merma/daño (`UI-015`).
-
----
-
-### D8: Estructura de Solicitudes de Reposición y Relación con Proveedores
-- **Formulación de la Pregunta:**  
-  *Las solicitudes de reposición de mercadería emitidas por el almacén, ¿deben estructurarse por producto individual o como pedidos multiproducto asociados a un proveedor obligatorio?*
-- **Dilema Operativo:**  
-  Exigir proveedor obligatorio en la solicitud de reposición limita al personal de almacén si desconoce las negociaciones comerciales de la administración; un modelo multiproducto complejo dilata la aprobación rápida de compras urgentes.
-- **Resolución Oficial Adoptada (v4.8):**  
-  **Modelo mono-producto con proveedor sugerido.** En `HU-SOL-01` a `HU-SOL-05`, cada solicitud se formula por producto y cantidad requerida, con proveedor sugerido opcional. La Administración evalúa y aprueba cada requerimiento de forma ágil, asignando formalmente el proveedor en el momento de la adquisición comercial.
-
----
-
-### D9: Alcance Tributario de Comprobantes SUNAT (Offline vs Integración Externa)
-- **Formulación de la Pregunta:**  
-  *¿El sistema debe contemplar la transmisión telemática sincrónica remota hacia los servidores de SUNAT / OSE en cada venta, o debe enfocarse en la generación local estructurada continua?*
-- **Dilema Operativo:**  
-  La transmisión telemática sincrónica depende de servicios web externos que sufren caídas frecuentes, paralizando las colas de cobro en el minimarket si no hay conexión; no cumplir con las normas tributarias acarrea multas fiscales.
-- **Resolución Oficial Adoptada (v4.8):**  
-  **Generación local estructurada continua con parámetros SUNAT.** En `HU-VEN-02` y regla **RN-13**, el sistema genera comprobantes locales oficiales (Boletas con serie B001 y Facturas con serie F001) con cálculo del 18 % de IGV y numeración correlativa atómica ininterrumpida. La solución garantiza continuidad operativa total incluso sin conexión a internet, generando los documentos imprimibles y exportables en formato estándar.
-
----
-
-### D10: Capacidad Neta del Sprint 1 y Gestión del Factor de Contingencia
-- **Formulación de la Pregunta:**  
-  *Dado que en la primera semana del Sprint 1 el equipo realiza ceremonias de alineación e inducción, ¿debe recortarse la capacidad oficial de 240 horas o mantenerse constante absorbiendo la varianza en el factor de contingencia?*
-- **Dilema Operativo:**  
-  Reducir la capacidad del Sprint 1 alteraría la métrica de velocidad y desbalancearía los modelos de costos; mantenerla sin justificación matemática aparenta optimismo irreal.
-- **Resolución Oficial Adoptada (v4.8):**  
-  **Capacidad oficial inmutable de 240 horas netas.** Se ratifica la fórmula matemática: 6 desarrolladores × 25 horas semanales × 2 semanas = 300 horas brutas; aplicando el 80 % de factor de disponibilidad neta = 240 horas netas por sprint (40 h netas por desarrollador). Las horas de inducción se absorben formalmente dentro de las 60 horas del margen de contingencia del 20 % no computadas en el esfuerzo de tareas (502 horas totales).
-
----
-
-### D11: Inmutabilidad de Registros Históricos de Almacén y Control de Lotes
+### D10: Inmutabilidad de Registros Históricos de Almacén y Regularización por Ajuste
 - **Formulación de la Pregunta:**  
   *Cuando se comete un error en el registro de una entrada o baja de mercadería, ¿debe permitirse la edición o eliminación directa del movimiento registrado?*
 - **Dilema Operativo:**  
-  Permitir la edición de registros históricos destruye la trazabilidad contable del kardex y facilita fraudes internos; prohibirla exige un mecanismo formal de compensación.
+  Permitir la edición de registros históricos destruye la trazabilidad contable del inventario valorizado y facilita fraudes internos; prohibirla exige un mecanismo formal de compensación.
 - **Resolución Oficial Adoptada (v4.8):**  
-  **Kardex inmutable y regularización por ajuste formal.** Los movimientos de almacén registrados son estrictamente inmutables. Todo error o discrepancia física debe corregirse mediante el flujo formal de Ajuste de Inventario (`HU-INV-06` y `UI-012`), justificando el motivo y registrando al supervisor responsable.
+  **Registro de movimientos inmutable y regularización por ajuste formal.** Los movimientos de almacén registrados son estrictamente inmutables. Todo error o discrepancia física debe corregirse mediante el flujo formal de Ajuste de Inventario (`HU-INV-06` y `UI-012`), justificando el motivo y registrando al supervisor responsable.
 
 ---
 
-### D12: Modelo de Gobernanza Scrum y Segregación de Tareas (Construye vs Verifica)
+### D11: Generación y Descarga de Comprobantes y Reportes Ejecutivos en PDF
 - **Formulación de la Pregunta:**  
-  *¿Puede un mismo desarrollador programar la lógica de negocio de una historia y certificar a la vez sus pruebas de control de calidad (QA)?*
+  *¿Cómo debe resolverse la entrega de comprobantes y reportes gerenciales para garantizar su portabilidad y validez documental?*
 - **Dilema Operativo:**  
-  Asignar construcción y verificación al mismo desarrollador reduce tiempos de coordinación; no obstante, genera sesgos de confirmación y permite que defectos no detectados pasen a producción.
+  Depender exclusivamente de pantallas de consulta dificulta auditorías contables externas y la entrega de sustento fiscal a clientes corporativos.
 - **Resolución Oficial Adoptada (v4.8):**  
-  **Principio estricto de segregación "Construye no es igual a Verifica".** En [DOC-PLAN-07](07_Desglose_de_Tareas_Task_Breakdown.md), las tareas de Construcción (pasos 1 a 5 y 7; 296 h) y las tareas de Verificación QA (pasos 6 y 8; 206 h) se asignan a desarrolladores distintos, garantizando objetividad y rigor en la certificación del incremento.
+  **Generación estándar en formato descargable e imprimible.** Se implementa la generación de comprobantes de pago en PDF (`HU-VEN-03`) y reportes analíticos periódicos (`HU-REP-09`), permitiendo su descarga directa o distribución por correo electrónico.
+
+---
+
+### D12: Modelo de Gobernanza Scrum y Segregación de Tareas (Construye ≠ Verifica)
+- **Formulación de la Pregunta:**  
+  *¿Cómo se garantiza la calidad técnica del producto manteniendo la independencia del aseguramiento de calidad sin sobrecargar al equipo de desarrollo?*
+- **Dilema Operativo:**  
+  Permitir que el mismo desarrollador verifique su propio código introduce sesgo de confirmación y eleva la deuda técnica; contratar un equipo de QA externo encarece el presupuesto.
+- **Resolución Oficial Adoptada (v4.8):**  
+  **Principio estricto Construye ≠ Verifica.** Ningún desarrollador puede validar ni realizar el pase de sus propias historias. El esfuerzo total de 502 horas en 363 tareas se divide en 296 h de Construcción (59.0 %) y 206 h de Verificación de Calidad (41.0 %, compuesto por 131.75 h de pruebas unitarias/integración y 74.25 h de verificación funcional y pase web).
 
 ---
 
@@ -151,7 +152,7 @@ El presente compendio reúne, clasifica y resuelve formalmente la totalidad de d
 
 | Identificador | Asunto / Pregunta de Negocio | Decisión y Resolución Adoptada en v4.8 | Documento / Regla Impactada |
 |:---:|:---|:---|:---:|
-| **PP-01** | ¿Cuál es la longitud óptima de la clave temporal OTP? | 4 dígitos numéricos con expiración de 15 minutos. | `HU-AUTH-05` / DOC-PLAN-03-01 |
+| **PP-01** | ¿Cuál es la longitud óptima de la código de verificación temporal? | 4 dígitos numéricos con expiración de 15 minutos. | `HU-AUTH-05` / DOC-PLAN-03-01 |
 | **PP-02** | ¿Qué porcentaje de IGV rige en el sistema? | 18 % legal vigente en el territorio nacional. | `HU-CONF-02`, `HU-VEN-01a` / DOC-PLAN-08 |
 | **PP-03** | ¿Cuál es la matriz de permisos por roles? | 8 módulos funcionales sincronizados con los 5 roles del minimarket. | `DOC-PLAN-01`, `DOC-PLAN-02` |
 | **PP-04** | ¿Quiénes intervienen en el flujo de reposición? | Almacenero formula requerimiento; Administrador autoriza adquisición. | `HU-SOL-03`, `HU-SOL-04` / DOC-PLAN-03-03 |
@@ -224,13 +225,13 @@ El presente compendio reúne, clasifica y resuelve formalmente la totalidad de d
 - **Argumentación para la Sustentación:**  
   El presupuesto se sustenta en la fórmula contractual del estándar académico:
   $$\text{Presupuesto} = 6 \text{ semanas} \times \text{S/ 625.00/semana/desarrollador} \times 6 \text{ desarrolladores} = \text{S/ 22,500.00}$$
-  Esto equivale exactamente a **S/ 7,500.00 por sprint o release** (100 % costo laboral directo). Dado que el equipo aporta 240 horas netas por sprint (40 h netas por desarrollador con factor 80 %), la tarifa neta efectiva resulta de **S/ 25.00 por hora neta**, cubriendo con solvencia las 502 horas oficiales de esfuerzo desglosado en las 363 tareas (296 h de Construcción y 206 h de Verificación QA).
+  Esto equivale exactamente a **S/ 7,500.00 por sprint o release** (100 % costo laboral directo). La remuneración contractual corresponde a **S/ 25.00 por hora bruta** (S/ 625.00 / 25 h semanales por desarrollador), lo que equivale a una tarifa de **S/ 31.25 por hora neta de desarrollo efectivo** (S/ 7,500.00 / 240 h netas por sprint), cubriendo con solvencia las 502 horas oficiales de esfuerzo desglosado en las 363 tareas (296 h de Construcción y 206 h de Verificación QA).
 
-### P-32: Separación entre Especificación Funcional y Evidencia Técnica
+### P-32: Independencia de la Especificación de Requisitos y Enfoque de Negocio
 - **Pregunta:**  
-  *¿Por qué en los 18 documentos de planificación no figuran detalles de programación ni especificaciones técnicas físicas?*
+  *¿Por qué la documentación de planificación se enfoca estrictamente en reglas de negocio, interfaces y valor para el usuario, sin acoplarse a detalles internos de código o componentes específicos de implementación?*
 - **Argumentación para la Sustentación:**  
-  Porque, bajo los estándares internacionales **ISO/IEC/IEEE 29148** y la **Scrum Guide 2020**, la especificación de requisitos del Product Owner debe ser una declaración contractual de valor y comportamiento del sistema (*a priori*), independiente de la tecnología de implementación subyacente. Los detalles técnicos físicos de construcción se encuentran resguardados con rigor en el expediente interno confidencial de ingeniería (`expediente interno de trazabilidad técnica`).
+  Bajo las mejores prácticas de la ingeniería de requisitos (**ISO/IEC/IEEE 29148**) y la **Scrum Guide 2020**, los artefactos del Product Owner deben expresar qué necesita el negocio y cómo debe responder el sistema para satisfacer al usuario final, preservando la neutralidad tecnológica y permitiendo al equipo técnico diseñar la mejor solución arquitectónica.
 
 ---
 

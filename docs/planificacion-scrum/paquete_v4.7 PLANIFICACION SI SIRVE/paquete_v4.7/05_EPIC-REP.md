@@ -38,8 +38,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A (parámetros institucionales transversales).
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (autenticación y verificación del rol Administrador).
+**Dependencias:**
+- Requiere `HU-CONF-02` (parámetros configurados en Sprint 1).
 
 ---
 
@@ -66,8 +66,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A (parámetros institucionales de configuración fiscal).
 
-**Dependencias:** 
-- Requiere `HU-CONF-01` (lectura de parámetros previos) y `HU-AUTH-01` (control de acceso de Administrador).
+**Dependencias:**
+- Requiere `HU-AUTH-01` (acceso administrativo para fijar parámetros del negocio).
 
 ---
 
@@ -95,8 +95,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (autenticación de Gerente/Administrador) y `HU-VEN-01` (ventas registradas en POS).
+**Dependencias:**
+- Requiere `HU-VEN-01` (ventas procesadas para resumen comercial).
 
 ---
 
@@ -121,8 +121,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - RN-06 (Alerta de Stock Mínimo)
 
-**Dependencias:** 
-- Requiere `HU-DASH-01` (estructura de cuadro de mando), `HU-CAJA-01` (apertura de turnos) y `HU-PROD-02` (parámetros de stock mínimo).
+**Dependencias:**
+- Requiere `HU-INV-01` y `HU-CAJA-05` (stock y turnos de caja para alertas).
 
 ---
 
@@ -147,12 +147,12 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-DASH-01` (panel principal e ingresos agregados).
+**Dependencias:**
+- Requiere `HU-VEN-01` (ventas procesadas para curva analítica diaria).
 
 ---
 
-### HU-DASH-04 · Dashboard – Ver ranking de productos más vendidos en dashboard
+### HU-DASH-04 · Dashboard – Ver ranking de productos más vendidos
 
 | Identificador | Épica | Prioridad MoSCoW | Estimación | Release | Sprint |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -173,8 +173,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-DASH-01` (datos de ventas del panel) y `HU-PROD-01` (catálogo de productos).
+**Dependencias:**
+- Requiere `HU-VEN-01` (ventas procesadas para ranking de productos).
 
 ### HU-DASH-05 · Dashboard – Ver solicitudes de reposición pendientes
 
@@ -196,8 +196,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-DASH-01` (panel ejecutivo) y `HU-SOL-01` (generación de solicitudes de reposición).
+**Dependencias:**
+- Requiere `HU-SOL-01` (solicitudes pendientes para panel gerencial).
 
 ---
 
@@ -224,8 +224,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-AUTH-01` (acceso Gerente/Administrador) y `HU-VEN-01` (registro de ventas).
+**Dependencias:**
+- Requiere `HU-VEN-01` (ventas procesadas para consolidado periódico).
 
 ---
 
@@ -250,8 +250,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-REP-01` (filtros temporales del módulo) y `HU-PROD-01` (catálogo de productos).
+**Dependencias:**
+- Requiere `HU-VEN-01` (ventas procesadas para ranking detallado).
 
 ---
 
@@ -276,8 +276,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-REP-01` (parámetros de consulta y módulo de reportes).
+**Dependencias:**
+- Requiere `HU-VEN-01` (ventas procesadas para desglose diario).
 
 ---
 
@@ -302,8 +302,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-REP-01` (módulo de reportes y ventas registradas).
+**Dependencias:**
+- Requiere `HU-VEN-01` (ventas procesadas para desglose por medio de pago).
 
 ### HU-REP-05 · Reportes – Ver stock crítico
 
@@ -328,8 +328,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - RN-06 (Alerta de Stock Mínimo)
 
-**Dependencias:** 
-- Requiere `HU-REP-01` (módulo de reportes) y `HU-PROD-02` (parámetros de stock mínimo en productos).
+**Dependencias:**
+- Requiere `HU-INV-01` (inventario valorizado para reporte de stock crítico).
 
 ---
 
@@ -353,8 +353,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-REP-01` (módulo de reportes) y `HU-PROD-01` (catálogo de productos).
+**Dependencias:**
+- Requiere `HU-INV-01` (entradas registradas para reporte de inventario).
 
 ---
 
@@ -379,8 +379,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - RN-14 (Actualización de Valorización de Inventario)
 
-**Dependencias:** 
-- Requiere `HU-REP-01` (módulo de reportes y ventas) y `HU-INV-01` (costos valorizados de entrada en inventario).
+**Dependencias:**
+- Requiere `HU-VEN-01` y `HU-INV-01` (ventas y costo promedio para margen de ganancia).
 
 ---
 
@@ -405,8 +405,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-REP-01` (filtros temporales) y `HU-INV-02` (registro de bajas de inventario).
+**Dependencias:**
+- Requiere `HU-INV-02` (bajas registradas para reporte de mermas).
 
 ---
 
@@ -431,5 +431,5 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Reglas de negocio aplicables:** 
 - N/A.
 
-**Dependencias:** 
-- Requiere `HU-REP-01` (módulo de reportes consolidados).
+**Dependencias:**
+- Requiere `HU-REP-01` (reporte estructurado para exportación a PDF).
