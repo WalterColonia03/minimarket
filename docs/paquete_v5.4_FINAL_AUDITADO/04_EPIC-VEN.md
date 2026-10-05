@@ -58,7 +58,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** el colaborador finaliza su jornada con un turno en estado «Abierto», **cuando** ingresa el arqueo físico contando el efectivo en gaveta e introduce el total del reporte de liquidación emitido por el terminal IziPay para pagos digitales y confirma el cierre, **entonces** el sistema pasa el turno a estado «Cerrado», calcula automáticamente las diferencias respecto a los saldos esperados, registra las observaciones del vendedor e inhabilita inmediatamente las funciones de cobro en el POS para ese turno.
-2. **Dado que** el colaborador ejecuta el arqueo de cierre, **cuando** introduce el recuento físico de efectivo y la liquidación del terminal digital, **entonces** el formulario de cierre procesará la declaración bajo la modalidad institucional de arqueo con saldo esperado visible en pantalla , orientando al colaborador en la conciliación previa al guardado formal.
+2. **Dado que** el colaborador ejecuta el arqueo de cierre, **cuando** introduce el recuento físico de efectivo y la liquidación del terminal digital, **entonces** el formulario de cierre procesará la declaración a través de un modal que indica «Cuenta el efectivo y Yape físico», sin exponer el saldo esperado en la vista de captura. Asimismo, el campo «Observaciones» se presenta visualmente como opcional en la interfaz, aunque la API lo exige como obligatorio en caso de registrarse un descuadre.
 3. **Dado que** un turno ha quedado formalmente en estado «Cerrado», **cuando** el vendedor intenta registrar una nueva venta o movimiento manual bajo dicho turno, **entonces** el sistema deniega el acceso exigiendo la apertura de un nuevo turno para continuar operando.
 4. **Dado que** el usuario interactúa con el formulario de arqueo final, **cuando** declara los importes físicos y la liquidación digital y visualiza el resumen del cuadre, **entonces** la interfaz satisface rigurosamente los estándares visuales y de microcopy de UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -113,7 +113,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad de apoyo operativo importante (Should have); proporciona transparencia al operador y facilita la reconciliación preventiva de valores en el Release 2 sin interferir con la velocidad de atención al cliente.
 
 **Criterios de aceptación:**
-1. **Dado que** el vendedor mantiene un turno en estado «Abierto», **cuando** consulta el panel de resumen de turno, **entonces** el sistema presenta un tablero consolidado con el monto de apertura, el volumen acumulado de ventas, el subtotal recaudado en efectivo físico, el total capturado en pagos digitales y los ingresos/egresos manuales procesados.
+1. **Dado que** el vendedor mantiene un turno en estado «Abierto», **cuando** consulta el panel de resumen de turno, **entonces** el sistema presenta tarjetas de resumen con la Apertura, Efectivo acumulado y Yape acumulado, seguido de una lista de «Movimientos del turno» detallando las operaciones manuales, sin presentar un total global de ventas ni totales separados de ingresos y egresos.
 2. **Dado que** el negocio define sus políticas de control interno según la decisión formal D1 (saldo esperado visible) y decisión formal D2 (tolerancia cero en descuadres no justificados), **cuando** el colaborador visualiza el resumen, **entonces** la visibilidad de los saldos teóricos esperados y las alertas de desviación se presentan orientando la conciliación y requiriendo justificación obligatoria ante cualquier descuadre.
 3. **Dado que** el colaborador consulta el estado del turno, **cuando** interactúa con las tarjetas de métricas y opciones de actualización, **entonces** la pantalla cumple las pautas visuales y de microcopy de UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -142,10 +142,10 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad indispensable de supervisión y control financiero (Must have); permite a la administración diaria cuadrar el flujo monetario del negocio y conciliar la caja con el patrimonio declarado en el MVP (Release 1).
 
 **Criterios de aceptación:**
-1. **Dado que** la jefatura requiere conciliar períodos contables anteriores, **cuando** aplica filtros de búsqueda por rango de fechas, vendedor responsable o estado del turno («Abierto» o «Cerrado»), **entonces** el sistema despliega el listado cronológico de turnos exhibiendo identificador, colaborador, fecha y hora de apertura/cierre, monto inicial, efectivo esperado, monto físico declarado, diferencias de arqueo y estado.
-2. **Dado que** el Administrador o Gerente inspecciona una fila del listado de turnos, **cuando** pulsa sobre el registro o su botón de detalle, **entonces** el sistema exhibe el desglose exhaustivo de movimientos del turno, incluyendo las ventas individuales realizadas, movimientos manuales de caja chica y, de corresponder, la identidad del Administrador o Gerente que intervino en cierres forzados con su motivo fundamentado.
+1. **Dado que** la jefatura requiere conciliar períodos contables anteriores, **cuando** aplica filtros de búsqueda por rango de fechas y estado del turno (sin disponer de filtro por vendedor), **entonces** el sistema despliega el listado exhibiendo las columnas visuales: Apertura, Cajero, Apertura (S/), Efec. esperado, Dif. efec., Yape esperado, Dif. Yape, Estado y Acción.
+2. **Dado que** el Administrador o Gerente inspecciona una fila del listado de turnos, **cuando** pulsa sobre el botón desplegable de la fila, **entonces** el detalle se muestra integrado en la misma grilla informando el detalle del cierre forzado, sin llegar a exhibir un desglose exhaustivo de las ventas individuales en esa vista.
 3. **Dado que** el directivo utiliza la pantalla de historial de turnos, **cuando** navega por los filtros y grillas de supervisión, **entonces** la interfaz satisface íntegramente las especificaciones de diseño y microcopy de UI-017 (Historial de Cajas y Cierres Forzados) del Catálogo de Interfaces (DOC-ANEXO-B).
-4. **Dado que** los filtros no coinciden con ningún turno registrado, **cuando** se actualiza la consulta, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay usuarios registrados».
+4. **Dado que** los filtros no coinciden con ningún turno registrado, **cuando** se actualiza la consulta, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay turnos para mostrar.».
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -199,6 +199,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** el cliente opta por cancelar en efectivo, **cuando** el vendedor ingresa el importe entregado, **entonces** el sistema valida que sea mayor o igual al monto total de la compra, calcula automáticamente el vuelto correspondiente, valida que la gaveta de caja cuente con saldo de efectivo suficiente para el cambio y registra la venta al confirmar el cobro.
 3. **Dado que** el cliente opta por abonar mediante billetera digital (Yape o Plin a través de terminal IziPay), **cuando** el operador introduce el código de confirmación o autorización emitido por el POS, **entonces** el sistema valida que conste de exactamente 6 dígitos numéricos y verifica que dicho código no haya sido registrado en ninguna venta previa (RN-02).
 4. **Dado que** el vendedor interactúa con el carrito, buscador y teclado numérico de cobro, **cuando** procesa las líneas y confirma la transacción, **entonces** la interfaz satisface los lineamientos de accesibilidad, controles y microcopy especificados en UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
+5. **Dado que** el vendedor realiza una búsqueda manual de producto por nombre o marca que no coincide con las existencias, **cuando** ejecuta la consulta, **entonces** el sistema despliega el mensaje de estado vacío «No se encontraron productos».
 
 **Reglas de negocio aplicables:** 
 - RN-02 (Protección contra Pagos Duplicados Yape/Plin (IziPay))
@@ -246,8 +247,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad de control gerencial importante (Should have); complementa el cierre operativo del vendedor con una etapa de revisión y aprobación administrativa que previene la consolidación de descuadres no analizados en el Release 2.
 
 **Criterios de aceptación:**
-1. **Dado que** un turno de caja se encuentra en estado «Cerrado» y no ha sido validado previamente, **cuando** el Administrador o Gerente revisa el arqueo físico frente al saldo esperado y confirma su conformidad, **entonces** el sistema registra la aprobación administrativa, asocia la identidad del directivo responsable y la fecha de validación, manteniendo el estado «Cerrado» definitivo del turno.
-2. **Dado que** el directivo inspecciona un turno cerrado con reporte de descuadre (sobrante o faltante), **cuando** examina el detalle de liquidación, **entonces** el sistema expone el desglose comparativo de montos: fondo de apertura, recaudación en efectivo, ventas digitales, egresos e ingresos manuales, monto físico declarado por el vendedor y la diferencia monetaria resultante.
+1. **Dado que** un turno de caja se encuentra en estado «Cerrado» y no ha sido validado previamente, **cuando** el Administrador o Gerente revisa el arqueo físico frente al saldo esperado y confirma su conformidad, **entonces** el sistema registra la aprobación administrativa, asocia la identidad del directivo responsable (`aprobado_por`), sin registrar una fecha de validación independiente.
+2. **Dado que** el directivo inspecciona un turno cerrado con reporte de descuadre (sobrante o faltante), **cuando** examina el detalle de liquidación, **entonces** el sistema permite procesar la revisión, aunque la interfaz gráfica actualmente omite exponer un desglose comparativo completo en pantalla.
 3. **Dado que** la jefatura supervisa los arqueos desde el panel administrativo, **cuando** interactúa con los módulos de revisión y confirmación, **entonces** las pantallas satisfacen los lineamientos visuales, grillas de control y microcopy especificados en UI-016 (Turno de Caja y Arqueo Inicial) y UI-017 (Historial de Cajas y Cierres Forzados) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -325,11 +326,11 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad crítica de servicio y atención al cliente (Must have); indispensable en el Release 1 para verificar tickets emitidos ante devoluciones inmediatas, reclamos de vuelto o aclaraciones en caja.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil Vendedor consulta el historial de ventas, **cuando** carga la pantalla de consulta, **entonces** el sistema filtra automáticamente las transacciones mostrando únicamente las ventas procesadas por su propio usuario durante su turno, garantizando la privacidad y segregación estricta entre vendedores (RN-07).
-2. **Dado que** un directivo con perfil Administrador o Gerente accede al historial, **cuando** aplica filtros de búsqueda, **entonces** el sistema despliega las transacciones comerciales de todos los vendedores del minimarket, permitiendo filtrar por rango de fechas, número de serie/correlativo, medio de pago y estado de la venta.
+1. **Dado que** un colaborador con perfil Vendedor consulta el historial de ventas, **cuando** carga la pantalla de consulta, **entonces** el sistema filtra automáticamente las transacciones mostrando las ventas procesadas por su propio usuario en todos sus turnos (sin restringirse al turno actual), garantizando la privacidad frente a otros vendedores (RN-07).
+2. **Dado que** un directivo con perfil Administrador o Gerente accede al historial, **cuando** aplica filtros de búsqueda, **entonces** el sistema despliega las transacciones comerciales de todos los vendedores del minimarket, permitiendo filtrar por rango de fechas, método de pago y un cuadro de búsqueda por «DNI/RUC o Correlativo», sin contar con filtro por estado de la venta.
 3. **Dado que** el usuario localiza una transacción específica en la grilla y pulsa en ver detalle, **cuando** el sistema abre la vista ampliada, **entonces** se visualiza la relación completa de artículos vendidos, cantidades, precios unitarios, subtotales, método de pago, código de autorización si fue billetera digital y datos del cliente.
 4. **Dado que** el operador consulta el módulo de ventas históricas, **cuando** interactúa con los filtros y la grilla de comprobantes, **entonces** la pantalla satisface las especificaciones de interfaz descritas en UI-015 (Historial de Ventas y Anulaciones) del Catálogo de Interfaces (DOC-ANEXO-B).
-5. **Dado que** la búsqueda no arroja coincidencias de ventas en el rango o criterios seleccionados, **cuando** se ejecuta el filtro, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay usuarios registrados».
+5. **Dado que** la búsqueda no arroja coincidencias de ventas en el rango o criterios seleccionados, **cuando** se ejecuta el filtro, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No se encontraron ventas».
 
 **Reglas de negocio aplicables:** 
 - RN-07 (Privacidad y Segregación de Ventas)
@@ -354,7 +355,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Criterios de aceptación:**
 1. **Dado que** el cliente solicita la anulación de una compra y devolución de su dinero, **cuando** el Administrador o Gerente evalúa la solicitud y el turno de caja en el que se efectuó la venta se encuentra todavía en estado «Abierto», **entonces** el sistema procesa la anulación autorizada, registra un movimiento de egreso por devolución en la gaveta de caja y cambia el estado de la venta a «Anulada».
 2. **Dado que** el turno de caja donde se emitió el comprobante original ya fue cerrado formalmente, **cuando** la supervisión intenta anular la venta, **entonces** el sistema bloquea inmediatamente la operación indicando que solo se admiten anulaciones sobre turnos de caja activos y abiertos, preservando la inmutabilidad de los arqueos ya conciliados (RN-08).
-3. **Dado que** la anulación involucra múltiples productos, **cuando** el Administrador o Gerente procesa la devolución, **entonces** el sistema exige determinar individualmente por cada artículo si reingresa al inventario disponible para venta o si se deriva a baja por merma (seleccionando obligatoriamente el motivo específico de la pérdida comercial, tipificado unívocamente como «Dañado» o «Vencido»), garantizando que productos deteriorados no vuelvan al anaquel comercial (RN-09).
+3. **Dado que** la anulación involucra múltiples productos, **cuando** el Administrador o Gerente procesa la devolución, **entonces** el sistema exige determinar individualmente por cada artículo si reingresa al inventario disponible para venta o si se deriva a baja por merma (seleccionando obligatoriamente el motivo específico de la pérdida comercial, tipificado unívocamente como «Dañado» o «Vencido»), garantizando que productos deteriorados no vuelvan al anaquel comercial (RN-09). *(Nota técnica: Aunque la interfaz gráfica despliega 6 opciones genéricas para el motivo al anular, la API de backend exige estrictamente los motivos "Dañado" o "Vencido").*
 4. **Dado que** la jefatura procesa la anulación y devolución desde el panel histórico, **cuando** confirma la justificación y los destinos de mercadería, **entonces** la interfaz satisface los lineamientos visuales, formularios modales y advertencias descritos en UI-015 (Historial de Ventas y Anulaciones) del Catálogo de Interfaces (DOC-ANEXO-B).
 5. **Dado que** la venta original que se anula fue cobrada mediante billetera digital (Yape o Plin vía terminal IziPay), **cuando** el Administrador o Gerente autoriza la anulación, **entonces** el sistema registra la anulación identificando el medio de pago original sin restar dinero en efectivo de la gaveta de caja (preservando el saldo exacto en billetes y monedas para el arqueo físico de cierre), actualiza el balance de cobros digitales en el reporte de caja activa e inhabilita el código de autorización vinculado para evitar dobles conciliaciones (RN-02, RN-08).
 6. **Dado que** la anulación de una venta formalizada es confirmada, **cuando** el sistema actualiza el registro a estado «Anulada», **entonces** el número correlativo oficial y serie permanecen asignados a la venta anulada sin reutilizarse, y el código de autorización digital correspondiente permanece inhabilitado históricamente sin admitir reuso (RN-02).
@@ -406,7 +407,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad de distribución de comprobantes por correo electrónico y soporte al cliente importante (Should have); programada en el Release 3 de consolidación de servicios para sustituir tickets impresos dañados o perdidos y brindar respaldo digital a los consumidores.
 
 **Criterios de aceptación:**
-1. **Dado que** una venta ha sido formalizada y cuenta con su numeración oficial ininterrumpida (RN-13), **cuando** el colaborador solicita la emisión del comprobante, **entonces** el sistema genera una representación visual estructurada que contiene los datos fiscales del minimarket, datos del cliente, desglose de ítems, precios unitarios y número de serie y correlativo oficial, apta para impresión térmica o guardado en formato digital por el navegador.
+1. **Dado que** una venta ha sido formalizada y cuenta con su numeración oficial ininterrumpida (RN-13), **cuando** el colaborador solicita la emisión del comprobante, **entonces** el sistema genera una representación visual estructurada que contiene los datos fiscales del minimarket, datos del cliente, desglose de ítems, precios unitarios y número de serie y correlativo oficial, apta para guardado en formato digital, generándose estrictamente en formato de página A4 vertical (no adaptado para impresión térmica de tickets).
 2. **Dado que** el cliente solicita recibir su comprobante por vía digital, **cuando** el operador introduce una dirección de correo electrónico válida y confirma el reenvío, **entonces** el sistema despacha una constancia detallada en formato HTML con la tabla de productos y totales directamente al buzón del destinatario y emite un mensaje de entrega exitosa.
 3. **Dado que** el colaborador intenta reenviar un comprobante, **cuando** introduce una dirección de correo con formato inválido o campos vacíos, **entonces** el sistema bloquea el despacho exigiendo una estructura válida de correo electrónico.
 4. **Dado que** el usuario consulta cualquier venta del historial, **cuando** interactúa con las opciones de descarga o reenvío digital, **entonces** la interfaz satisface los estándares visuales y de interacción descritos en UI-015 (Historial de Ventas y Anulaciones) del Catálogo de Interfaces (DOC-ANEXO-B).
@@ -434,7 +435,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Criterios de aceptación:**
 1. **Dado que** el vendedor se encuentra en la pantalla de Punto de Venta con una caja abierta, **cuando** escanea con el lector óptico el código de barras de un producto activo, **entonces** el sistema localiza el artículo en el catálogo y lo agrega de inmediato al carrito de compra con cantidad inicial 1.
 2. **Dado que** un artículo ya figura en el carrito de compras, **cuando** el colaborador escanea nuevamente su código de barras una o más veces sucesivas, **entonces** el sistema incrementa la cantidad en la misma fila del producto en vez de generar filas duplicadas.
-3. **Dado que** el colaborador escanea un código de barras inexistente en el catálogo o perteneciente a un producto desactivado, **cuando** el escáner envía el código, **entonces** el sistema emite una alerta auditiva o visual notificando que el código no corresponde a ningún producto comercializable activo.
+3. **Dado que** el colaborador escanea un código de barras inexistente en el catálogo o perteneciente a un producto desactivado, **cuando** el escáner envía el código, **entonces** el sistema emite un mensaje visual «Código de barras no registrado».
 4. **Dado que** el vendedor utiliza la interfaz de cobro, **cuando** interactúa con el buscador óptico y visualiza la lista dinámica del carrito, **entonces** la pantalla cumple rigurosamente las pautas de diseño y microcopy de UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -445,17 +446,17 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 ---
 
-### HU-VEN-08 · Ventas (POS) – Exportar historial de ventas a documento portátil (PDF)
+### HU-VEN-08 · Ventas (POS) – Exportar historial de ventas a documento portátil (PDF) (Fuera de Alcance)
 
 | Identificador | Épica | Prioridad MoSCoW | Estimación | Release | Sprint |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| HU-VEN-08 | EPIC-VEN | Could have | 3 | REL-3 | SPR-3 |
+| HU-VEN-08 | EPIC-VEN | Won't have | 3 | Ninguno | Ninguno |
 
 **Como** Administrador o Gerente del minimarket,  
 **quiero** exportar reportes o listados históricos de transacciones comerciales a un documento (PDF descargable),  
 **para** realizar conciliaciones contables en herramientas externas de hoja de cálculo y facilitar el envío de reportes mensuales al estudio contable externo.
 
-**Justificación de exclusión:** Generación de archivo mediante motor de renderizado PDF del lado del cliente (jsPDF) para evitar sobrecarga de procesamiento en el servidor.
+**Justificación de exclusión:** En el módulo del Historial de Ventas solo existe el PDF de un comprobante y reenvío por correo. La funcionalidad masiva en PDF se reubica conceptualmente en el «Reporte de Ventas» dentro de EPIC-REP. Por tanto, esta HU puntual se declara fuera de alcance (no implementada en EPIC-VEN).
 
 **Criterios de aceptación:**
 1. **Dado que** el directivo consulta el historial de ventas con filtros de fechas o comprobantes aplicados, **cuando** presiona la opción de exportar datos a archivo PDF, **entonces** el sistema genera y descarga un archivo estructurado con los registros correspondientes al filtro activo.

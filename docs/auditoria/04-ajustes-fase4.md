@@ -1,0 +1,10 @@
+## Respuestas para continuar la Fase 4
+
+Aquí tienes las respuestas a tus 4 preguntas, verificadas directamente en el código de la plataforma:
+
+1. **Ajuste (prioridad):** Al intentar registrar un ajuste con cantidad diferente al stock y el campo Observaciones vacío, la interfaz lo permite enviar, pero **el backend rechaza la solicitud** con el código 400 y el mensaje *"Debe ingresar una justificación para el ajuste"*. Este mensaje de error es interceptado por el frontend y mostrado al usuario a través de un componente *Toast* (notificación). Por lo tanto, el sistema real SÍ exige obligatoriamente las observaciones para ajustes con descuadre.
+2. **POS sin turno:** Al ingresar a `/pos` sin un turno abierto, la pantalla carga toda la interfaz (catálogo, buscador, carrito), pero **bloquea completamente la posibilidad de cobrar**. Muestra un aviso de alerta estático en pantalla: *"No puedes realizar ventas porque no tienes un turno de caja abierto. Abre un turno para continuar."* y desactiva el flujo de pago. No hay redirección, solo un bloqueo funcional.
+3. **Yape pendiente:** En la pantalla "Historial de ventas", **NO hay ningún botón para verificar** una venta Yape «Pendiente». Solamente se renderiza un indicador visual (`<XCircle className="h-3.5 w-3.5 text-amber-500" /> Pendiente`) si `yape_verificado` es falso, pero la interfaz gráfica actual no ofrece controles para cambiar este estado desde esa pantalla.
+4. **Forzar cierre:** El botón rojo de "Cerrar turno" **aparece en todo turno en estado «Abierto»** inmediatamente para el Administrador. La variable de horas abiertas (`horasAbiertoTurno > HORAS_ALERTA_TURNO_ABIERTO`) se utiliza únicamente para mostrar un icono de advertencia visual ("El cajero podría haberse olvidado de cerrarlo"), pero no restringe la funcionalidad del cierre forzado, que siempre está disponible.
+
+Por favor, con esta información entrega tu veredicto final sobre la Fase 4 y continúa con el análisis de la **Fase 5 (Reportes y Usuarios)** si corresponde.
