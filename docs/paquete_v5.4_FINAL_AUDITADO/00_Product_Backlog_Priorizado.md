@@ -132,7 +132,7 @@ Las 4 historias con estimación igual a 8 puntos de historia (el tamaño máximo
 | 68 | HU-VEN-03 | Ventas (POS) – Generar comprobante en PDF o reenviar por correo electrónico | EPIC-VEN | Should have (3) | 5 | REL-3 | SPR-3 | HU-VEN-02 |
 | 69 | HU-VEN-04 | Ventas (POS) – Buscar producto por código de barras | EPIC-VEN | Should have (3) | 3 | REL-3 | SPR-3 | HU-VEN-01b |
 
-### Could have (5 Historias · 14 Puntos)
+### Could have (4 Historias · 11 Puntos)
 
 | Orden | HU ID | Título Oficial de la Historia de Usuario | Épica | MoSCoW | Puntos | Release | Sprint | Depende de |
 |:---:|---|---|---|---|:---:|:---:|:---:|---|
@@ -140,12 +140,12 @@ Las 4 historias con estimación igual a 8 puntos de historia (el tamaño máximo
 | 71 | HU-CLI-03 | Clientes – Editar correo electrónico de cliente | EPIC-CAT | Could have (2) | 1 | REL-3 | SPR-3 | HU-CLI-02 |
 | 72 | HU-PROD-03 | Productos – Escanear código de barras para registrar producto | EPIC-CAT | Could have (2) | 5 | REL-3 | SPR-3 | HU-PROD-02 |
 | 73 | HU-REP-09 | Reportes – Exportar reportes en PDF | EPIC-REP | Could have (2) | 3 | REL-3 | SPR-3 | HU-REP-01 |
-| 74 | HU-VEN-08 | Ventas (POS) – Exportar historial de ventas a PDF | EPIC-VEN | Could have (2) | 3 | REL-3 | SPR-3 | HU-VEN-05 |
 
 ---
 
-## Fuera de Alcance (Won't have · 1 Historia)
+## Fuera de Alcance (Won't have · 2 Historias)
 
 | Orden | HU ID | Título Oficial de la Historia de Usuario | Épica | MoSCoW | Puntos | Release | Sprint | Depende de |
 |:---:|---|---|---|---|:---:|:---:|:---:|---|
+| N/A | HU-VEN-08 | Ventas (POS) – Exportar historial de ventas a PDF (Fuera de Alcance) | EPIC-VEN | Won't have (1) | 3 | Ninguno | Ninguno | HU-VEN-05 |
 | N/A | HU-VEN-09 | Ventas – Venta a granel o por peso | EPIC-VEN | Won't have (1) | 0 | Ninguno | Ninguno | Ninguna |

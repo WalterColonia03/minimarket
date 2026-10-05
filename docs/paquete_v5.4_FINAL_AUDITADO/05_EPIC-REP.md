@@ -89,7 +89,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** el usuario con rol Gerente o Administrador inicia sesión y accede al cuadro de mando principal («Dashboard»), **cuando** la pantalla carga con el período predeterminado del mes en curso, **entonces** el sistema presenta tarjetas de indicadores clave destacando: Total de Ventas concretadas, Ingresos totales acumulados en moneda nacional (S/) y Ticket promedio por transacción comercial.
 2. **Dado que** se registran nuevas ventas en los terminales de punto de venta (POS) o el usuario pulsa la opción «Actualizar», **cuando** la vista refresca su información, **entonces** los indicadores métricos recalculan sus valores de forma inmediata para reflejar los ingresos más recientes.
 3. **Dado que** el usuario requiere analizar un horizonte temporal específico, **cuando** selecciona un rango de fechas («Desde» y «Hasta») y aplica el filtro, **entonces** las tarjetas de indicadores actualizan sus totales reflejando con exactitud las ventas correspondientes a dicho período, validando que la fecha inicial no sea posterior a la final ni exceda el límite cronológico permitido.
-4. **Dado que** el usuario pulsa sobre cualquiera de las tarjetas métricas (Ventas, Ingresos o Ticket promedio), **cuando** interactúa con el componente, **entonces** el sistema despliega una ventana de diálogo modal interactiva con el detalle desagregado de las operaciones que componen la métrica sin necesidad de abandonar la vista ejecutiva principal.
+4. **Dado que** el usuario pulsa sobre cualquiera de las tarjetas métricas («Total Ventas», «Ingresos» o «Ticket Promedio»), **cuando** interactúa con el componente, **entonces** el sistema despliega una ventana de diálogo modal interactiva presentando para Ventas y Ticket Promedio la tabla con fecha/hora, cliente o vendedor, método de pago, monto y estado (o «No hay ventas registradas este mes.» si está vacío), y para Ingresos la tabla con método de pago, N° de ventas y monto acumulado (o «No hay ingresos registrados este mes.» si está vacío), sin necesidad de abandonar la vista ejecutiva principal.
 5. **Dado que** el usuario navega en el panel de control, **cuando** visualiza la disposición de tarjetas, indicadores porcentuales y acciones de filtrado, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-018 (Dashboard y KPIs Estratégicos) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -113,7 +113,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad crítica de proactividad operativa (Must have); previene pérdidas comerciales por falta de inventario, disminuye mermas y mitiga riesgos de fraude o descuadre por turnos de caja abiertos indebidamente en el Release 2.
 
 **Criterios de aceptación:**
-1. **Dado que** uno o más productos activos registran existencias iguales o inferiores a su umbral de stock mínimo parametrizado (o stock en cero), **cuando** el usuario accede al panel de control, **entonces** el sistema exhibe una tarjeta de alerta «Sin Stock» y una sección prioritaria de «Stock Crítico» listando los productos más urgentes de reponer conforme a la RN-06, con enlace directo para inspeccionarlos en el catálogo de productos.
+1. **Dado que** uno o más productos activos registran existencias iguales o inferiores a su umbral de stock mínimo parametrizado (o stock en cero), **cuando** el usuario accede al panel de control, **entonces** el sistema exhibe una tarjeta de alerta «Sin Stock» (cuyo modal interactivo despliega la lista de artículos agotados o el mensaje «No hay productos sin stock. ✓» si todas las existencias están cubiertas) y una sección prioritaria de «Stock Crítico» listando los productos más urgentes de reponer conforme a la RN-06, con enlace directo para inspeccionarlos en el catálogo de productos.
 2. **Dado que** un vendedor inició un turno de atención y este permanece en estado «Abierto» durante más de 16 horas consecutivas sin haber sido cerrado, **cuando** el Administrador o Gerente ingresa al cuadro de mando, **entonces** el sistema presenta un banner de notificación de advertencia preventiva de «Turno Abierto Prolongado», indicando el nombre del colaborador, el tiempo transcurrido y un botón de acceso directo al historial de cajas para proceder con la supervisión o cierre forzado.
 3. **Dado que** no existen anomalías operativas de turnos prolongados, **cuando** el usuario inspecciona el cuadro de mando, **entonces** el banner de advertencia se oculta automáticamente, manteniendo una visualización despejada y focalizada en los indicadores comerciales.
 4. **Dado que** el usuario interactúa con los avisos, tarjetas de riesgo y enlaces de navegación rápida en el panel principal, **cuando** consulta el estado preventivo del minimarket, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-018 (Dashboard y KPIs Estratégicos) del Catálogo de Interfaces (DOC-ANEXO-B).
@@ -141,7 +141,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Criterios de aceptación:**
 1. **Dado que** el usuario visualiza el panel de control ejecutivo con datos comerciales registrados, **cuando** desciende a la sección analítica, **entonces** el sistema renderiza un gráfico de área lineal interactivo que representa las ventas por día, ubicando las fechas cronológicas en el eje horizontal y los importes en moneda nacional (S/) en el eje vertical.
 2. **Dado que** el usuario desplaza el cursor sobre cualquier punto o nodo representativo de una fecha en el gráfico, **cuando** se posiciona sobre el día seleccionado, **entonces** el sistema presenta un recuadro flotante informativo destacando la fecha completa, el monto total facturado y el número de ventas concretadas en dicha jornada.
-3. **Dado que** el período seleccionado no registra ninguna venta concretada, **cuando** se renderiza la sección, **entonces** el sistema presenta un estado visual alternativo con el mensaje descriptivo «No hay ventas registradas aún», preservando el diseño sin generar distorsiones visuales.
+3. **Dado que** el período seleccionado no registra ninguna venta concretada, **cuando** se renderiza la sección, **entonces** el sistema presenta un estado visual alternativo con el mensaje descriptivo «No hay ventas registradas este mes.» (o del período), preservando el diseño sin generar distorsiones visuales.
 4. **Dado que** el usuario interactúa con los controles de visualización gráfica y analiza la curva de ventas, **cuando** consulta el gráfico en el panel, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-018 (Dashboard y KPIs Estratégicos) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -159,15 +159,15 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 | HU-DASH-04 | EPIC-REP | Should have | 3 pts | REL-3 | SPR-3 |
 
 **Como** Gerente del minimarket,  
-**quiero** visualizar un ranking gráfico tipo barra con el listado de los 5 productos con mayor volumen de rotación en ventas dentro del período seleccionado en el panel principal,  
+**quiero** visualizar un ranking gráfico tipo barra con el listado de los 5 productos con mayor volumen de rotación en ventas dentro del período seleccionado en el panel principal («Top 5 productos más vendidos»),  
 **para** conocer rápidamente los artículos más demandados por la clientela sin tener que navegar hacia el módulo exhaustivo de reportes analíticos.
 
 **Justificación de prioridad:** Funcionalidad importante de apoyo comercial (Should have); agiliza el reconocimiento del catálogo con mayor tracción comercial en el Release 3 para planificar oportunamente las compras y la colocación estratégica de mercadería en los anaqueles del salón.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario consulta el cuadro de mando ejecutivo, **cuando** observa el bloque «Top 5 productos», **entonces** el sistema presenta las 5 mercaderías con mayor cantidad de unidades vendidas en el período activo, ordenadas de mayor a menor rotación, indicando para cada producto su nombre comercial, marca, unidades despachadas y una barra proporcional visual.
+1. **Dado que** el usuario consulta el cuadro de mando ejecutivo, **cuando** observa el bloque «Top 5 productos más vendidos», **entonces** el sistema presenta los 5 artículos con mayor cantidad de unidades despachadas en el período activo (`limite: 5` en API, a diferencia del Top 10 del módulo de Reportes), ordenados de mayor a menor rotación, indicando para cada producto su nombre comercial, marca, unidades vendidas y una barra proporcional visual.
 2. **Dado que** se registran nuevas ventas que alteran el orden de demanda comercial, **cuando** se actualiza la información del cuadro de mando, **entonces** las barras de clasificación reordenan dinámicamente sus posiciones relativas reflejando los nuevos líderes de venta.
-3. **Dado que** en el período seleccionado no se han efectuado ventas en la tienda, **cuando** se consulta el bloque, **entonces** el sistema muestra un estado informativo indicando «No hay ventas registradas».
+3. **Dado que** en el período seleccionado no se han efectuado ventas en la tienda, **cuando** se consulta el bloque, **entonces** el sistema muestra un estado informativo indicando «No hay ventas registradas este mes.».
 4. **Dado que** el usuario revisa el escalafón de productos estrella en el cuadro de mando, **cuando** interactúa con las barras proporcionales y etiquetas informativas, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-018 (Dashboard y KPIs Estratégicos) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -220,7 +220,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** el usuario ingresa un rango de fechas donde la fecha inicial («Desde») es cronológicamente posterior a la fecha final («Hasta»), **cuando** intenta aplicar los filtros, **entonces** el sistema bloquea la consulta y exhibe un mensaje de validación indicando que la fecha inicial no puede ser posterior a la fecha final.
 3. **Dado que** el usuario no especifica fechas en los filtros, **cuando** carga la vista analítica, **entonces** el sistema consolida automáticamente la totalidad de operaciones históricas registradas respetando el límite temporal máximo permitido (10 años).
 4. **Dado que** el usuario interactúa con los filtros cronológicos y tarjetas de resumen financiero, **cuando** consulta el reporte analítico, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
-5. **Dado que** el período seleccionado no registra ninguna venta, **cuando** se ejecuta la consulta, **entonces** el sistema presenta los indicadores en S/ 0.00 y un estado vacío explícito con el mensaje «No se encontraron resultados para el período seleccionado».
+5. **Dado que** el período seleccionado no registra ninguna venta, **cuando** se ejecuta la consulta, **entonces** las tarjetas de resumen presentan Total de Ventas en 0, Ingresos Totales en S/ 0.00 y Ticket Promedio en S/ 0.00, y los bloques analíticos asociados despliegan sus respectivos estados vacíos.
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -237,17 +237,17 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 | HU-REP-02 | EPIC-REP | Must have | 3 pts | REL-2 | SPR-2 |
 
 **Como** Gerente o Administrador del minimarket,  
-**quiero** consultar un listado jerárquico (ranking) con los productos de mayor volumen de ventas dentro de un período seleccionado,  
+**quiero** consultar un listado jerárquico (ranking) con los 10 productos de mayor volumen de ventas dentro de un período seleccionado («Top 10 productos más vendidos»),  
 **para** identificar los artículos estratégicos de alta rotación (principio de Pareto), planificar compras mayoristas y negociar mejores acuerdos de precios y descuentos por volumen con los proveedores.
 
 **Justificación de prioridad:** Funcionalidad esencial para la estrategia comercial y de compras (Must have); constituye el insumo analítico clave para determinar la política de abastecimiento del minimarket en el Release 2.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario genera el reporte comercial para un período determinado, **cuando** visualiza la grilla de productos más vendidos, **entonces** el sistema presenta un listado ordenado de mayor a menor según la cantidad total de unidades despachadas, exhibiendo para cada producto su nombre comercial, marca, unidades vendidas e importe total recaudado.
+1. **Dado que** el usuario genera el reporte comercial para un período determinado, **cuando** visualiza la grilla de productos más vendidos, **entonces** el sistema presenta un listado de hasta 10 productos («Top 10 productos más vendidos», con límite fijado en 10 en la llamada API a diferencia del Top 5 del Dashboard) ordenado de mayor a menor según la cantidad total de unidades despachadas, exhibiendo para cada producto su posición (#), nombre comercial, marca, unidades vendidas e importe total recaudado.
 2. **Dado que** un producto no registra ninguna transacción de venta dentro del rango temporal seleccionado, **cuando** el sistema compila el ranking, **entonces** dicho artículo es excluido de la clasificación, garantizando que el listado concentre únicamente mercadería con rotación efectiva.
 3. **Dado que** existen empates en la cantidad de unidades vendidas entre dos o más artículos, **cuando** el sistema construye el escalafón, **entonces** aplica como criterio secundario de ordenamiento el monto total de ingresos recaudados en orden descendente.
 4. **Dado que** el usuario revisa el ranking de productos estrella, **cuando** navega en la vista analítica, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
-5. **Dado que** el período seleccionado no registra ventas de ningún producto, **cuando** se compila el ranking, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No se encontraron ventas para generar el ranking».
+5. **Dado que** el período seleccionado no registra ventas de ningún producto, **cuando** se compila el ranking, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay datos de ventas aún».
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -274,7 +274,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** en una fecha específica la tienda permaneció cerrada (feriado, inventario físico o sin actividad comercial), **cuando** se compila el reporte, **entonces** dicho día sin movimientos comerciales no genera fila en la grilla tabular, consolidando exclusivamente jornadas con actividad efectiva.
 3. **Dado que** el usuario consulta los montos diarios, **cuando** inspecciona las fechas, **entonces** el sistema agrupa las ventas asignándolas al día calendario oficial de la zona horaria nacional, asegurando que las ventas nocturnas previas a la medianoche correspondan a la jornada respectiva.
 4. **Dado que** el usuario interactúa con el listado tabular de evolución diaria, **cuando** revisa los registros en pantalla, **entonces** la interfaz satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
-5. **Dado que** el período seleccionado no registra ninguna transacción comercial, **cuando** se genera el desglose, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No se encontraron ventas en este período».
+5. **Dado que** el período seleccionado no registra ninguna transacción comercial, **cuando** se genera el desglose, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay ventas en el período seleccionado».
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -299,7 +299,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Criterios de aceptación:**
 1. **Dado que** el usuario genera el reporte financiero para un intervalo temporal, **cuando** consulta la sección de recaudación por medio de pago, **entonces** el sistema exhibe un desglose analítico separando el total recaudado en Efectivo y el total recaudado a través de transferencias digitales (Yape/Plin (IziPay)), detallando para cada modalidad el número de operaciones y el monto monetario acumulado.
 2. **Dado que** el usuario evalúa la consistencia de los montos desglosados, **cuando** suma los ingresos de Efectivo y Yape/Plin (IziPay), **entonces** el resultado de la suma coincide de manera exacta y al céntimo con el importe total de ventas brutas completadas reportadas para dicho período.
-3. **Dado que** en un período evaluado no se registraron transacciones mediante alguna de las modalidades de pago, **cuando** se presenta el desglose, **entonces** el sistema exhibe el medio respectivo con saldo S/ 0.00 y cero operaciones o consolida únicamente los medios activos, preservando la coherencia aritmética.
+3. **Dado que** en un período evaluado no se registraron transacciones mediante alguna de las modalidades de pago o en general no hay ventas, **cuando** se presenta el desglose, **entonces** el sistema exhibe un estado vacío explícito con el mensaje «No hay datos de ventas en el período seleccionado» (o saldo S/ 0.00 en cada medio).
 4. **Dado que** el usuario inspecciona el resumen de medios de pago, **cuando** interactúa con los indicadores y gráficos de proporción, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -324,10 +324,10 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** el usuario solicita el reporte de existencias críticas, **cuando** el sistema compila la información, **entonces** presenta exclusivamente aquellos productos activos donde las existencias actuales sean menores o iguales a su umbral mínimo configurado (o al umbral global predeterminado de 5 unidades) conforme a la RN-06.
-2. **Dado que** se presenta la grilla de stock crítico, **cuando** el usuario inspecciona las columnas, **entonces** visualiza de forma clara el código del producto, nombre comercial, marca, categoría, existencias vigentes y el umbral mínimo específico aplicado para la evaluación.
+2. **Dado que** se presenta la grilla de stock crítico, **cuando** el usuario inspecciona las columnas, **entonces** visualiza de forma clara: Producto, Marca, Categoría, Stock actual y Mínimo aplicado (sin código de producto en la grilla).
 3. **Dado que** el usuario requiere ajustar el nivel de exigencia del reporte, **cuando** modifica el umbral numérico de evaluación en pantalla y aplica el cambio, **entonces** la grilla recalcula dinámicamente el listado incorporando los artículos que cumplan el nuevo criterio de criticidad.
 4. **Dado que** el usuario interactúa con el reporte analítico de existencias críticas, **cuando** consulta los datos en pantalla, **entonces** la interfaz satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
-5. **Dado que** ningún producto tiene stock menor o igual al umbral, **cuando** se genera el reporte, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay productos con stock crítico».
+5. **Dado que** ningún producto tiene stock menor o igual al umbral o este se fija en cero sin alertas, **cuando** se genera el reporte, **entonces** el sistema presenta un estado vacío explícito en un banner verde con el mensaje «✓ Todo el stock está en orden».
 
 **Reglas de negocio aplicables:** 
 - RN-06 (Alerta de Stock Mínimo)
@@ -347,10 +347,11 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **quiero** consultar un resumen cuantitativo consolidado del estado global del inventario en almacén y salón,  
 **para** conocer las métricas operativas de volumen del catálogo comercial, cobertura de categorías, red de proveedores y artículos agotados en el Release 3.
 
-**Justificación de prioridad:** Funcionalidad de alto valor para el control patrimonial (Should have); proporciona una panorama integral del catálogo de existencias sin requerir supervisiones manuales exhaustivas.
+**Justificación de prioridad:** Funcionalidad de alto valor para el control patrimonial (Should have); proporciona una panorama integral del catálogo de existencias sin requerir supervisiones manuales exhaustivas.  
+*(Nota técnica de arquitectura):* A nivel de backend, el endpoint `/reportes/inventario/resumen` calcula los 5 indicadores cuantitativos (total de productos, total de categorías, total de proveedores, productos sin stock y solicitudes pendientes); en la interfaz web actual, estos datos se canalizan hacia el Dashboard en tarjetas individuales (Productos Activos, Sin Stock y Solicitudes Pendientes), mientras que las métricas de categorías y proveedores no se renderizan en una sección visual independiente de Reportes.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario accede al bloque de estado del inventario, **cuando** la pantalla presenta los datos, **entonces** el sistema exhibe los conteos cuantitativos globales: total de productos comerciales activos, total de categorías creadas, total de proveedores activos, cantidad de productos con existencias en cero y total de solicitudes de reposición en estado pendiente.
+1. **Dado que** se consumen los datos consolidados del inventario desde el servicio analítico, **cuando** el sistema compila las métricas globales, **entonces** el API calcula los 5 conteos cuantitativos (total de productos activos, total de categorías, total de proveedores activos, productos sin existencias y solicitudes de reposición pendientes), disponibilizándolos para la supervisión patrimonial y la presentación de tarjetas en el tablero de control.
 2. **Dado que** se producen entradas por compras, despachos en ventas o bajas por merma, **cuando** el usuario refresca la consulta, **entonces** los indicadores cuantitativos actualizan sus valores en tiempo real reflejando la situación patrimonial vigente del almacén.
 3. **Dado que** el usuario analiza las tarjetas cuantitativas de existencias, **cuando** navega en la vista analítica, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -372,12 +373,13 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **quiero** consultar un reporte de rentabilidad comercial que desglose el margen de utilidad bruta (precio de venta cobrado frente al costo promedio de adquisición) por cada producto vendido,  
 **para** identificar los artículos con mayor y menor aporte financiero al negocio y reajustar oportunamente las listas de precios de aquellos productos que resulten deficitarios o con márgenes reducidos.
 
-**Justificación de prioridad:** Funcionalidad estratégica de rentabilidad comercial (Should have); brinda la inteligencia financiera requerida para asegurar que la política de fijación de precios maximice el retorno económico en el Release 3.
+**Justificación de prioridad:** Funcionalidad estratégica de rentabilidad comercial (Should have); brinda la inteligencia financiera requerida para asegurar que la política de fijación de precios maximice el retorno económico en el Release 3.  
+*(Nota de dependencia operativa de costeo):* El cálculo del margen de ganancia depende estrictamente de consumos de lotes que posean un costo unitario registrado (`em.costo_unitario` no nulo). Debido a que los formularios de carga de entradas y recepción de reposición en la interfaz web actual no solicitan el costo (enviando valor nulo por defecto según RN-14), los movimientos generados exclusivamente por la interfaz de usuario presentarán un reporte de margen vacío con el aviso: «Sin datos de costo en el período. Registra el costo unitario al ingresar mercadería para ver el margen.».
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario define un período de análisis y genera el reporte de rentabilidad, **cuando** visualiza la grilla de márgenes comerciales, **entonces** el sistema presenta para cada artículo vendido: nombre del producto, marca, categoría, unidades totales despachadas, importe bruto recaudado, costo valorizado total según el costo promedio ponderado de los lotes consumidos (RN-14), ganancia monetaria absoluta y porcentaje de margen de utilidad obtenido.
+1. **Dado que** el usuario define un período de análisis y genera el reporte de rentabilidad, **cuando** visualiza la grilla de márgenes comerciales, **entonces** el sistema presenta para cada artículo vendido que cuente con lotes costeados: Producto, Marca, Categoría, Vendido (unidades), Ingreso (S/), Costo (S/), Margen S/. y Margen % (calculado sobre el ingreso). Si no existen lotes con costo registrado en el período, la grilla despliega el mensaje informativo «Sin datos de costo en el período. Registra el costo unitario al ingresar mercadería para ver el margen.».
 2. **Dado que** un producto registró ventas a un precio inferior a su costo de adquisición (margen negativo o venta a pérdida), **cuando** se renderiza la grilla analítica, **entonces** el sistema resalta visualmente la fila con alerta destacada en color rojo y signo negativo, advirtiendo de forma inmediata la anomalía tarifaria.
-3. **Dado que** el usuario examina la rentabilidad del catálogo, **cuando** ordena la grilla por ganancia absoluta o porcentaje de margen, **entonces** el sistema reorganiza las filas de forma interactiva en sentido ascendente o descendente.
+3. **Dado que** el usuario consulta la rentabilidad del catálogo en pantalla, **cuando** se renderiza la grilla de margen, **entonces** el sistema presenta los registros ordenados de forma predeterminada por ganancia monetaria descendente proveniente de la consulta de backend, con encabezados tabulares fijos sin ordenamiento interactivo en el cliente.
 4. **Dado que** el usuario interactúa con la grilla de rentabilidad comercial, **cuando** revisa los valores en pantalla, **entonces** la interfaz satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -401,11 +403,11 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad importante para el control de pérdidas (Should have); permite diagnosticar las causas estructurales de merma y reducir los costos ocultos por desperdicio de productos perecibles en el Release 3.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario selecciona un rango temporal y genera el reporte de mermas, **cuando** la pantalla presenta los resultados, **entonces** el sistema exhibe un desglose analítico agrupando las bajas por motivo reglamentario (Vencimiento, Dañado, Merma Operativa), indicando para cada causa el número total de eventos de descarte, las unidades físicas perdidas y el costo económico total valorizado.
-2. **Dado que** el usuario inspecciona el detalle de las pérdidas, **cuando** revisa las partidas registradas, **entonces** el sistema calcula el valor monetario de la merma multiplicando las unidades dadas de baja por el costo unitario de adquisición del lote correspondiente.
+1. **Dado que** el usuario selecciona un rango temporal y genera el reporte de mermas, **cuando** la pantalla presenta los resultados, **entonces** el sistema exhibe un desglose analítico en grilla con cabecera roja agrupando las bajas según los 6 motivos del sistema: «Vencido», «Dañado», «Robo o faltante», «Consumo interno», «Error de registro» y «Otro», indicando para cada causa las columnas Motivo, N° Bajas, Cantidad Total y Costo Valorizado.
+2. **Dado que** el usuario inspecciona el costo valorizado de las bajas, **cuando** el sistema liquida las partidas registradas, **entonces** calcula el valor monetario de la merma tomando el costo unitario del lote de compra, o el costo promedio del producto, o S/ 0.00 en caso de no registrarse costo en el ingreso.
 3. **Dado que** en el período evaluado no se produjeron bajas para una o más causales de merma, **cuando** se compila el reporte, **entonces** el sistema refleja cero incidencias y costo S/ 0.00 para dichas categorías, conservando la integridad de las sumas totales.
 4. **Dado que** el usuario interactúa con la grilla y representaciones gráficas de mermas, **cuando** consulta el análisis en pantalla, **entonces** la interfaz satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
-5. **Dado que** no existen mermas registradas en absoluto durante el período consultado, **cuando** se genera el reporte, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No se encontraron mermas en el período seleccionado».
+5. **Dado que** no existen mermas registradas en absoluto durante el período consultado, **cuando** se genera el reporte, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay bajas de inventario en el período seleccionado».
 
 **Reglas de negocio aplicables:** 
 - N/A.

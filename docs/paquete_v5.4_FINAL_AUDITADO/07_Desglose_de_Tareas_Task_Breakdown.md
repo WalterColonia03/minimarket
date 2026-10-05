@@ -991,18 +991,18 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 
 **Subtotal HU-REP-09:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
-### HU-VEN-08: Ventas (POS) – Exportar historial de ventas a PDF
-**Puntos:** 3 · **Prioridad:** Could have (2) · **Constructor Principal:** Des.5 Colonia · **Verificador QA:** Des.4 Alcalde
+### HU-VEN-08: Ventas (POS) – Exportar historial de ventas a PDF (Fuera de Alcance)
+**Puntos:** 3 · **Prioridad:** Won't have (1) · **Estado:** Excluida / Absorbida en Reportes (`HU-REP-09`) · **Constructor Principal:** N/A · **Verificador QA:** N/A
 
 | ID | Tarea | Tipo | Estado | Responsable | Tiempo (h) |
 |---|---|---|---|---|---|
-| TAR-HU-VEN-08-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.5 - Colonia | 1.00 |
-| TAR-HU-VEN-08-05 | Codificar | Codificación | Pend. | Des.5 - Colonia | 1.50 |
-| TAR-HU-VEN-08-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
-| TAR-HU-VEN-08-07 | Depuración | Test | Pend. | Des.5 - Colonia | 1.00 |
-| TAR-HU-VEN-08-08 | Verificación funcional y pase web | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-VEN-08-04 | Desarrollar interfaces | Diseño/Cod. | Cancelada | Des.5 - Colonia | 0.00 |
+| TAR-HU-VEN-08-05 | Codificar | Codificación | Cancelada | Des.5 - Colonia | 0.00 |
+| TAR-HU-VEN-08-06 | Pruebas de unidad e integración | Test | Cancelada | Des.4 - Alcalde | 0.00 |
+| TAR-HU-VEN-08-07 | Depuración | Test | Cancelada | Des.5 - Colonia | 0.00 |
+| TAR-HU-VEN-08-08 | Verificación funcional y pase web | Test | Cancelada | Des.4 - Alcalde | 0.00 |
 
-**Subtotal HU-VEN-08:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
+**Subtotal HU-VEN-08:** 0.00 h Construcción, 0.00 h Verificación. Total: 0.00 h (Funcionalidad de exportación PDF unificada y absorbida en `HU-REP-09`).
 
 ## Resumen consolidado
 ### Horas por sprint

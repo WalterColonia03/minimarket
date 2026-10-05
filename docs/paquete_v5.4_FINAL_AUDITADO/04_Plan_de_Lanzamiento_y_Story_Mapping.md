@@ -70,14 +70,14 @@ Estructura de trazabilidad horizontal por épicas funcionales y vertical por hor
 
 ### REL-3: Release 3 (Mejoras, Supervisión y Exportación)
 - **Objetivo Estratégico:** Optimizar la experiencia de uso y robustecer el sistema con capacidades de supervisión de accesos, edición y mantenimiento avanzado de registros maestros, lector óptico de código de barras para agilización del POS, generación de comprobantes y reportes analíticos descargables en PDF, y análisis detallado de márgenes de ganancia por producto.
-- **Alcance Funcional:** 27 Historias de Usuario (22 Should have + 5 Could have), sumando 72 puntos de historia ejecutados en el Sprint 3.
-- **Esfuerzo Operativo Asociado:** 144.0 horas de trabajo efectivo distribuidas en 135 tareas técnicas (85.75 h de construcción y 58.25 h de verificación QA independiente).
+- **Alcance Funcional:** 26 Historias de Usuario (22 Should have + 4 Could have), sumando 69 puntos de historia ejecutados en el Sprint 3 (con `HU-VEN-08` formalizada fuera de alcance y unificada en `HU-REP-09`).
+- **Esfuerzo Operativo Asociado:** 138.0 horas de trabajo efectivo distribuidas en tareas técnicas (82.25 h de construcción y 55.75 h de verificación QA independiente).
 - **Criterios de Salida (Definition of Done del Release):**
   1. Registro inmutable de supervisión para eventos de autenticación exitosos y fallidos (`HU-LOG-01`).
   2. Gestión de perfil personal, edición de catálogos y reactivación de empleados suspendidos (`HU-AUTH-06 (Cancelada)`, `HU-CAT-03`, `HU-CAT-04`, `HU-CLI-01`, `HU-CLI-03`, `HU-PROD-04`, `HU-PROD-05`, `HU-PROV-03`, `HU-USR-03`, `HU-USR-05`).
   3. Agilización del punto de venta y catálogo mediante integración con lector óptico de código de barras (`HU-VEN-04`, `HU-PROD-03`).
   4. Trazabilidad histórica completa de movimientos de almacén: entradas, bajas por merma y ajustes físicos (`HU-INV-04`, `HU-INV-05`, `HU-INV-06`).
-  5. Descarga e impresión de comprobantes de pago en PDF y reenvío por correo electrónico (`HU-VEN-03`), junto con la especificación para exportación del historial a formato estructurado (`HU-VEN-08`).
+  5. Descarga e impresión de comprobantes de pago en PDF y reenvío por correo electrónico (`HU-VEN-03`), junto con la exportación ejecutiva de ventas en PDF (`HU-REP-09`), quedando la exportación aislada de ventas (`HU-VEN-08`) fuera de alcance.
   6. Suite analítica completa: ventas por medio de pago, evolución diaria de ventas, rentabilidad/margen por producto, análisis de mermas por causa y exportación general de reportes en PDF (`HU-DASH-02`, `HU-DASH-04`, `HU-DASH-05`, `HU-REP-03`, `HU-REP-04`, `HU-REP-06`, `HU-REP-07`, `HU-REP-08`, `HU-REP-09`).
   7. Aprobación del 100 % de los criterios de aceptación y entrega de la solución final consolidada.
 - **Fecha Objetivo y Presentación:** Martes 10 de noviembre de 2026 (Semana 11 del calendario académico).

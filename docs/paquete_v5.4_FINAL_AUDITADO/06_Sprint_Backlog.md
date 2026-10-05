@@ -278,12 +278,12 @@ Formato: día de cierre (horas efectivas usadas ese día). Escenarios: **base**;
 | **HU-VEN-03** | Ventas (POS) – Generar comprobante en PDF o reenviar por correo electrónico | Should have (3) | 5 | HU-VEN-02 | Des.1 Velasquez | Des.3 Castillo |
 | **HU-CLI-03** | Clientes – Editar correo electrónico de cliente | Could have (2) | 1 | HU-CLI-02 | Des.3 Castillo | Des.1 Velasquez |
 | **HU-REP-09** | Reportes – Exportar reportes en PDF | Could have (2) | 3 | HU-REP-01 | Des.1 Velasquez | Des.3 Castillo |
-| **HU-VEN-08** | Ventas (POS) – Exportar historial de ventas a PDF | Could have (2) | 3 | HU-VEN-05 | Des.5 Colonia | Des.4 Alcalde |
-| **TOTALES S3** | **27 Historias de Usuario Comprometidas** | | **72** | | **85.75 h Constr.** | **58.25 h QA** |
+| **HU-VEN-08** | Ventas (POS) – Exportar historial de ventas a PDF (Fuera de Alcance) | Won't have (1) | — | HU-VEN-05 | *(Excluida / Diferida a Reportes)* | *(Excluida)* |
+| **TOTALES S3** | **26 Historias de Usuario Comprometidas (1 Fuera de Alcance)** | | **69** | | **82.25 h Constr.** | **55.75 h QA** |
 
 ### Estrategia de Ejecución del Sprint 3
-1. **Flujo ágil de alta cadencia para historias atomizadas:** El Sprint 3 reúne 27 historias con un promedio de 2.67 puntos por HU. Al tratarse de componentes modulares, el equipo aplica un ciclo corto de desarrollo y pase continuo a pruebas unitarias sin tiempos de espera.
-2. **Generación documental y exportación:** Se implementan las librerías de generación y renderizado PDF para comprobantes (`HU-VEN-03`) y reportes gerenciales (`HU-REP-09`), y la serialización a formato CSV estructurado para historial comercial (`HU-VEN-08`).
+1. **Flujo ágil de alta cadencia para historias atomizadas:** El Sprint 3 reúne las historias modulares finales con un ciclo corto de desarrollo y pase continuo a pruebas unitarias sin tiempos de espera.
+2. **Generación documental y exportación:** Se implementan las librerías de generación y renderizado PDF para comprobantes (`HU-VEN-03`) y reportes gerenciales (`HU-REP-09`), quedando la exportación masiva del historial (`HU-VEN-08`) unificada y absorbida dentro del reporte ejecutivo de ventas en `HU-REP-09` (EPIC-REP).
 3. **Agilización periférica:** Se incorporan los componentes de escucha de eventos HID del navegador para el escaneo de códigos de barra estándar tanto en el registro de productos (`HU-PROD-03`) como en la búsqueda inmediata en punto de venta (`HU-VEN-04`).
 4. **Analítica de rentabilidad y supervisión de seguridad:** Se completan los reportes financieros de margen de ganancia (`HU-REP-07`) y el registro inmutable de accesos (`HU-LOG-01`), cerrando el 100 % de los requisitos funcionales del sistema.
 5. **Holgura para certificación y cierre:** Con 144.0 horas de tareas y 96.0 horas de colchón (40.0 % de holgura), la capacidad restante se destina a pruebas de regresión integral y a la consolidación del paquete final de entrega académica.

@@ -166,7 +166,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** el Administrador o Almacenero audita las correcciones manuales de inventario, **cuando** realiza una búsqueda por producto o rango temporal, **entonces** el sistema expone el historial de todos los ajustes registrados directamente en las columnas de la grilla (sin vista de detalle extra), indicando la fecha, el saldo previo ("Stock Sistema"), el saldo verificado ("Contado") y la diferencia neta generada.
 2. **Dado que** el Administrador o Almacenero examina un ajuste individual, **cuando** revisa el historial, **entonces** el sistema expone el comentario o justificación registrado como una columna visible en el registro de ajuste.
 3. **Dado que** el Administrador o Almacenero utiliza el panel de supervisión de conteos, **cuando** interactúa con los filtros y la grilla de resultados, **entonces** la interfaz cumple con las especificaciones de diseño y microcopy de UI-012 del Catálogo de Interfaces (DOC-ANEXO-B).
-4. **Dado que** los filtros de búsqueda no encuentran ningún ajuste, **cuando** se ejecuta la consulta, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay ajustes registradas».
+4. **Dado que** los filtros de búsqueda no encuentran ningún ajuste, **cuando** se ejecuta la consulta, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay ajustes registrados».
 
 **Reglas de negocio aplicables:** 
 - N/A

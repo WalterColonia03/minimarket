@@ -1,4 +1,4 @@
-﻿# PAQUETE INTEGRAL DE PLANIFICACIÓN SCRUM – VERSIÓN 5.2 DEFINITIVA SANEADA
+# PAQUETE INTEGRAL DE PLANIFICACIÓN SCRUM – VERSIÓN 5.2 DEFINITIVA SANEADA
 ## SISTEMA DE GESTIÓN COMERCIAL PARA MINIMARKET CON PUNTO DE VENTA Y CONTROL TRIBUTARIO
 **Estado:** Documento Maestro Consolidado y Aprobado por el Product Owner  
 **Fecha:** 2026-10-04 | **Versión:** 5.2 Oficial Aprobada  
@@ -503,7 +503,7 @@ Las 4 historias con estimación igual a 8 puntos de historia (el tamaño máximo
 | 71 | HU-CLI-03 | Clientes – Editar correo electrónico de cliente | EPIC-CAT | Could have (2) | 1 | REL-3 | SPR-3 | HU-CLI-02 |
 | 72 | HU-PROD-03 | Productos – Escanear código de barras para registrar producto | EPIC-CAT | Could have (2) | 5 | REL-3 | SPR-3 | HU-PROD-02 |
 | 73 | HU-REP-09 | Reportes – Exportar reportes en PDF | EPIC-REP | Could have (2) | 3 | REL-3 | SPR-3 | HU-REP-01 |
-| 74 | HU-VEN-08 | Ventas (POS) – Exportar historial de ventas a PDF | EPIC-VEN | Could have (2) | 3 | REL-3 | SPR-3 | HU-VEN-05 |
+| 74 | HU-VEN-08 | Ventas (POS) – Exportar historial de ventas a PDF (Fuera de Alcance) | EPIC-VEN | Won't have (1) | 3 | Ninguno | Ninguno | HU-VEN-05 |
 
 ---
 
@@ -1368,6 +1368,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** la mercadería recibida corresponde a un producto clasificado como perecible, **cuando** se procesa la entrada física, **entonces** el sistema exige obligatoriamente la captura de la fecha de vencimiento (que no puede ser anterior a la fecha actual y tiene un límite máximo de 15 años a futuro, mostrando una alerta visual si vence en menos de 7 días) alimentando el control preventivo FEFO (RN-19). Si se ingresa la fecha de hoy, el lote se crea pero nace automáticamente bloqueado para venta.
 4. **Dado que** el operador interactúa con el módulo de recepción de mercadería, **cuando** visualiza los campos de captura de lote, cálculos de costo y botones de confirmación, **entonces** la pantalla cumple rigurosamente con los patrones de diseño y microcopy especificados en UI-010 (Entradas de Mercadería y Lotes) del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - RN-01 (Política de Ingreso Inicial y Abastecimiento por Solicitud)
 - RN-14 (Actualización de Valorización de Inventario)
@@ -1394,6 +1395,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** un artículo sufrió merma física o pérdida, **cuando** el operador registra la baja seleccionando los motivos justificados (Vencido, Dañado, Robo o faltante -con detalle obligatorio-, Consumo interno, Error de registro u Otro), **entonces** si elige «Dañado» el sistema exige obligatoriamente seleccionar el lote específico, descontando de inmediato las unidades del stock físico. Si elige un motivo distinto a «Vencido» y no selecciona lote, el sistema descuenta la baja únicamente del stock vigente en buen estado (RN-04, RN-20).
 2. **Dado que** el operador registra una baja por el motivo explícito «Vencido», **cuando** selecciona el producto afectado, **entonces** el sistema bloquea el ingreso de cantidad asumiendo automáticamente todo el stock vencido consolidado o el de un lote vencido específico elegido, impidiendo el registro de cantidades parciales desde la interfaz gráfica, aunque la API sí acepta cantidades parciales (RN-05).
 3. **Dado que** el colaborador opera sobre el panel de mermas, **cuando** selecciona los motivos reglamentarios, confirma las cantidades y visualiza los indicadores de stock restante, **entonces** la interfaz satisface los lineamientos de diseño, advertencias y microcopy descritos en UI-011 (Bajas de Inventario y Mermas) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - RN-04 (Registro Obligatorio de Mermas)
@@ -1422,6 +1424,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** el operador confirma un ajuste de inventario, **cuando** procesa la operación en pantalla, **entonces** el sistema le solicita registrar obligatoriamente una justificación o comentario explicativo sobre la causa de la discrepancia constatada para fines de trazabilidad y control interno, el cual es exigido por la API aunque la interfaz lo marque como opcional.
 3. **Dado que** el colaborador interactúa con el formulario de regularización, **cuando** digita los conteos físicos, revisa las diferencias calculadas y confirma el ajuste, **entonces** la pantalla responde con la estructura visual, validaciones y microcopy definidos en UI-012 (Ajustes de Conteo Físico) del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - N/A
 
@@ -1447,6 +1450,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** un usuario revisa un registro histórico de recepción, **cuando** examina la información, **entonces** el sistema expone todos los datos de la operación directamente integrados en las columnas de la grilla sin disponer de una vista de detalle en modal separado, en modo de solo lectura estricto.
 3. **Dado que** el usuario navega por la consulta de recepciones, **cuando** aplica filtros, revisa las columnas de datos y utiliza los controles de visualización, **entonces** la interfaz satisface integralmente los estándares visuales de UI-010 del Catálogo de Interfaces (DOC-ANEXO-B).
 4. **Dado que** los filtros aplicados no devuelven coincidencias, **cuando** se ejecuta la consulta, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay entradas registradas».
+
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -1474,6 +1478,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** el Administrador o Almacenero interactúa con el visor de bajas históricas, **cuando** visualiza los registros, aplica filtros y consulta los motivos, **entonces** la pantalla responde a los patrones de diseño y microcopy especificados en UI-011 del Catálogo de Interfaces (DOC-ANEXO-B).
 4. **Dado que** los filtros de búsqueda no arrojan ninguna baja histórica, **cuando** se actualiza la grilla, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay bajas registradas».
 
+
 **Reglas de negocio aplicables:** 
 - N/A
 
@@ -1498,7 +1503,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** el Administrador o Almacenero audita las correcciones manuales de inventario, **cuando** realiza una búsqueda por producto o rango temporal, **entonces** el sistema expone el historial de todos los ajustes registrados directamente en las columnas de la grilla (sin vista de detalle extra), indicando la fecha, el saldo previo ("Stock Sistema"), el saldo verificado ("Contado") y la diferencia neta generada.
 2. **Dado que** el Administrador o Almacenero examina un ajuste individual, **cuando** revisa el historial, **entonces** el sistema expone el comentario o justificación registrado como una columna visible en el registro de ajuste.
 3. **Dado que** el Administrador o Almacenero utiliza el panel de supervisión de conteos, **cuando** interactúa con los filtros y la grilla de resultados, **entonces** la interfaz cumple con las especificaciones de diseño y microcopy de UI-012 del Catálogo de Interfaces (DOC-ANEXO-B).
-4. **Dado que** los filtros de búsqueda no encuentran ningún ajuste, **cuando** se ejecuta la consulta, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay ajustes registradas».
+4. **Dado que** los filtros de búsqueda no encuentran ningún ajuste, **cuando** se ejecuta la consulta, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay ajustes registrados».
+
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -1524,6 +1530,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** el colaborador detecta bajo stock o necesidad de reposición de un artículo, **cuando** selecciona el producto del catálogo y registra la cantidad requerida junto con el proveedor sugerido, **entonces** el sistema genera una nueva solicitud de reposición individual en estado «Pendiente».
 2. **Dado que** el usuario introduce los datos de la solicitud, **cuando** intenta ingresar una cantidad menor o igual a cero o valores no numéricos, **entonces** el sistema bloquea el registro exigiendo una cantidad entera estrictamente positiva.
 3. **Dado que** el colaborador opera desde la pantalla «Solicitudes de Reposición», **cuando** interactúa con los controles de selección, formularios y confirmación de pedidos, **entonces** la interfaz satisface los lineamientos de diseño, controles y microcopy especificados en UI-013 (Solicitudes de Reposición) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -1551,6 +1558,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** el usuario consulta el panel de reposiciones, **cuando** visualiza la grilla de datos, tarjetas de estado y botones de filtrado, **entonces** la pantalla cumple rigurosamente los estándares de interfaz visual de UI-013 (Solicitudes de Reposición) del Catálogo de Interfaces (DOC-ANEXO-B).
 4. **Dado que** la lista de solicitudes no contiene registros que cumplan con los filtros, **cuando** se actualiza la grilla, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay solicitudes registradas».
 
+
 **Reglas de negocio aplicables:** 
 - N/A
 
@@ -1577,6 +1585,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** el aprobador dispone del compromiso de entrega del proveedor, **cuando** autoriza la orden desde la pantalla, **entonces** la interfaz gráfica le exige registrar de forma obligatoria una fecha estimada de llegada (que no puede ser anterior a la fecha actual) para fines de previsión, independientemente de que la API la requiera como opcional.
 4. **Dado que** la jefatura opera en la bandeja de autorización, **cuando** interactúa con los diálogos y confirmaciones de aprobación, **entonces** la interfaz satisface las especificaciones de diseño y microcopy de UI-013 (Solicitudes de Reposición) del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - RN-16 (Flexibilidad en Elección de Proveedores)
 
@@ -1601,6 +1610,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** una solicitud de reposición está en estado «Pendiente», **cuando** el Gerente o Administrador decide denegarla, **entonces** el sistema cambia su estado a «Rechazada», registra la identidad del responsable y exige consignar de forma obligatoria desde la interfaz una justificación o motivo explicativo del rechazo.
 2. **Dado que** una solicitud ha sido marcada como «Rechazada», **cuando** un colaborador de almacén intente procesar una recepción física contra dicho documento, **entonces** el sistema bloquea cualquier ingreso de mercadería asociado al mismo.
 3. **Dado que** la jefatura interactúa con el modal o panel de denegación, **cuando** introduce el motivo y confirma la acción, **entonces** la pantalla satisface las directrices visuales, advertencias y microcopy descritos en UI-013 (Solicitudes de Reposición) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -1627,6 +1637,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** se completa la recepción de mercadería contra la solicitud aprobada, **cuando** la transacción concluye exitosamente, **entonces** el sistema genera de forma atómica el registro de movimiento en el historial de entradas de inventario vinculándolo a la solicitud original para garantizar la estricta trazabilidad de abastecimiento (RN-01).
 3. **Dado que** la funcionalidad de recepción parcial de mercadería es soportada estructuralmente por el backend, **cuando** el usuario intenta registrarla visualmente en pantalla, **entonces** la interfaz bloquea el registro estableciendo la "Cantidad recibida" como igual a la cantidad solicitada, por lo que el cierre de recepción parcial queda inaccesible para el operador final.
 4. **Dado que** el colaborador procesa la recepción de mercadería desde el módulo de reposiciones, **cuando** interactúa con los formularios de ingreso de lote, costos, vencimiento y confirmación de entrega, **entonces** la interfaz satisface íntegramente los estándares de diseño, validaciones visuales y microcopy descritos en UI-013 (Solicitudes de Reposición) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - RN-01 (Política de Ingreso Inicial y Abastecimiento por Solicitud)
@@ -1677,6 +1688,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** el colaborador ya cuenta con un turno de caja previamente abierto y no cerrado, **cuando** intenta abrir un nuevo turno concurrente, **entonces** el sistema bloquea la acción indicando que debe proceder con el cierre de su turno activo antes de aperturar uno nuevo.
 4. **Dado que** el colaborador interactúa con el módulo de turno de caja, **cuando** captura el monto inicial y visualiza las indicaciones de fondo mínimo, **entonces** la pantalla satisface las directrices visuales, controles y microcopy especificados en UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - RN-10 (Fondo Mínimo de Apertura de Caja)
 
@@ -1702,6 +1714,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** el colaborador ejecuta el arqueo de cierre, **cuando** introduce el recuento físico de efectivo y la liquidación del terminal digital, **entonces** el formulario de cierre procesará la declaración a través de un modal que indica «Cuenta el efectivo y Yape físico», sin exponer el saldo esperado en la vista de captura. Asimismo, el campo «Observaciones» se presenta visualmente como opcional en la interfaz, aunque la API lo exige como obligatorio en caso de registrarse un descuadre.
 3. **Dado que** un turno ha quedado formalmente en estado «Cerrado», **cuando** el vendedor intenta registrar una nueva venta o movimiento manual bajo dicho turno, **entonces** el sistema deniega el acceso exigiendo la apertura de un nuevo turno para continuar operando.
 4. **Dado que** el usuario interactúa con el formulario de arqueo final, **cuando** declara los importes físicos y la liquidación digital y visualiza el resumen del cuadre, **entonces** la interfaz satisface rigurosamente los estándares visuales y de microcopy de UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -1732,6 +1745,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** el vendedor procesa el formulario de movimiento manual, **cuando** intenta guardar sin registrar una descripción o justificación del gasto/ingreso, **entonces** el sistema impide el registro exigiendo un motivo documentado para fines de supervisión interna.
 4. **Dado que** el usuario opera desde la ventana de movimientos de caja, **cuando** captura el tipo, monto y motivo, **entonces** la pantalla satisface las especificaciones de interfaz descritas en UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - RN-11 (Tope Máximo para Movimientos Manuales)
 - RN-15 (Medio Exclusivo de Arqueo Manual)
@@ -1757,6 +1771,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** el vendedor mantiene un turno en estado «Abierto», **cuando** consulta el panel de resumen de turno, **entonces** el sistema presenta tarjetas de resumen con la Apertura, Efectivo acumulado y Yape acumulado, seguido de una lista de «Movimientos del turno» detallando las operaciones manuales, sin presentar un total global de ventas ni totales separados de ingresos y egresos.
 2. **Dado que** el negocio define sus políticas de control interno según la decisión formal D1 (saldo esperado visible) y decisión formal D2 (tolerancia cero en descuadres no justificados), **cuando** el colaborador visualiza el resumen, **entonces** la visibilidad de los saldos teóricos esperados y las alertas de desviación se presentan orientando la conciliación y requiriendo justificación obligatoria ante cualquier descuadre.
 3. **Dado que** el colaborador consulta el estado del turno, **cuando** interactúa con las tarjetas de métricas y opciones de actualización, **entonces** la pantalla cumple las pautas visuales y de microcopy de UI-016 (Turno de Caja y Arqueo Inicial) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -1788,6 +1803,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** el directivo utiliza la pantalla de historial de turnos, **cuando** navega por los filtros y grillas de supervisión, **entonces** la interfaz satisface íntegramente las especificaciones de diseño y microcopy de UI-017 (Historial de Cajas y Cierres Forzados) del Catálogo de Interfaces (DOC-ANEXO-B).
 4. **Dado que** los filtros no coinciden con ningún turno registrado, **cuando** se actualiza la consulta, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay turnos para mostrar.».
 
+
 **Reglas de negocio aplicables:** 
 - N/A
 
@@ -1812,8 +1828,9 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** el colaborador inicia sesión e intenta acceder a la pantalla de Punto de Venta (POS), **cuando** el sistema comprueba que tiene un turno de caja activo en estado «Abierto», **entonces** desbloquea la interfaz de mostrador, inicializa una nueva canasta de venta en blanco y muestra en la cabecera los datos del turno y vendedor responsable.
-2. **Dado que** el colaborador no cuenta con un turno de caja abierto o su último turno fue cerrado, **cuando** intenta ingresar al módulo POS, **entonces** el sistema bloquea de forma estricta el acceso, emitiendo una notificación que le exige abrir formalmente su turno de caja antes de atender a los clientes.
+2. **Dado que** el colaborador no cuenta con un turno de caja abierto o su último turno fue cerrado, **cuando** accede al módulo POS, **entonces** la pantalla carga mostrando el catálogo pero presenta un aviso destacado en color ámbar notificando que no tiene turno abierto junto al botón «Ir a Mi Caja», quedando deshabilitado el proceso de cobro en mostrador.
 3. **Dado que** el usuario opera desde el mostrador, **cuando** visualiza la cabecera de sesión y estado de caja activa, **entonces** la pantalla satisface las especificaciones de interfaz descritas en UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - RN-10 (Fondo Mínimo de Apertura de Caja)
@@ -1842,6 +1859,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 4. **Dado que** el vendedor interactúa con el carrito, buscador y teclado numérico de cobro, **cuando** procesa las líneas y confirma la transacción, **entonces** la interfaz satisface los lineamientos de accesibilidad, controles y microcopy especificados en UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
 5. **Dado que** el vendedor realiza una búsqueda manual de producto por nombre o marca que no coincide con las existencias, **cuando** ejecuta la consulta, **entonces** el sistema despliega el mensaje de estado vacío «No se encontraron productos».
 
+
 **Reglas de negocio aplicables:** 
 - RN-02 (Protección contra Pagos Duplicados Yape/Plin (IziPay))
 
@@ -1868,6 +1886,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** la cantidad vendida de un producto supera el saldo del lote más próximo a vencer, **cuando** el sistema procesa el descargo, **entonces** consume la totalidad de dicho lote y descuenta el remanente del siguiente lote vigente más próximo en estricto orden cronológico de caducidad de forma atómica.
 4. **Dado que** el colaborador confirma la venta en el mostrador, **cuando** el sistema procesa la descarga en el almacén, **entonces** la pantalla POS actualiza en tiempo real los indicadores de stock disponible conforme a las directrices de UI-014 del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - RN-03 (Prohibición de Comercialización de Vencidos)
 - RN-19 (Prioridad de Despacho por Expiración FEFO y Bloqueo de Lotes Caducados)
@@ -1892,6 +1911,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** el directivo inspecciona un turno cerrado con reporte de descuadre (sobrante o faltante), **cuando** examina el detalle de liquidación, **entonces** el sistema permite procesar la revisión, aunque la interfaz gráfica actualmente omite exponer un desglose comparativo completo en pantalla.
 3. **Dado que** la jefatura supervisa los arqueos desde el panel administrativo, **cuando** interactúa con los módulos de revisión y confirmación, **entonces** las pantallas satisfacen los lineamientos visuales, grillas de control y microcopy especificados en UI-016 (Turno de Caja y Arqueo Inicial) y UI-017 (Historial de Cajas y Cierres Forzados) del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - N/A
 
@@ -1913,10 +1933,11 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad de contingencia operativa importante (Should have); resuelve bloqueos físicos en tienda cuando un turno queda abierto indefinidamente por ausencia del operador, evitando la parálisis de la caja en el Release 2.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador dejó su turno de caja en estado «Abierto» y se encuentra ausente o imposibilitado de cerrar, **cuando** el Administrador o Gerente ejecuta el cierre forzado de dicha caja, **entonces** el sistema le exige obligatoriamente ingresar el conteo físico real de efectivo y pagos digitales encontrados en gaveta y documentar una justificación o motivo explicativo de la intervención.
+1. **Dado que** un colaborador dejó su turno de caja en estado «Abierto» y se encuentra ausente o imposibilitado de cerrar, **cuando** el Administrador o Gerente pulsa el botón rojo «Cerrar turno» en la fila del turno dentro del historial de cajas, **entonces** se abre una ventana modal donde el botón de confirmación indica «Forzar cierre», exigiéndole obligatoriamente ingresar el conteo físico real de efectivo y pagos digitales encontrados en gaveta junto con una justificación o motivo explicativo de la intervención forzada.
 2. **Dado que** se confirma el cierre forzado de la caja, **cuando** el sistema procesa la liquidación, **entonces** el turno pasa inmediatamente a estado «Cerrado», calcula las diferencias de arqueo resultantes y deja constancia permanente e inmodificable del directivo que forzó el cierre y del motivo justificado registrado.
 3. **Dado que** dos supervisores intentan intervenir simultáneamente sobre la misma caja abierta, **cuando** uno de ellos confirma el cierre forzado, **entonces** el sistema procesa la operación de forma atómica y bloquea cualquier intento concurrente posterior notificando que el turno ya fue cerrado.
 4. **Dado que** la administración opera el cierre forzado de contingencia, **cuando** visualiza los formularios y alertas de confirmación, **entonces** la pantalla satisface los lineamientos de interfaz y advertencias de seguridad descritos en UI-017 (Historial de Cajas y Cierres Forzados) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -1939,11 +1960,12 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad crítica indispensable para la operación comercial (Must have); la emisión formal de comprobantes tributarios es obligatoria por ley para cualquier establecimiento comercial y requisito no negociable de salida del MVP (Release 1).
 
 **Criterios de aceptación:**
-1. **Dado que** el cliente solicita una Factura Comercial para sustento tributario de su empresa, **cuando** el vendedor ingresa el número de RUC de 11 dígitos y selecciona tipo «Factura», **entonces** el sistema verifica en línea que el RUC figure en estado Activo y condición Habido ante el padrón tributario, genera la serie y el correlativo ininterrumpido oficial (RN-13) y emite el comprobante desglosando base imponible e Impuesto General a las Ventas (IGV 18 %).
+1. **Dado que** el cliente solicita una Factura Comercial para sustento tributario de su empresa, **cuando** el vendedor ingresa el número de RUC de 11 dígitos y selecciona tipo «Factura», **entonces** el sistema verifica en línea que el RUC figure en estado Activo y condición Habido ante el padrón tributario, genera la serie y el correlativo ininterrumpido oficial (RN-13) y emite el comprobante por el monto total de la operación.
 2. **Dado que** el servicio externo de consulta tributaria no responde o no se encuentra disponible al momento de la venta y el cliente acredita sus datos fiscales, **cuando** el vendedor introduce manualmente la razón social y dirección fiscal, **entonces** el sistema permite emitir la factura en modalidad de contingencia dejando una marca de verificación tributaria pendiente para su posterior regularización.
 3. **Dado que** el comprador adquiere productos por un monto total de hasta S/ 700.00 inclusive (monto total ≤ S/ 700.00) y no solicita identificación personal, **cuando** el vendedor emite una Boleta de Venta, **entonces** el sistema asigna automáticamente el comprobante a «Público General» correlativo sin requerir DNI (RN-13, RN-21).
 4. **Dado que** el colaborador emite comprobantes desde el mostrador de ventas, **cuando** visualiza la previsualización del ticket, serie, correlativo y datos del receptor, **entonces** la interfaz satisface los estándares visuales y de formato de comprobante descritos en UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
 5. **Dado que** el comprador adquiere productos por un monto total superior a S/ 700.00 (> S/ 700.00), **cuando** el vendedor intente emitir la Boleta de Venta a «Público General» sin documento de identidad, **entonces** el sistema bloquea de forma terminante la emisión del comprobante y exige la captura obligatoria del DNI de 8 dígitos del adquirente para dar estricto cumplimiento a la normativa tributaria vigente de SUNAT (RN-21).
+
 
 **Reglas de negocio aplicables:** 
 - RN-13 (Numeración Oficial e Ininterrumpida)
@@ -1973,6 +1995,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 4. **Dado que** el operador consulta el módulo de ventas históricas, **cuando** interactúa con los filtros y la grilla de comprobantes, **entonces** la pantalla satisface las especificaciones de interfaz descritas en UI-015 (Historial de Ventas y Anulaciones) del Catálogo de Interfaces (DOC-ANEXO-B).
 5. **Dado que** la búsqueda no arroja coincidencias de ventas en el rango o criterios seleccionados, **cuando** se ejecuta el filtro, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No se encontraron ventas».
 
+
 **Reglas de negocio aplicables:** 
 - RN-07 (Privacidad y Segregación de Ventas)
 
@@ -2001,6 +2024,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 5. **Dado que** la venta original que se anula fue cobrada mediante billetera digital (Yape o Plin vía terminal IziPay), **cuando** el Administrador o Gerente autoriza la anulación, **entonces** el sistema registra la anulación identificando el medio de pago original sin restar dinero en efectivo de la gaveta de caja (preservando el saldo exacto en billetes y monedas para el arqueo físico de cierre), actualiza el balance de cobros digitales en el reporte de caja activa e inhabilita el código de autorización vinculado para evitar dobles conciliaciones (RN-02, RN-08).
 6. **Dado que** la anulación de una venta formalizada es confirmada, **cuando** el sistema actualiza el registro a estado «Anulada», **entonces** el número correlativo oficial y serie permanecen asignados a la venta anulada sin reutilizarse, y el código de autorización digital correspondiente permanece inhabilitado históricamente sin admitir reuso (RN-02).
 
+
 **Reglas de negocio aplicables:** 
 - RN-02 (Protección contra Pagos Duplicados Yape/Plin (IziPay))
 - RN-08 (Límite Temporal para Anulaciones)
@@ -2023,9 +2047,10 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** el cliente realiza el abono mediante billetera digital (Yape o Plin mediante terminal IziPay), **cuando** el operador captura el número de autorización en el formulario de cobro o en la revisión posterior, **entonces** el sistema valida que contenga exactamente 6 dígitos numéricos, rechazando caracteres alfabéticos o longitudes distintas para evitar errores de tipeo.
-2. **Dado que** el código de autorización de 6 dígitos numéricos es sintácticamente correcto, **cuando** el operador o supervisor confirma la verificación de la transacción, **entonces** el sistema valida que no haya sido registrado en ninguna venta histórica previa (RN-02) y actualiza el estado de la venta como «Verificado», consignando la identidad del colaborador responsable y la fecha de verificación.
-3. **Dado que** una transacción ya cuenta con la marca de abono verificado, **cuando** cualquier operador intente marcarla nuevamente como verificada, **entonces** el sistema bloquea la acción notificando que la transacción ya se encuentra verificada.
+2. **Dado que** el código de autorización de 6 dígitos numéricos es válido y el vendedor confirma la recepción del abono en el terminal IziPay en mostrador, **cuando** pulsa el botón «Pago confirmado en IziPay», **entonces** el sistema habilita el botón «Realizar Venta» para concretar la transacción, quedando registrado el código unívoco verificado (RN-02). Sin este paso previo de confirmación en el POS no es posible procesar el cobro. En la grilla del historial, la columna «Yape/Plin (IziPay) Verif.» informa con el distintivo esmeralda «Sí» las ventas cobradas por este medio.
+3. **Dado que** a nivel de backend existe el endpoint `PATCH /ventas/:id/verificar-yape` para verificación diferida (no invocado desde la interfaz de usuario web), **cuando** dicho servicio es consumido externamente sobre una transacción que ya cuenta con la marca de abono verificado, **entonces** la API bloquea la acción notificando que la transacción ya se encuentra verificada como salvaguarda técnica del servicio.
 4. **Dado que** el colaborador opera desde el Punto de Venta o el Historial de Transacciones, **cuando** interactúa con las casillas de captura y confirmación de pago digital, **entonces** las interfaces satisfacen los lineamientos visuales y de microcopy descritos en UI-014 (Terminal de Punto de Venta POS) y UI-015 (Historial de Ventas y Anulaciones) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - RN-02 (Protección contra Pagos Duplicados Yape/Plin (IziPay))
@@ -2053,6 +2078,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** el colaborador intenta reenviar un comprobante, **cuando** introduce una dirección de correo con formato inválido o campos vacíos, **entonces** el sistema bloquea el despacho exigiendo una estructura válida de correo electrónico.
 4. **Dado que** el usuario consulta cualquier venta del historial, **cuando** interactúa con las opciones de descarga o reenvío digital, **entonces** la interfaz satisface los estándares visuales y de interacción descritos en UI-015 (Historial de Ventas y Anulaciones) del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - RN-13 (Numeración Oficial e Ininterrumpida)
 
@@ -2079,6 +2105,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 3. **Dado que** el colaborador escanea un código de barras inexistente en el catálogo o perteneciente a un producto desactivado, **cuando** el escáner envía el código, **entonces** el sistema emite un mensaje visual «Código de barras no registrado».
 4. **Dado que** el vendedor utiliza la interfaz de cobro, **cuando** interactúa con el buscador óptico y visualiza la lista dinámica del carrito, **entonces** la pantalla cumple rigurosamente las pautas de diseño y microcopy de UI-014 (Terminal de Punto de Venta POS) del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - N/A
 
@@ -2103,6 +2130,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** el directivo consulta el historial de ventas con filtros de fechas o comprobantes aplicados, **cuando** presiona la opción de exportar datos a archivo PDF, **entonces** el sistema genera y descarga un archivo estructurado con los registros correspondientes al filtro activo.
 2. **Dado que** el usuario abre el documento exportado, **cuando** inspecciona sus campos, **entonces** el documento contiene columnas normalizadas con fecha y hora, tipo de comprobante, serie, correlativo, cliente, medio de pago, base imponible, impuesto IGV, importe total y estado de la venta.
 3. **Dado que** el usuario aplica filtros de fecha o estado que no arrojaron ninguna venta registrada en el período, **cuando** presiona la opción de exportar datos, **entonces** el sistema notifica que no existen registros comerciales disponibles para el criterio seleccionado, evitando la descarga de archivos vacíos.
+
 
 **Especificación de interfaz:** Funcionalidad de descarga de documento estructurado sin pantalla propia independiente; se integra como control de exportación dentro de la grilla de consulta de ventas.
 
@@ -2167,6 +2195,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** la parametrización institucional y fiscal constituye información estratégica reservada para la administración, **cuando** un colaborador con rol Vendedor o Almacenero intenta acceder a esta vista de configuración, **entonces** el sistema bloquea el ingreso denegando el acceso y preservando la integridad de los parámetros del negocio.
 3. **Dado que** el Administrador interactúa con la vista de configuración institucional, **cuando** inspecciona los campos, textos de ayuda y etiquetas informativas, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-020 (Configuración Fiscal y SUNAT) del Catálogo de Interfaces (DOC-ANEXO-B).
 
+
 **Reglas de negocio aplicables:** 
 - N/A (parámetros institucionales transversales).
 
@@ -2188,12 +2217,13 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad crítica indispensable desde el primer incremento operativo (Must have); los datos fiscales y las series de comprobantes deben estar operativas y configurables desde el MVP (SPR-1) para habilitar la apertura formal de la tienda y la emisión legal de boletas y facturas en caja.
 
 **Criterios de aceptación:**
-1. **Dado que** el Administrador requiere actualizar los datos tributarios del minimarket, **cuando** verifica o actualiza los datos institucionales configurando la tasa impositiva oficial (fijada por defecto en 18.00 % conforme a la normativa tributaria peruana, y el sistema opera asumiendo el importe (PVP) como valor neto final) y confirma la acción, **entonces** el sistema guarda el valor porcentual y lo aplica de forma inmediata al cálculo extractivo del comprobante a partir del precio de venta al público (PVP) para todas las ventas emitidas a partir de ese momento.
+1. **Dado que** el Administrador requiere actualizar los datos tributarios del minimarket, **cuando** verifica o actualiza los datos institucionales configurando la tasa impositiva oficial (fijada por defecto en 18.00 % conforme a la normativa tributaria peruana) y confirma la acción, **entonces** el sistema almacena el valor porcentual como parámetro global del negocio (dejando el cálculo extractivo delegado a futuras integraciones contables o a la capa de presentación).
 2. **Dado que** el Administrador ingresa el identificador tributario del establecimiento, **cuando** el valor capturado no corresponde a un RUC válido registrado ante SUNAT (exactamente 11 dígitos numéricos iniciando con el prefijo 20 para persona jurídica comercial), **entonces** el sistema rechaza la actualización, resalta el campo con error y notifica que se requiere un RUC válido en estado Activo y condición Habido.
 3. **Dado que** el Administrador actualiza los medios de contacto de la tienda, **cuando** ingresa el número telefónico, **entonces** el sistema valida que cumpla con el formato de telefonía celular nacional (9 dígitos iniciando con 9) o telefonía fija institucional con prefijo de área departamental, rechazando secuencias numéricas inválidas.
 4. **Dado que** el Administrador define las series tributarias para comprobantes de pago, **cuando** ingresa las series de boleta y factura, **entonces** el sistema verifica que ambas cumplan con la estructura fiscal reglamentaria de cuatro caracteres (una letra mayúscula identificadora seguida de tres dígitos numéricos, tales como B001 y F001), impidiendo formatos anómalos.
 5. **Dado que** el Administrador edita los datos de la empresa, **cuando** ingresa un RUC válido en el formulario y solicita la consulta de datos fiscales, **entonces** el sistema recupera automáticamente la Razón Social y el domicilio fiscal registrados ante la entidad tributaria oficial (SUNAT), facilitando el llenado fidedigno del formulario.
 6. **Dado que** el Administrador gestiona la actualización fiscal, **cuando** manipula los formularios, botones de guardado y mensajes de confirmación o error, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-020 (Configuración Fiscal y SUNAT) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A (parámetros institucionales de configuración fiscal).
@@ -2221,8 +2251,9 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** el usuario con rol Gerente o Administrador inicia sesión y accede al cuadro de mando principal («Dashboard»), **cuando** la pantalla carga con el período predeterminado del mes en curso, **entonces** el sistema presenta tarjetas de indicadores clave destacando: Total de Ventas concretadas, Ingresos totales acumulados en moneda nacional (S/) y Ticket promedio por transacción comercial.
 2. **Dado que** se registran nuevas ventas en los terminales de punto de venta (POS) o el usuario pulsa la opción «Actualizar», **cuando** la vista refresca su información, **entonces** los indicadores métricos recalculan sus valores de forma inmediata para reflejar los ingresos más recientes.
 3. **Dado que** el usuario requiere analizar un horizonte temporal específico, **cuando** selecciona un rango de fechas («Desde» y «Hasta») y aplica el filtro, **entonces** las tarjetas de indicadores actualizan sus totales reflejando con exactitud las ventas correspondientes a dicho período, validando que la fecha inicial no sea posterior a la final ni exceda el límite cronológico permitido.
-4. **Dado que** el usuario pulsa sobre cualquiera de las tarjetas métricas (Ventas, Ingresos o Ticket promedio), **cuando** interactúa con el componente, **entonces** el sistema despliega una ventana de diálogo modal interactiva con el detalle desagregado de las operaciones que componen la métrica sin necesidad de abandonar la vista ejecutiva principal.
+4. **Dado que** el usuario pulsa sobre cualquiera de las tarjetas métricas («Total Ventas», «Ingresos» o «Ticket Promedio»), **cuando** interactúa con el componente, **entonces** el sistema despliega una ventana de diálogo modal interactiva presentando para Ventas y Ticket Promedio la tabla con fecha/hora, cliente o vendedor, método de pago, monto y estado (o «No hay ventas registradas este mes.» si está vacío), y para Ingresos la tabla con método de pago, N° de ventas y monto acumulado (o «No hay ingresos registrados este mes.» si está vacío), sin necesidad de abandonar la vista ejecutiva principal.
 5. **Dado que** el usuario navega en el panel de control, **cuando** visualiza la disposición de tarjetas, indicadores porcentuales y acciones de filtrado, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-018 (Dashboard y KPIs Estratégicos) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2245,10 +2276,11 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad crítica de proactividad operativa (Must have); previene pérdidas comerciales por falta de inventario, disminuye mermas y mitiga riesgos de fraude o descuadre por turnos de caja abiertos indebidamente en el Release 2.
 
 **Criterios de aceptación:**
-1. **Dado que** uno o más productos activos registran existencias iguales o inferiores a su umbral de stock mínimo parametrizado (o stock en cero), **cuando** el usuario accede al panel de control, **entonces** el sistema exhibe una tarjeta de alerta «Sin Stock» y una sección prioritaria de «Stock Crítico» listando los productos más urgentes de reponer conforme a la RN-06, con enlace directo para inspeccionarlos en el catálogo de productos.
+1. **Dado que** uno o más productos activos registran existencias iguales o inferiores a su umbral de stock mínimo parametrizado (o stock en cero), **cuando** el usuario accede al panel de control, **entonces** el sistema exhibe una tarjeta de alerta «Sin Stock» (cuyo modal interactivo despliega la lista de artículos agotados o el mensaje «No hay productos sin stock. ✓» si todas las existencias están cubiertas) y una sección prioritaria de «Stock Crítico» listando los productos más urgentes de reponer conforme a la RN-06, con enlace directo para inspeccionarlos en el catálogo de productos.
 2. **Dado que** un vendedor inició un turno de atención y este permanece en estado «Abierto» durante más de 16 horas consecutivas sin haber sido cerrado, **cuando** el Administrador o Gerente ingresa al cuadro de mando, **entonces** el sistema presenta un banner de notificación de advertencia preventiva de «Turno Abierto Prolongado», indicando el nombre del colaborador, el tiempo transcurrido y un botón de acceso directo al historial de cajas para proceder con la supervisión o cierre forzado.
 3. **Dado que** no existen anomalías operativas de turnos prolongados, **cuando** el usuario inspecciona el cuadro de mando, **entonces** el banner de advertencia se oculta automáticamente, manteniendo una visualización despejada y focalizada en los indicadores comerciales.
 4. **Dado que** el usuario interactúa con los avisos, tarjetas de riesgo y enlaces de navegación rápida en el panel principal, **cuando** consulta el estado preventivo del minimarket, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-018 (Dashboard y KPIs Estratégicos) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - RN-06 (Alerta de Stock Mínimo)
@@ -2273,8 +2305,9 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Criterios de aceptación:**
 1. **Dado que** el usuario visualiza el panel de control ejecutivo con datos comerciales registrados, **cuando** desciende a la sección analítica, **entonces** el sistema renderiza un gráfico de área lineal interactivo que representa las ventas por día, ubicando las fechas cronológicas en el eje horizontal y los importes en moneda nacional (S/) en el eje vertical.
 2. **Dado que** el usuario desplaza el cursor sobre cualquier punto o nodo representativo de una fecha en el gráfico, **cuando** se posiciona sobre el día seleccionado, **entonces** el sistema presenta un recuadro flotante informativo destacando la fecha completa, el monto total facturado y el número de ventas concretadas en dicha jornada.
-3. **Dado que** el período seleccionado no registra ninguna venta concretada, **cuando** se renderiza la sección, **entonces** el sistema presenta un estado visual alternativo con el mensaje descriptivo «No hay ventas registradas aún», preservando el diseño sin generar distorsiones visuales.
+3. **Dado que** el período seleccionado no registra ninguna venta concretada, **cuando** se renderiza la sección, **entonces** el sistema presenta un estado visual alternativo con el mensaje descriptivo «No hay ventas registradas este mes.» (o del período), preservando el diseño sin generar distorsiones visuales.
 4. **Dado que** el usuario interactúa con los controles de visualización gráfica y analiza la curva de ventas, **cuando** consulta el gráfico en el panel, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-018 (Dashboard y KPIs Estratégicos) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2297,10 +2330,11 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad importante de apoyo comercial (Should have); agiliza el reconocimiento del catálogo con mayor tracción comercial en el Release 3 para planificar oportunamente las compras y la colocación estratégica de mercadería en los anaqueles del salón.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario consulta el cuadro de mando ejecutivo, **cuando** observa el bloque «Top 5 productos», **entonces** el sistema presenta las 5 mercaderías con mayor cantidad de unidades vendidas en el período activo, ordenadas de mayor a menor rotación, indicando para cada producto su nombre comercial, marca, unidades despachadas y una barra proporcional visual.
+1. **Dado que** el usuario consulta el cuadro de mando ejecutivo, **cuando** observa el bloque «Top 5 productos más vendidos», **entonces** el sistema presenta los 5 artículos con mayor cantidad de unidades despachadas en el período activo (`limite: 5` en API, a diferencia del Top 10 del módulo de Reportes), ordenados de mayor a menor rotación, indicando para cada producto su nombre comercial, marca, unidades vendidas y una barra proporcional visual.
 2. **Dado que** se registran nuevas ventas que alteran el orden de demanda comercial, **cuando** se actualiza la información del cuadro de mando, **entonces** las barras de clasificación reordenan dinámicamente sus posiciones relativas reflejando los nuevos líderes de venta.
-3. **Dado que** en el período seleccionado no se han efectuado ventas en la tienda, **cuando** se consulta el bloque, **entonces** el sistema muestra un estado informativo indicando «No hay ventas registradas».
+3. **Dado que** en el período seleccionado no se han efectuado ventas en la tienda, **cuando** se consulta el bloque, **entonces** el sistema muestra un estado informativo indicando «No hay ventas registradas este mes.».
 4. **Dado que** el usuario revisa el escalafón de productos estrella en el cuadro de mando, **cuando** interactúa con las barras proporcionales y etiquetas informativas, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-018 (Dashboard y KPIs Estratégicos) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2324,6 +2358,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** el usuario con rol Gerente o Administrador accede al cuadro de mando principal («Dashboard»), **cuando** revisa la tarjeta métrica «Solicitudes Pendientes», **entonces** el sistema exhibe el contador cuantitativo exacto de pedidos de abastecimiento que se encuentran en estado «Pendiente» junto con el indicador descriptivo de estado.
 2. **Dado que** el usuario pulsa sobre la tarjeta métrica «Solicitudes Pendientes», **cuando** la aplicación procesa la interacción, **entonces** el sistema despliega una ventana de diálogo modal en pantalla presentando el listado detallado de solicitudes pendientes (identificador de solicitud, producto requerido, cantidad solicitada, colaborador solicitante y fecha de emisión) o el estado informativo «No hay solicitudes pendientes. ✓» si todas las órdenes han sido resueltas, permaneciendo en la vista del cuadro de mando.
 3. **Dado que** el usuario interactúa con la tarjeta y el diálogo modal de órdenes pendientes, **cuando** consulta la información en el panel, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-018 (Dashboard y KPIs Estratégicos) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2352,6 +2387,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** el usuario ingresa un rango de fechas donde la fecha inicial («Desde») es cronológicamente posterior a la fecha final («Hasta»), **cuando** intenta aplicar los filtros, **entonces** el sistema bloquea la consulta y exhibe un mensaje de validación indicando que la fecha inicial no puede ser posterior a la fecha final.
 3. **Dado que** el usuario no especifica fechas en los filtros, **cuando** carga la vista analítica, **entonces** el sistema consolida automáticamente la totalidad de operaciones históricas registradas respetando el límite temporal máximo permitido (10 años).
 4. **Dado que** el usuario interactúa con los filtros cronológicos y tarjetas de resumen financiero, **cuando** consulta el reporte analítico, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
+5. **Dado que** el período seleccionado no registra ninguna venta, **cuando** se ejecuta la consulta, **entonces** las tarjetas de resumen presentan Total de Ventas en 0, Ingresos Totales en S/ 0.00 y Ticket Promedio en S/ 0.00, y los bloques analíticos asociados despliegan sus respectivos estados vacíos.
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2374,10 +2411,12 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad esencial para la estrategia comercial y de compras (Must have); constituye el insumo analítico clave para determinar la política de abastecimiento del minimarket en el Release 2.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario genera el reporte comercial para un período determinado, **cuando** visualiza la grilla de productos más vendidos, **entonces** el sistema presenta un listado ordenado de mayor a menor según la cantidad total de unidades despachadas, exhibiendo para cada producto su nombre comercial, marca, unidades vendidas e importe total recaudado.
+1. **Dado que** el usuario genera el reporte comercial para un período determinado, **cuando** visualiza la grilla de productos más vendidos, **entonces** el sistema presenta un listado de hasta 10 productos («Top 10 productos más vendidos», con límite fijado en 10 en la llamada API a diferencia del Top 5 del Dashboard) ordenado de mayor a menor según la cantidad total de unidades despachadas, exhibiendo para cada producto su posición (#), nombre comercial, marca, unidades vendidas e importe total recaudado.
 2. **Dado que** un producto no registra ninguna transacción de venta dentro del rango temporal seleccionado, **cuando** el sistema compila el ranking, **entonces** dicho artículo es excluido de la clasificación, garantizando que el listado concentre únicamente mercadería con rotación efectiva.
 3. **Dado que** existen empates en la cantidad de unidades vendidas entre dos o más artículos, **cuando** el sistema construye el escalafón, **entonces** aplica como criterio secundario de ordenamiento el monto total de ingresos recaudados en orden descendente.
 4. **Dado que** el usuario revisa el ranking de productos estrella, **cuando** navega en la vista analítica, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
+5. **Dado que** el período seleccionado no registra ventas de ningún producto, **cuando** se compila el ranking, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay datos de ventas aún».
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2404,6 +2443,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** en una fecha específica la tienda permaneció cerrada (feriado, inventario físico o sin actividad comercial), **cuando** se compila el reporte, **entonces** dicho día sin movimientos comerciales no genera fila en la grilla tabular, consolidando exclusivamente jornadas con actividad efectiva.
 3. **Dado que** el usuario consulta los montos diarios, **cuando** inspecciona las fechas, **entonces** el sistema agrupa las ventas asignándolas al día calendario oficial de la zona horaria nacional, asegurando que las ventas nocturnas previas a la medianoche correspondan a la jornada respectiva.
 4. **Dado que** el usuario interactúa con el listado tabular de evolución diaria, **cuando** revisa los registros en pantalla, **entonces** la interfaz satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
+5. **Dado que** el período seleccionado no registra ninguna transacción comercial, **cuando** se genera el desglose, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay ventas en el período seleccionado».
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2428,8 +2469,9 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Criterios de aceptación:**
 1. **Dado que** el usuario genera el reporte financiero para un intervalo temporal, **cuando** consulta la sección de recaudación por medio de pago, **entonces** el sistema exhibe un desglose analítico separando el total recaudado en Efectivo y el total recaudado a través de transferencias digitales (Yape/Plin (IziPay)), detallando para cada modalidad el número de operaciones y el monto monetario acumulado.
 2. **Dado que** el usuario evalúa la consistencia de los montos desglosados, **cuando** suma los ingresos de Efectivo y Yape/Plin (IziPay), **entonces** el resultado de la suma coincide de manera exacta y al céntimo con el importe total de ventas brutas completadas reportadas para dicho período.
-3. **Dado que** en un período evaluado no se registraron transacciones mediante alguna de las modalidades de pago, **cuando** se presenta el desglose, **entonces** el sistema exhibe el medio respectivo con saldo S/ 0.00 y cero operaciones o consolida únicamente los medios activos, preservando la coherencia aritmética.
+3. **Dado que** en un período evaluado no se registraron transacciones mediante alguna de las modalidades de pago o en general no hay ventas, **cuando** se presenta el desglose, **entonces** el sistema exhibe un estado vacío explícito con el mensaje «No hay datos de ventas en el período seleccionado» (o saldo S/ 0.00 en cada medio).
 4. **Dado que** el usuario inspecciona el resumen de medios de pago, **cuando** interactúa con los indicadores y gráficos de proporción, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2453,9 +2495,11 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** el usuario solicita el reporte de existencias críticas, **cuando** el sistema compila la información, **entonces** presenta exclusivamente aquellos productos activos donde las existencias actuales sean menores o iguales a su umbral mínimo configurado (o al umbral global predeterminado de 5 unidades) conforme a la RN-06.
-2. **Dado que** se presenta la grilla de stock crítico, **cuando** el usuario inspecciona las columnas, **entonces** visualiza de forma clara el código del producto, nombre comercial, marca, categoría, existencias vigentes y el umbral mínimo específico aplicado para la evaluación.
+2. **Dado que** se presenta la grilla de stock crítico, **cuando** el usuario inspecciona las columnas, **entonces** visualiza de forma clara: Producto, Marca, Categoría, Stock actual y Mínimo aplicado (sin código de producto en la grilla).
 3. **Dado que** el usuario requiere ajustar el nivel de exigencia del reporte, **cuando** modifica el umbral numérico de evaluación en pantalla y aplica el cambio, **entonces** la grilla recalcula dinámicamente el listado incorporando los artículos que cumplan el nuevo criterio de criticidad.
 4. **Dado que** el usuario interactúa con el reporte analítico de existencias críticas, **cuando** consulta los datos en pantalla, **entonces** la interfaz satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
+5. **Dado que** ningún producto tiene stock menor o igual al umbral o este se fija en cero sin alertas, **cuando** se genera el reporte, **entonces** el sistema presenta un estado vacío explícito en un banner verde con el mensaje «✓ Todo el stock está en orden».
+
 
 **Reglas de negocio aplicables:** 
 - RN-06 (Alerta de Stock Mínimo)
@@ -2478,9 +2522,10 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad de alto valor para el control patrimonial (Should have); proporciona una panorama integral del catálogo de existencias sin requerir supervisiones manuales exhaustivas.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario accede al bloque de estado del inventario, **cuando** la pantalla presenta los datos, **entonces** el sistema exhibe los conteos cuantitativos globales: total de productos comerciales activos, total de categorías creadas, total de proveedores activos, cantidad de productos con existencias en cero y total de solicitudes de reposición en estado pendiente.
+1. **Dado que** se consumen los datos consolidados del inventario desde el servicio analítico, **cuando** el sistema compila las métricas globales, **entonces** el API calcula los 5 conteos cuantitativos (total de productos activos, total de categorías, total de proveedores activos, productos sin existencias y solicitudes de reposición pendientes), disponibilizándolos para la supervisión patrimonial y la presentación de tarjetas en el tablero de control.
 2. **Dado que** se producen entradas por compras, despachos en ventas o bajas por merma, **cuando** el usuario refresca la consulta, **entonces** los indicadores cuantitativos actualizan sus valores en tiempo real reflejando la situación patrimonial vigente del almacén.
 3. **Dado que** el usuario analiza las tarjetas cuantitativas de existencias, **cuando** navega en la vista analítica, **entonces** la pantalla satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2503,10 +2548,11 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad estratégica de rentabilidad comercial (Should have); brinda la inteligencia financiera requerida para asegurar que la política de fijación de precios maximice el retorno económico en el Release 3.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario define un período de análisis y genera el reporte de rentabilidad, **cuando** visualiza la grilla de márgenes comerciales, **entonces** el sistema presenta para cada artículo vendido: nombre del producto, marca, categoría, unidades totales despachadas, importe bruto recaudado, costo valorizado total según el costo promedio ponderado de los lotes consumidos (RN-14), ganancia monetaria absoluta y porcentaje de margen de utilidad obtenido.
+1. **Dado que** el usuario define un período de análisis y genera el reporte de rentabilidad, **cuando** visualiza la grilla de márgenes comerciales, **entonces** el sistema presenta para cada artículo vendido que cuente con lotes costeados: Producto, Marca, Categoría, Vendido (unidades), Ingreso (S/), Costo (S/), Margen S/. y Margen % (calculado sobre el ingreso). Si no existen lotes con costo registrado en el período, la grilla despliega el mensaje informativo «Sin datos de costo en el período. Registra el costo unitario al ingresar mercadería para ver el margen.».
 2. **Dado que** un producto registró ventas a un precio inferior a su costo de adquisición (margen negativo o venta a pérdida), **cuando** se renderiza la grilla analítica, **entonces** el sistema resalta visualmente la fila con alerta destacada en color rojo y signo negativo, advirtiendo de forma inmediata la anomalía tarifaria.
-3. **Dado que** el usuario examina la rentabilidad del catálogo, **cuando** ordena la grilla por ganancia absoluta o porcentaje de margen, **entonces** el sistema reorganiza las filas de forma interactiva en sentido ascendente o descendente.
+3. **Dado que** el usuario consulta la rentabilidad del catálogo en pantalla, **cuando** se renderiza la grilla de margen, **entonces** el sistema presenta los registros ordenados de forma predeterminada por ganancia monetaria descendente proveniente de la consulta de backend, con encabezados tabulares fijos sin ordenamiento interactivo en el cliente.
 4. **Dado que** el usuario interactúa con la grilla de rentabilidad comercial, **cuando** revisa los valores en pantalla, **entonces** la interfaz satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - RN-14 (Actualización de Valorización de Inventario)
@@ -2529,10 +2575,12 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad importante para el control de pérdidas (Should have); permite diagnosticar las causas estructurales de merma y reducir los costos ocultos por desperdicio de productos perecibles en el Release 3.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario selecciona un rango temporal y genera el reporte de mermas, **cuando** la pantalla presenta los resultados, **entonces** el sistema exhibe un desglose analítico agrupando las bajas por motivo reglamentario (Vencimiento, Dañado, Merma Operativa), indicando para cada causa el número total de eventos de descarte, las unidades físicas perdidas y el costo económico total valorizado.
-2. **Dado que** el usuario inspecciona el detalle de las pérdidas, **cuando** revisa las partidas registradas, **entonces** el sistema calcula el valor monetario de la merma multiplicando las unidades dadas de baja por el costo unitario de adquisición del lote correspondiente.
+1. **Dado que** el usuario selecciona un rango temporal y genera el reporte de mermas, **cuando** la pantalla presenta los resultados, **entonces** el sistema exhibe un desglose analítico en grilla con cabecera roja agrupando las bajas según los 6 motivos del sistema: «Vencido», «Dañado», «Robo o faltante», «Consumo interno», «Error de registro» y «Otro», indicando para cada causa las columnas Motivo, N° Bajas, Cantidad Total y Costo Valorizado.
+2. **Dado que** el usuario inspecciona el costo valorizado de las bajas, **cuando** el sistema liquida las partidas registradas, **entonces** calcula el valor monetario de la merma tomando el costo unitario del lote de compra, o el costo promedio del producto, o S/ 0.00 en caso de no registrarse costo en el ingreso.
 3. **Dado que** en el período evaluado no se produjeron bajas para una o más causales de merma, **cuando** se compila el reporte, **entonces** el sistema refleja cero incidencias y costo S/ 0.00 para dichas categorías, conservando la integridad de las sumas totales.
 4. **Dado que** el usuario interactúa con la grilla y representaciones gráficas de mermas, **cuando** consulta el análisis en pantalla, **entonces** la interfaz satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
+5. **Dado que** no existen mermas registradas en absoluto durante el período consultado, **cuando** se genera el reporte, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay bajas de inventario en el período seleccionado».
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2559,6 +2607,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 2. **Dado que** el reporte contiene múltiples secciones analíticas (resumen financiero, ventas por día, medios de pago, ranking de rotación y mermas), **cuando** se compila el documento, **entonces** el sistema pagina automáticamente el contenido, manteniendo encabezados claros, estilos tipográficos uniformes y saltos de página ordenados.
 3. **Dado que** la compilación del documento se encuentra en progreso, **cuando** el usuario acciona la descarga, **entonces** el sistema exhibe un indicador visual de procesamiento y deshabilita temporalmente el botón para prevenir descargas duplicadas involuntarias.
 4. **Dado que** el usuario interactúa con el botón de exportación y la previsualización documental, **cuando** utiliza el módulo, **entonces** la interfaz satisface las directrices visuales, diseño y microcopy especificados en UI-019 (Reportes Analíticos y PDF) del Catálogo de Interfaces (DOC-ANEXO-B).
+
 
 **Reglas de negocio aplicables:** 
 - N/A.
@@ -2649,7 +2698,7 @@ Estructura de trazabilidad horizontal por épicas funcionales y vertical por hor
   2. Gestión de perfil personal, edición de catálogos y reactivación de empleados suspendidos (`HU-AUTH-06 (Cancelada)`, `HU-CAT-03`, `HU-CAT-04`, `HU-CLI-01`, `HU-CLI-03`, `HU-PROD-04`, `HU-PROD-05`, `HU-PROV-03`, `HU-USR-03`, `HU-USR-05`).
   3. Agilización del punto de venta y catálogo mediante integración con lector óptico de código de barras (`HU-VEN-04`, `HU-PROD-03`).
   4. Trazabilidad histórica completa de movimientos de almacén: entradas, bajas por merma y ajustes físicos (`HU-INV-04`, `HU-INV-05`, `HU-INV-06`).
-  5. Descarga e impresión de comprobantes de pago en PDF y reenvío por correo electrónico (`HU-VEN-03`), junto con la especificación para exportación del historial a formato estructurado (`HU-VEN-08`).
+  5. Descarga e impresión de comprobantes de pago en PDF y reenvío por correo electrónico (`HU-VEN-03`), junto con la exportación ejecutiva de ventas en PDF (`HU-REP-09`), quedando la exportación aislada de ventas (`HU-VEN-08`) fuera de alcance.
   6. Suite analítica completa: ventas por medio de pago, evolución diaria de ventas, rentabilidad/margen por producto, análisis de mermas por causa y exportación general de reportes en PDF (`HU-DASH-02`, `HU-DASH-04`, `HU-DASH-05`, `HU-REP-03`, `HU-REP-04`, `HU-REP-06`, `HU-REP-07`, `HU-REP-08`, `HU-REP-09`).
   7. Aprobación del 100 % de los criterios de aceptación y entrega de la solución final consolidada.
 - **Fecha Objetivo y Presentación:** Martes 10 de noviembre de 2026 (Semana 11 del calendario académico).
@@ -3157,12 +3206,12 @@ Formato: día de cierre (horas efectivas usadas ese día). Escenarios: **base**;
 | **HU-VEN-03** | Ventas (POS) – Generar comprobante en PDF o reenviar por correo electrónico | Should have (3) | 5 | HU-VEN-02 | Des.1 Velasquez | Des.3 Castillo |
 | **HU-CLI-03** | Clientes – Editar correo electrónico de cliente | Could have (2) | 1 | HU-CLI-02 | Des.3 Castillo | Des.1 Velasquez |
 | **HU-REP-09** | Reportes – Exportar reportes en PDF | Could have (2) | 3 | HU-REP-01 | Des.1 Velasquez | Des.3 Castillo |
-| **HU-VEN-08** | Ventas (POS) – Exportar historial de ventas a PDF | Could have (2) | 3 | HU-VEN-05 | Des.5 Colonia | Des.4 Alcalde |
+| **HU-VEN-08** | Ventas (POS) – Exportar historial de ventas a PDF (Fuera de Alcance) | Won't have (1) | — | HU-VEN-05 | *(Excluida / Diferida a Reportes)* | *(Excluida)* |
 | **TOTALES S3** | **27 Historias de Usuario Comprometidas** | | **72** | | **85.75 h Constr.** | **58.25 h QA** |
 
 ### Estrategia de Ejecución del Sprint 3
 1. **Flujo ágil de alta cadencia para historias atomizadas:** El Sprint 3 reúne 27 historias con un promedio de 2.67 puntos por HU. Al tratarse de componentes modulares, el equipo aplica un ciclo corto de desarrollo y pase continuo a pruebas unitarias sin tiempos de espera.
-2. **Generación documental y exportación:** Se implementan las librerías de generación y renderizado PDF para comprobantes (`HU-VEN-03`) y reportes gerenciales (`HU-REP-09`), y la serialización a formato CSV estructurado para historial comercial (`HU-VEN-08`).
+2. **Generación documental y exportación:** Se implementan las librerías de generación y renderizado PDF para comprobantes (`HU-VEN-03`) y reportes gerenciales (`HU-REP-09`), quedando la exportación masiva del historial (`HU-VEN-08`) unificada y absorbida dentro del reporte ejecutivo de ventas en `HU-REP-09` (EPIC-REP).
 3. **Agilización periférica:** Se incorporan los componentes de escucha de eventos HID del navegador para el escaneo de códigos de barra estándar tanto en el registro de productos (`HU-PROD-03`) como en la búsqueda inmediata en punto de venta (`HU-VEN-04`).
 4. **Analítica de rentabilidad y supervisión de seguridad:** Se completan los reportes financieros de margen de ganancia (`HU-REP-07`) y el registro inmutable de accesos (`HU-LOG-01`), cerrando el 100 % de los requisitos funcionales del sistema.
 5. **Holgura para certificación y cierre:** Con 144.0 horas de tareas y 96.0 horas de colchón (40.0 % de holgura), la capacidad restante se destina a pruebas de regresión integral y a la consolidación del paquete final de entrega académica.
@@ -4232,7 +4281,7 @@ A continuación se establecen las 21 reglas de negocio mandatarias que norman la
 | **RN-11** | Tope Máximo para Movimientos Manuales de Efectivo | Todo movimiento manual menor de ingreso o egreso de dinero en efectivo en el cajón de venta física (gastos imprevistos de caja chica o retiro de sencillo no proveniente de una venta) tendrá un monto límite permitido de S/ 5,000.00 por operación. | Vendedor | HU-CAJA-03 |
 | **RN-12** | Identidad Unívoca de Empleados en el Sistema | La identidad de cada colaborador en el sistema se establecerá de manera irrepetible a través de su dirección de correo electrónico registrada. No se admitirá la creación ni duplicidad de dos cuentas activas con una misma dirección de correo electrónico. | SuperAdmin | HU-USR-02, HU-USR-03 |
 | **RN-13** | Numeración Consecutiva e Ininterrumpida de Comprobantes | La emisión de comprobantes de pago (Boletas de Venta y Facturas) mantendrá una correlatividad numérica estricta, continua e ininterrumpida por serie y tipo de documento fiscal, garantizando la consistencia ante la normativa tributaria de SUNAT. | Vendedor | HU-VEN-02, HU-VEN-03 |
-| **RN-14** | Actualización Automática de la Valorización de Inventario | Cada vez que se registre el ingreso de mercadería al almacén con un precio de compra específico, el sistema recalculará automáticamente el costo promedio ponderado del producto, manteniendo actualizada la valorización del inventario del minimarket y la base de costeo para los reportes de margen de ganancia comercial. | Almacenero | HU-INV-01, HU-REP-07, HU-SOL-05 |
+| **RN-14** | Actualización Automática de la Valorización de Inventario | Estructuralmente, la API está diseñada para recalcular automáticamente el costo promedio ponderado del producto cada vez que se reciba un ingreso con costo específico; sin embargo, en la interfaz gráfica final no existe campo de costo ni en el formulario de Entradas de Almacén ni en el de Completar Solicitud de Reposición (la interfaz envía el valor nulo por defecto), por lo que la actualización de la valorización del inventario permanece inactiva para el operador en pantalla. | Almacenero | HU-INV-01, HU-REP-07, HU-SOL-05 |
 | **RN-15** | Medio Exclusivo para Movimientos Manuales de Caja | Los registros de movimiento manual de entrada o salida en el turno de caja operarán única y exclusivamente sobre dinero en efectivo en el cajón físico de mostrador. Queda prohibido registrar movimientos manuales de caja bajo modalidades electrónicas o billeteras digitales. | Vendedor | HU-CAJA-03 |
 | **RN-16** | Flexibilidad en la Selección de Proveedores para Reposición | Al momento de revisar y aprobar una solicitud de reposición de mercadería, el Gerente o Administrador podrá reasignar o modificar el proveedor sugerido originalmente por el personal de almacén, optimizando las condiciones de compra comercial antes de autorizar la recepción de los productos. | Gerente, Administrador | HU-SOL-03 |
 | **RN-17** | Bloqueo Preventivo por Intentos Fallidos de Autenticación | El sistema bloqueará la cuenta por 15 minutos si acumula 5 intentos fallidos consecutivos. Al intentar ingresar nuevamente, se mostrará el mensaje «Cuenta bloqueada temporalmente. Intente en 15 minutos.» para mitigar intentos reiterados no autorizados de acceso a las cuentas. | Todos los roles | HU-AUTH-02 |
@@ -4254,7 +4303,7 @@ Los siguientes recorridos describen el flujo de interacción de los colaboradore
    El almacenero realiza inspecciones periódicas de los anaqueles y del almacén siguiendo el principio logístico FEFO (Primero en vencer, primero en salir). Cuando identifica productos cuya fecha de vencimiento ha expirado o que presentan rotura física, retira las unidades del área de exhibición. En el sistema, accede a la sección de inventario, selecciona el producto y el lote respectivo, y registra formalmente la baja declarando de forma obligatoria el motivo de la merma (RN-04), validando la congruencia de caducidad del lote (RN-05) y registrando el lote puntual en caso de rotura o avería física (RN-20). El sistema actualiza el saldo disponible y deja constancia histórica para el control administrativo de pérdidas.
 
 3. **Abastecimiento y Ciclo de Reposición de Mercadería:**  
-   Cuando un producto alcanza o cae por debajo de su nivel de stock mínimo, el sistema emite alertas visuales preventivas en el catálogo de productos y en el tablero de control gerencial (RN-06). A partir de la verificación de existencias en el inventario o la indicación de gerencia, el personal de almacén emite una solicitud de reposición detallando la cantidad sugerida y el proveedor habitual. El Gerente o Administrador examina las solicitudes pendientes, pudiendo confirmar el proveedor propuesto o seleccionar un proveedor alternativo más conveniente (RN-16) antes de formalizar la aprobación. Una vez recibida físicamente la mercadería en el local con su comprobante de compra, el almacenero registra la entrada contra la solicitud aprobada (RN-01), declarando el lote, la fecha de caducidad y el costo unitario de adquisición, ante lo cual el sistema recalcula en el acto el costo promedio ponderado del artículo (RN-14).
+   Cuando un producto alcanza o cae por debajo de su nivel de stock mínimo, el sistema emite alertas visuales preventivas en el catálogo de productos y en el tablero de control gerencial (RN-06). A partir de la verificación de existencias en el inventario o la indicación de gerencia, el personal de almacén emite una solicitud de reposición detallando la cantidad sugerida y el proveedor habitual. El Gerente o Administrador examina las solicitudes pendientes, pudiendo confirmar el proveedor propuesto o seleccionar un proveedor alternativo más conveniente (RN-16) antes de formalizar la aprobación. Una vez recibida físicamente la mercadería en el local con su comprobante de compra, el almacenero registra la entrada contra la solicitud aprobada (RN-01), declarando la fecha de caducidad. El código de lote es asignado automáticamente por el sistema y el costo unitario no se captura visualmente en pantalla, aunque la API soporte la actualización del costo promedio (RN-14).
 
 4. **Arqueo, Control Operativo y Cuadre de Caja:**  
    Al iniciar la jornada, el vendedor apertura su turno ingresando un monto en efectivo igual o mayor a S/ 500.00 (RN-10). Durante el horario de atención, si requiere registrar un egreso menor justificado en mostrador, genera un movimiento manual en efectivo dentro del límite de S/ 5,000.00 (RN-11 y RN-15). En caso de presentarse una devolución de un cliente dentro del turno abierto, el supervisor puede autorizar la anulación de la venta (RN-08) y definir si la mercadería reingresa al catálogo o se deriva a merma (RN-09). Al concluir el turno, el vendedor efectúa el arqueo físico de gaveta y la conciliación del reporte de liquidación del terminal digital, ingresa los montos totales y el sistema contrasta los valores declarados contra el saldo esperado del sistema, emitiendo el acta de cuadre para revisión y aprobación administrativa.
@@ -4397,9 +4446,9 @@ El propósito central radica en explicitar las reglas operativas, delimitaciones
 - **Reglas de negocio asociadas:** RN-01 (Control de abastecimiento directo) y RN-14 (Actualización de valorización de inventario).
 
 ### D11: Compilación de comprobantes y reportes ejecutivos en PDF
-- **Declaración:** La entrega de comprobantes fiscales al cliente y la presentación de cuadros de control para la dirección del negocio se materializan mediante la generación de documentos estructurados en formato PDF. Estos documentos integran membrete institucional, logotipo, parámetros fiscales, detalle de renglones y cuadros de resumen con distribución de páginas automática. La exportación complementaria de historiales de venta a formato estructurado de intercambio plano (CSV) se programa formalmente como una prestación opcional (Could have) para el Release 3.
+- **Declaración:** La entrega de comprobantes fiscales al cliente y la presentación de cuadros de control para la dirección del negocio se materializan mediante la generación de documentos estructurados en formato PDF. Estos documentos integran membrete institucional, logotipo, parámetros fiscales, detalle de renglones y cuadros de resumen con distribución de páginas automática. La exportación masiva de ventas en PDF se centraliza y consolida en el reporte ejecutivo de ventas (`HU-REP-09`), quedando la historia puntual del historial (`HU-VEN-08`) reclasificada fuera de alcance (Won't have) para evitar duplicidad de componentes.
 - **Justificación de negocio:** Proveer comprobantes con diseño profesional para impresión térmica o envío digital al cliente, dotando a la gerencia de informes ejecutivos consolidados e inalterables para la toma de decisiones.
-- **Historias de usuario vinculadas:** `HU-VEN-03`, `HU-VEN-08`, `HU-REP-09`.
+- **Historias de usuario vinculadas:** `HU-VEN-03`, `HU-REP-09` (con `HU-VEN-08` diferida/absorbida).
 - **Reglas de negocio asociadas:** RN-13 (Numeración oficial ininterrumpida) y directrices de imagen corporativa.
 
 ### D12: Modelo de gobernanza Scrum y segregación Construye no es igual a Verifica
@@ -4599,7 +4648,7 @@ Los conteos representan referencias descriptivas en el Anexo B que detallan cada
 | HU-CLI-03 | UI-009 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-PROD-03 | UI-007 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-REP-09 | UI-019 | CA-UI (criterio final de interfaz) | Con especificación completa |
-| HU-VEN-08 | — | — | La exportación CSV opera como funcionalidad secundaria (Could have en Release 3) integrada en el historial |
+| HU-VEN-08 | — | — | Excluida del alcance funcional (Won't have); la exportación a PDF se centraliza en el módulo de Reportes (HU-REP-09 en UI-019) |
 | HU-VEN-09 | — | — | Excluida del alcance funcional (Won't have); sin interfaz |
 
 ---
@@ -4635,7 +4684,7 @@ Las 20 pantallas especificadas en el Anexo B cubren el 100 % de las interaccione
 2. **Aviso de sesión desplazada:** La notificación informativa ante un inicio de sesión concurrente en otro equipo (HU-AUTH-04) se presenta mediante el banner superior destacado en UI-001 conforme a la Decisión D1.
 3. **Validación de pagos móviles:** El registro del código de autorización de 6 dígitos emitido por el terminal de cobro para billeteras digitales Yape/Plin (IziPay) se encuentra plenamente formalizado en el Punto de Venta (UI-014) y en el Historial de Ventas (UI-015) conforme a la Decisión D8.
 4. **Supervisión de compras pendientes:** La visualización de solicitudes de reposición en estado pendiente se integra de forma interactiva en el panel gerencial (UI-018) permitiendo la revisión inmediata del stock crítico.
-5. **Formatos de exportación:** La generación de reportes y comprobantes oficiales se resuelve en formato PDF (Decisión D11); la exportación a formato plano (CSV, HU-VEN-08) se reserva como incremento complementario (Could have) en el Release 3.
+5. **Formatos de exportación:** La generación de reportes y comprobantes oficiales se resuelve en formato PDF (Decisión D11); la exportación masiva del historial comercial (HU-VEN-08) se unifica y consolida en el reporte ejecutivo de ventas en PDF (HU-REP-09).
 6. **Exclusiones de hardware:** La venta a granel con balanzas electrónicas (HU-VEN-09) se mantiene excluida del alcance (Won't have) conforme a los supuestos del negocio.
 
 ---
@@ -5042,7 +5091,7 @@ Razón oficial: Pts × (S/ 22,500.00 ÷ 251 pts) = Pts × S/ 89.6414/pt. Orden: 
 | OBJ-04 | EPIC-VEN | HU-VEN-07 | Ventas (POS) – Verificar recepción de pago Yape/Plin (IziPay) | 2 | REL-2 | SPR-2 | 4 h | S/ 179.28 |
 | OBJ-04 | EPIC-VEN | HU-VEN-03 | Ventas (POS) – Generar comprobante en PDF o reenviar por correo electrónico | 5 | REL-3 | SPR-3 | 10 h | S/ 448.21 |
 | OBJ-04 | EPIC-VEN | HU-VEN-04 | Ventas (POS) – Buscar producto por código de barras | 3 | REL-3 | SPR-3 | 6 h | S/ 268.92 |
-| OBJ-04 | EPIC-VEN | HU-VEN-08 | Ventas (POS) – Exportar historial de ventas a PDF | 3 | REL-3 | SPR-3 | 6 h | S/ 268.92 |
+| OBJ-04 | EPIC-VEN | HU-VEN-08 | Ventas (POS) – Exportar historial de ventas a PDF (Fuera de Alcance) | 3 | Ninguno | Ninguno | 0 h | S/ 0.00 |
 | OBJ-05 | EPIC-REP | HU-CONF-02 | Configuración – Actualizar configuración del negocio | 3 | REL-1 | SPR-1 | 6 h | S/ 268.92 |
 | OBJ-05 | EPIC-REP | HU-DASH-01 | Dashboard – Ver resumen de ventas del día y del mes | 5 | REL-2 | SPR-2 | 10 h | S/ 448.21 |
 | OBJ-05 | EPIC-REP | HU-DASH-03 | Dashboard – Alertas de stock crítico, vencimientos y turnos olvidados | 5 | REL-2 | SPR-2 | 10 h | S/ 448.21 |

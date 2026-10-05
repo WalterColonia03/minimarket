@@ -88,9 +88,9 @@ El propósito central radica en explicitar las reglas operativas, delimitaciones
 - **Reglas de negocio asociadas:** RN-01 (Control de abastecimiento directo) y RN-14 (Actualización de valorización de inventario).
 
 ### D11: Compilación de comprobantes y reportes ejecutivos en PDF
-- **Declaración:** La entrega de comprobantes fiscales al cliente y la presentación de cuadros de control para la dirección del negocio se materializan mediante la generación de documentos estructurados en formato PDF. Estos documentos integran membrete institucional, logotipo, parámetros fiscales, detalle de renglones y cuadros de resumen con distribución de páginas automática. La exportación complementaria de historiales de venta a formato estructurado de intercambio plano (CSV) se programa formalmente como una prestación opcional (Could have) para el Release 3.
+- **Declaración:** La entrega de comprobantes fiscales al cliente y la presentación de cuadros de control para la dirección del negocio se materializan mediante la generación de documentos estructurados en formato PDF. Estos documentos integran membrete institucional, logotipo, parámetros fiscales, detalle de renglones y cuadros de resumen con distribución de páginas automática. La exportación masiva de ventas en PDF se centraliza y consolida en el reporte ejecutivo de ventas (`HU-REP-09`), quedando la historia puntual del historial (`HU-VEN-08`) reclasificada fuera de alcance (Won't have) para evitar duplicidad de componentes.
 - **Justificación de negocio:** Proveer comprobantes con diseño profesional para impresión térmica o envío digital al cliente, dotando a la gerencia de informes ejecutivos consolidados e inalterables para la toma de decisiones.
-- **Historias de usuario vinculadas:** `HU-VEN-03`, `HU-VEN-08`, `HU-REP-09`.
+- **Historias de usuario vinculadas:** `HU-VEN-03`, `HU-REP-09` (con `HU-VEN-08` diferida/absorbida).
 - **Reglas de negocio asociadas:** RN-13 (Numeración oficial ininterrumpida) y directrices de imagen corporativa.
 
 ### D12: Modelo de gobernanza Scrum y segregación Construye no es igual a Verifica

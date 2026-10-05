@@ -141,7 +141,7 @@ Los conteos representan referencias descriptivas en el Anexo B que detallan cada
 | HU-CLI-03 | UI-009 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-PROD-03 | UI-007 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-REP-09 | UI-019 | CA-UI (criterio final de interfaz) | Con especificación completa |
-| HU-VEN-08 | — | — | La exportación CSV opera como funcionalidad secundaria (Could have en Release 3) integrada en el historial |
+| HU-VEN-08 | — | — | Excluida del alcance funcional (Won't have); la exportación a PDF se centraliza en el módulo de Reportes (HU-REP-09 en UI-019) |
 | HU-VEN-09 | — | — | Excluida del alcance funcional (Won't have); sin interfaz |
 
 ---
@@ -177,7 +177,7 @@ Las 20 pantallas especificadas en el Anexo B cubren el 100 % de las interaccione
 2. **Aviso de sesión desplazada:** La notificación informativa ante un inicio de sesión concurrente en otro equipo (HU-AUTH-04) se presenta mediante el banner superior destacado en UI-001 conforme a la Decisión D1.
 3. **Validación de pagos móviles:** El registro del código de autorización de 6 dígitos emitido por el terminal de cobro para billeteras digitales Yape/Plin (IziPay) se encuentra plenamente formalizado en el Punto de Venta (UI-014) y en el Historial de Ventas (UI-015) conforme a la Decisión D8.
 4. **Supervisión de compras pendientes:** La visualización de solicitudes de reposición en estado pendiente se integra de forma interactiva en el panel gerencial (UI-018) permitiendo la revisión inmediata del stock crítico.
-5. **Formatos de exportación:** La generación de reportes y comprobantes oficiales se resuelve en formato PDF (Decisión D11); la exportación a formato plano (CSV, HU-VEN-08) se reserva como incremento complementario (Could have) en el Release 3.
+5. **Formatos de exportación:** La generación de reportes y comprobantes oficiales se resuelve en formato PDF (Decisión D11); la exportación masiva del historial comercial (HU-VEN-08) se unifica y consolida en el reporte ejecutivo de ventas en PDF (HU-REP-09).
 6. **Exclusiones de hardware:** La venta a granel con balanzas electrónicas (HU-VEN-09) se mantiene excluida del alcance (Won't have) conforme a los supuestos del negocio.
 
 ---
