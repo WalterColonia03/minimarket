@@ -44,7 +44,7 @@ El presente compendio reúne, clasifica y resuelve formalmente la totalidad de d
 - **Dilema Operativo:**  
   Los enlaces largos son difíciles de manipular en terminales de caja o teléfonos de mostrador; los códigos breves requieren un tiempo de caducidad estricto para evitar intentos no autorizados.
 - **Resolución Oficial Adoptada (v4.8):**  
-  **Código de verificación temporal de 4 dígitos numéricos con expiración de 15 minutos y longitud mínima de contraseña de 8 caracteres.** Se unificó en `HU-AUTH-05` un código de verificación de 4 dígitos numéricos, limitando los intentos fallidos a un máximo de 5 antes de invalidar la solicitud y exigir asistencia gerencial. Asimismo, toda contraseña de usuario debe contener al menos 8 caracteres combinando mayúsculas, minúsculas y números.
+  **Código de verificación temporal de 4 dígitos numéricos con expiración de 15 minutos y longitud mínima de contraseña de 8 caracteres.** Se unificó en `HU-AUTH-05` un código de verificación de 4 dígitos numéricos, limitando los  a un máximo de 5 antes de invalidar la solicitud y exigir asistencia gerencial. Asimismo, toda contraseña de usuario debe contener al menos 8 caracteres combinando mayúsculas, minúsculas y números.
 
 ---
 

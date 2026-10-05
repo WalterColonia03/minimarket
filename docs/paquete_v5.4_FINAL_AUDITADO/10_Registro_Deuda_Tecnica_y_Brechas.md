@@ -34,9 +34,9 @@ El propósito central radica en explicitar las reglas operativas, delimitaciones
 - **Reglas de negocio asociadas:** Gobernanza de seguridad de cuentas y trazabilidad de accesos.
 
 ### D2: Política de contraseñas y recuperación mediante código de verificación temporal de 4 dígitos
-- **Declaración:** Para la recuperación no asistida de credenciales de acceso, el sistema generará un código de autorización numérico temporal de 4 dígitos (rango 1000 a 9999) con una vigencia estricta de 15 minutos, remitido a la casilla de correo electrónico del colaborador solicitante. Como mecanismo de protección contra intentos no autorizados de adivinación, se fija un bloqueo temporal automático de la cuenta por 15 minutos tras acumularse 5 intentos fallidos consecutivos en el ingreso del código de autorización.
+- **Declaración:** Para la recuperación no asistida de credenciales de acceso, el sistema generará un código de autorización numérico temporal de 4 dígitos (rango 1000 a 9999) con una vigencia estricta de 15 minutos, remitido a la casilla de correo electrónico del colaborador solicitante. Como mecanismo de protección contra intentos no autorizados de adivinación, se fija un bloqueo temporal automático de la cuenta por 15 minutos tras acumularse 5  consecutivos en el ingreso del código de autorización.
 - **Justificación de negocio:** Brindar un balance óptimo entre agilidad operativa en mostrador para la recuperación rápida de acceso por parte de personal de tienda y salvaguarda robusta contra accesos indebidos.
-- **Historias de usuario vinculadas:** `HU-AUTH-05`, `HU-AUTH-06`.
+- **Historias de usuario vinculadas:** `HU-AUTH-05`, `HU-AUTH-06 (Cancelada)`.
 - **Reglas de negocio asociadas:** RN-12 (Identidad unívoca de empleados).
 
 ### D3: Manejo de catálogos y consultas ágiles en mostrador

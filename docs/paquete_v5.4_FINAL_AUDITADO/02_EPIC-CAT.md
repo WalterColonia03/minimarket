@@ -34,7 +34,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 1. **Dado que** un colaborador habilitado (Almacenero o Administrador) accede a la sección de categorías de productos, **cuando** el sistema carga la pantalla principal del módulo, **entonces** presenta la lista completa de categorías registradas.
 2. **Dado que** el minimarket dispone de una nómina extensa de familias de artículos, **cuando** el usuario introduce un término en la barra de búsqueda rápida, **entonces** el sistema filtra de forma inmediata la grilla mostrando las coincidencias exactas o parciales.
 3. **Dado que** el usuario consulta las categorías comerciales, **cuando** interactúa con la lista, filtros y botones de navegación, **entonces** la interfaz satisface integralmente los lineamientos visuales, indicadores y microcopy especificados en UI-006 (Catálogo de Categorías) del Catálogo de Interfaces (DOC-ANEXO-B).
-4. **Dado que** la búsqueda no coincide con ninguna categoría registrada, **cuando** se actualiza la grilla, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No se encontraron resultados».
+4. **Dado que** la búsqueda no coincide con ninguna categoría registrada, **cuando** se actualiza la grilla, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay categorías registradas».
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -57,7 +57,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad crítica de configuración inicial (Must have); prerrequisito bloqueante para el alta de productos en el sistema, ya que ningún producto puede registrarse sin estar asociado a una categoría válida.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario completa el formulario de registro introduciendo una denominación de categoría inédita, **cuando** presiona el botón «Guardar Categoría», **entonces** el sistema crea la nueva categoría de forma exitosa, la incorpora al catálogo activo y actualiza la lista disponible al instante.
+1. **Dado que** el usuario completa el formulario de registro introduciendo una denominación de categoría inédita, **cuando** presiona el botón «Guardar», **entonces** el sistema crea la nueva categoría de forma exitosa, la incorpora al catálogo activo y actualiza la lista disponible al instante.
 2. **Dado que** el usuario intenta registrar una categoría, **cuando** ingresa un nombre que ya se encuentra registrado previamente en el sistema (sin distinguir mayúsculas de minúsculas), **entonces** el sistema rechaza el guardado y muestra un mensaje de advertencia informando sobre la duplicidad del rubro.
 3. **Dado que** el colaborador interactúa con el formulario de alta, **cuando** introduce datos y valida la operación, **entonces** la interfaz responde estrictamente a la estructura de campos, validaciones y diseño descritos en UI-006 del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -108,7 +108,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** una categoría no posee ningún producto vinculado en el catálogo, **cuando** el Administrador pulsa el botón de eliminación y aprueba el diálogo de confirmación, **entonces** el sistema suprime la categoría de forma permanente y la retira de todas las listas de selección.
-2. **Dado que** una categoría tiene uno o más productos asignados (activos o inactivos), **cuando** el Administrador intenta eliminarla, **entonces** el sistema bloquea terminantemente la acción y despliega un mensaje notificando que no se pueden eliminar categorías con artículos vinculados, instruyendo al usuario a reasignar los productos antes de intentar su borrado.
+2. **Dado que** una categoría tiene uno o más productos asignados (activos o inactivos), **cuando** el Administrador intenta eliminarla, **entonces** el sistema bloquea terminantemente la acción y despliega un mensaje notificando que no se pueden eliminar categorías con artículos vinculados, con el mensaje «No se puede eliminar, tiene productos asociados».
 3. **Dado que** el Administrador ejecuta la acción de retiro, **cuando** atiende los mensajes preventivos y confirma la eliminación, **entonces** la interacción visual satisface las advertencias, colores y flujos definidos en UI-006 del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -134,10 +134,10 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Requisito indispensable de aprovisionamiento (Must have); programado para el Release 2 para brindar visibilidad completa a la gestión de reposiciones formalizadas.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil autorizado accede al módulo de proveedores, **cuando** carga la pantalla principal, **entonces** el sistema expone una grilla organizada con el RUC oficial de 11 dígitos, razón social de la empresa proveedora, canal de contacto principal (teléfono o correo electrónico) y estado de habilitación operativa (Activo o Inactivo).
-2. **Dado que** la empresa mantiene relaciones comerciales con múltiples proveedores, **cuando** el operador introduce un criterio de búsqueda por razón social o número de RUC, **entonces** el sistema filtra los registros de inmediato presentando únicamente los proveedores coincidentes.
+1. **Dado que** un colaborador con perfil autorizado accede al módulo de proveedores, **cuando** carga la pantalla principal, **entonces** el sistema expone una grilla mostrando las columnas Nombre, RUC, Contacto, Estado y Acciones.
+2. **Dado que** la empresa mantiene relaciones comerciales con múltiples proveedores, **cuando** el operador introduce un criterio de búsqueda en la barra «Buscar por nombre o RUC...» o usa el filtro «Todos los estados / Activo / Inactivo», **entonces** el sistema filtra los registros de inmediato presentando únicamente los proveedores coincidentes.
 3. **Dado que** el operador interactúa con el directorio de proveedores, **cuando** visualiza la grilla, aplica filtros o revisa los indicadores de estado, **entonces** la interfaz satisface íntegramente las pautas visuales y microcopy descritos en UI-008 (Directorio de Proveedores) del Catálogo de Interfaces (DOC-ANEXO-B).
-4. **Dado que** la búsqueda no coincide con ningún proveedor registrado, **cuando** se ejecuta el filtro, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No se encontraron resultados».
+4. **Dado que** la búsqueda no coincide con ningún proveedor registrado, **cuando** se ejecuta el filtro, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay proveedores registrados».
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -161,7 +161,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** el usuario digita un número de RUC de 11 dígitos numéricos correspondiente a una empresa formal (excluyendo números que inicien con 10) y la razón social, **cuando** solicita el registro en el formulario, **entonces** el sistema consulta la API de SUNAT, valida el formato de la numeración, la no duplicidad del documento y **bloquea obligatoriamente el alta si el estado fiscal es distinto a ACTIVO o la condición es distinta a HABIDO**, previniendo el registro de proveedores inhabilitados.
-2. **Dado que** los datos fiscales han sido validados satisfactoriamente y el usuario completa la información de contacto comercial, **cuando** presiona el botón «Guardar Proveedor», **entonces** el sistema registra la ficha del proveedor en estado Activo y la deja inmediatamente habilitada para operaciones de compra y recepción.
+2. **Dado que** los datos fiscales han sido validados satisfactoriamente y el usuario completa la información de contacto comercial, **cuando** presiona el botón «Guardar», **entonces** el sistema registra la ficha del proveedor en estado Activo y la deja inmediatamente habilitada para operaciones de compra y recepción.
 3. **Dado que** el usuario ingresa un número de RUC que ya pertenece a otro proveedor registrado, un RUC con prefijo 10 o un documento tributario que no se encuentre en condición activa y habida, **cuando** intenta procesar el registro, **entonces** el sistema rechaza la operación e indica claramente la causal de rechazo impidiendo la creación de fichas inconsistentes.
 4. **Dado que** el usuario opera sobre el formulario de alta de proveedores, **cuando** visualiza los campos, etiquetas de validación y confirmaciones, **entonces** la pantalla satisface integralmente los estándares de presentación y diseño de UI-008 del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -184,7 +184,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad recomendada de mantenimiento (Should have); programada para el Release 3 para la administración continua de la cartera de proveedores comerciales, permitiendo subsanar variaciones de números de teléfono, correos o nombres comerciales sin asistencia técnica.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil autorizado accede a la ficha de un proveedor existente, **cuando** actualiza los datos del canal de contacto (número telefónico o correo electrónico) y pulsa «Guardar Cambios», **entonces** el sistema actualiza de inmediato el registro en el directorio comercial y refleja la nueva información en las consultas operativas.
+1. **Dado que** un colaborador con perfil autorizado accede a la ficha de un proveedor existente, **cuando** actualiza los datos del canal de contacto (número telefónico o correo electrónico) y pulsa «Guardar», **entonces** el sistema actualiza de inmediato el registro en el directorio comercial y refleja la nueva información en las consultas operativas.
 2. **Dado que** el colaborador intenta modificar el RUC de una empresa proveedora, **cuando** ingresa una numeración que no cumple con el formato reglamentario de 11 dígitos numéricos o que coincide con el RUC de otro proveedor ya existente, **entonces** el sistema bloquea la actualización y emite una alerta indicando el error de formato o la colisión de identidad tributaria.
 3. **Dado que** el colaborador opera sobre el formulario de edición de proveedores, **cuando** visualiza los campos precargados, controles de guardado y avisos de confirmación, **entonces** la interfaz satisface integralmente los estándares visuales, microcopy e indicadores de estado detallados en UI-008 (Directorio de Proveedores) del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -236,10 +236,10 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad analítica y de fidelización (Should have); programada para el Release 3 para enriquecer la toma de decisiones comerciales una vez que el flujo principal de ventas y caja se encuentre consolidado.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil autorizado (Administrador o Gerente) ingresa a la sección de clientes, **cuando** el sistema carga la pantalla principal del módulo, **entonces** expone una grilla con los nombres y apellidos o razón social, número de documento de identidad (DNI de 8 dígitos), correo electrónico de contacto y la cantidad total de compras (número de transacciones) acumuladas por cada cliente.
-2. **Dado que** la empresa dispone de una cartera extensa de compradores, **cuando** el Administrador o Gerente ingresa un texto en la barra de búsqueda rápida por nombre o número de documento, **entonces** el sistema filtra la lista al instante presentando únicamente las coincidencias pertinentes.
-3. **Dado que** el Administrador o Gerente interactúa con el visor de compradores, **cuando** visualiza la grilla, aplica filtros de búsqueda o revisa los acumulados comerciales, **entonces** la pantalla cumple rigurosamente las pautas de presentación, paginación y microcopy definidas en UI-009 (Directorio de Clientes) del Catálogo de Interfaces (DOC-ANEXO-B).
-4. **Dado que** la búsqueda no coincide con ningún cliente registrado, **cuando** se actualiza la lista, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No se encontraron resultados».
+1. **Dado que** un colaborador con perfil autorizado (Administrador o Gerente) accede a la pantalla de clientes mediante su dirección directa (sin entrada en el menú lateral), **cuando** el sistema carga la pantalla principal del módulo, **entonces** expone una grilla mostrando Nombre, DNI, Compras y, solo para el Administrador, las columnas Email y Acciones.
+2. **Dado que** la empresa dispone de una cartera extensa de compradores, **cuando** el Administrador o Gerente ingresa un texto en la barra de búsqueda rápida por nombre o número de documento (o correo, solo Administrador), **entonces** el sistema filtra la lista al instante presentando únicamente las coincidencias pertinentes.
+3. **Dado que** el Administrador o Gerente interactúa con el visor de compradores, **cuando** visualiza la grilla, aplica filtros de búsqueda o revisa los acumulados comerciales, **entonces** la pantalla cumple rigurosamente las pautas de presentación y microcopy definidas en UI-009 (Directorio de Clientes) del Catálogo de Interfaces (DOC-ANEXO-B).
+4. **Dado que** la búsqueda no coincide con ningún cliente registrado, **cuando** se actualiza la lista, **entonces** el sistema presenta un estado vacío explícito con el mensaje «Sin resultados para esa búsqueda» o «No hay clientes registrados aún».
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -313,10 +313,10 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad núcleo esencial para el producto mínimo viable (Must have); consulta obligatoria para la gestión de existencias y control físico en almacén. En mostrador, el personal de ventas consulta productos exclusivamente a través del terminal POS (`HU-VEN-01`).
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil autorizado (Almacenero o Administrador) ingresa al módulo de catálogo maestro, **cuando** carga la vista principal, **entonces** el sistema presenta la relación íntegra de artículos registrados mostrando su código de barras comercial, denominación del producto, marca del fabricante, categoría asignada, precio de venta al público, costo promedio de adquisición referencial y stock total disponible.
-2. **Dado que** el minimarket mantiene cientos de artículos en su catálogo comercial, **cuando** el usuario introduce un texto en la barra de búsqueda rápida por nombre o código de barras, **entonces** el sistema filtra los resultados al instante presentando las coincidencias pertinentes.
-3. **Dado que** el usuario consulta el inventario del catálogo, **cuando** interactúa con las filas de la grilla, buscadores y controles de visualización, **entonces** la pantalla satisface integralmente los componentes visuales, indicadores de estado y microcopy de UI-007 (Catálogo de Productos y Alertas) del Catálogo de Interfaces (DOC-ANEXO-B).
-4. **Dado que** la búsqueda no arroja coincidencias en el catálogo, **cuando** se ejecuta el filtro, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No se encontraron resultados».
+1. **Dado que** un colaborador con perfil autorizado (Almacenero o Administrador) ingresa al módulo de catálogo maestro, **cuando** carga la vista principal, **entonces** el sistema presenta la relación íntegra de artículos registrados mostrando su Nombre, Marca, Categoría, Precio, Stock, Stock Mín., Vencimiento, Estado y Acciones.
+2. **Dado que** el minimarket mantiene cientos de artículos en su catálogo comercial, **cuando** el usuario introduce un texto en la barra de búsqueda rápida por nombre o marca, o usa los filtros de categorías, estados o alertas (Crítico, Agotado, Vencido, etc.), **entonces** el sistema filtra los resultados al instante presentando las coincidencias pertinentes.
+3. **Dado que** el usuario consulta el inventario del catálogo, **cuando** interactúa con las filas de la grilla (incluyendo opciones como Editar, Dar de baja, Solicitar reposición, Ver lotes y Desactivar), buscadores y controles, **entonces** la pantalla satisface integralmente los componentes visuales, indicadores de estado y microcopy de UI-007 (Catálogo de Productos y Alertas) del Catálogo de Interfaces (DOC-ANEXO-B).
+4. **Dado que** la búsqueda no arroja coincidencias en el catálogo, **cuando** se ejecuta el filtro, **entonces** el sistema presenta un estado vacío explícito con el mensaje «No hay productos registrados».
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -339,9 +339,9 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad crítica de aprovisionamiento (Must have); bloqueador operativo directo: si un producto no existe formalmente en el catálogo maestro, el almacenero no puede registrar entradas de mercadería ni generar inventario en bodega.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario completa el formulario de registro ingresando código de barras comercial, nombre descriptivo, marca, categoría reglamentaria y precio de venta unitario, **cuando** presiona el botón «Guardar Producto», **entonces** el sistema crea la ficha del artículo en estado Activo con stock físico en cero y costo de adquisición inicial en cero (el cual se actualizará automáticamente conforme ingresen lotes reales al almacén).
+1. **Dado que** el usuario completa el formulario de registro ingresando código de barras comercial, nombre descriptivo, marca, categoría reglamentaria y precio de venta unitario, **cuando** presiona el botón «Guardar», **entonces** el sistema crea la ficha del artículo estableciendo su estado inicial como Activo, pidiendo categoría obligatoriamente, permitiendo marcar la casilla de vencimiento, con un recuadro para indicar que el stock se carga vía Inventario.
 2. **Dado que** el usuario introduce un código de barras que ya se encuentra asignado a otro producto registrado en el minimarket, **cuando** intenta procesar el alta, **entonces** el sistema deniega el guardado y emite un mensaje de error notificando la duplicidad del código comercial.
-3. **Dado que** el usuario diligencia la ficha técnica del artículo, **cuando** revisa los parámetros de control, **entonces** el sistema inicializa el umbral de stock mínimo en blanco (sin límite predeterminado), permitiendo al usuario ingresar un valor de forma opcional y permite marcar si el producto maneja fecha de caducidad para activar el control preventivo de alertas (RN-06).
+3. **Dado que** el usuario diligencia la ficha técnica del artículo, **cuando** revisa los parámetros de control, **entonces** el sistema inicializa el umbral de stock mínimo y, si se deja vacío, rige el umbral global de 5 unidades, permitiendo al usuario ingresar un valor de forma opcional y permite marcar si el producto maneja fecha de caducidad para activar el control preventivo de alertas (RN-06).
 4. **Dado que** el usuario interactúa con la ventana de registro de productos, **cuando** completa los campos requeridos y confirma la operación, **entonces** la pantalla satisface rigurosamente los lineamientos de diseño, validaciones numéricas y formato definidos en UI-007 del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -441,7 +441,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Control mandatorio sanitario y financiero (Must have); programado para el Release 2 como salvaguarda preventiva contra sanciones regulatorias y merma económica en góndola.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil autorizado accede a la sección de control de vencimientos, **cuando** el sistema examina el inventario almacenado, **entonces** presenta un consolidado agrupado por producto (no por lote individual) mostrando el stock total próximo a vencer (próximos 30 días) y el stock ya vencido, junto con la fecha de vencimiento más próxima de cada producto, resaltando con distintivos de alerta visual roja aquellos que ya tengan cantidades caducadas.
+1. **Dado que** un colaborador con perfil autorizado accede a la sección de control de vencimientos, **cuando** el sistema examina el inventario almacenado, **entonces** muestra avisos con la cantidad de productos vencidos y por vencer, permite filtrarlos, muestra la fecha de vencimiento más próxima en la grilla y el detalle por lote en «Ver lotes» (el lote que vence hoy se marca «Vencido» en el detalle de lotes y se incluye como «por vencer» en los avisos y filtros de la grilla).
 2. **Dado que** un lote de mercadería ha superado su fecha límite de caducidad (un lote cuya fecha de caducidad coincide con la fecha en curso o es anterior queda bloqueado para la venta en el punto de venta desde la apertura del turno y debe canalizarse a bajas por vencimiento), **cuando** un vendedor intenta despachar dicho producto en el terminal de punto de venta, **entonces** el sistema bloquea de forma terminante la operación excluyendo el lote vencido e informando stock cero disponible para venta, en estricto cumplimiento de la prohibición de comercialización de productos caducados (RN-03, RN-19).
 3. **Dado que** el usuario monitorea el panel preventivo de caducidades, **cuando** visualiza la grilla, aplica filtros por días de vigencia y examina los avisos de alerta, **entonces** la interfaz satisface los patrones de diseño, colores de advertencia y microcopy de UI-007 del Catálogo de Interfaces (DOC-ANEXO-B).
 

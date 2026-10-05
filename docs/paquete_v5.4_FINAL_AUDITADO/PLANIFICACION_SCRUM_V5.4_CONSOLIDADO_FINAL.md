@@ -1,4 +1,4 @@
-# PAQUETE INTEGRAL DE PLANIFICACIÓN SCRUM – VERSIÓN 5.2 DEFINITIVA SANEADA
+﻿# PAQUETE INTEGRAL DE PLANIFICACIÓN SCRUM – VERSIÓN 5.2 DEFINITIVA SANEADA
 ## SISTEMA DE GESTIÓN COMERCIAL PARA MINIMARKET CON PUNTO DE VENTA Y CONTROL TRIBUTARIO
 **Estado:** Documento Maestro Consolidado y Aprobado por el Product Owner  
 **Fecha:** 2026-10-04 | **Versión:** 5.2 Oficial Aprobada  
@@ -176,7 +176,7 @@ La publicación de la versión 5.2 fechada el 04 de octubre de 2026 (con el Spri
 | N° | Cambio Metodológico y Documental | Justificación y Alcance |
 |:---:|---|---|
 | 1 | **Unificación rigurosa de frontera de caducidad (D-01):** alineación de RN-03, RN-05, RN-19, HU-VEN-01 CA-3/CA-5, HU-PROD-06 CA-2 y HU-INV-02 a la política preventiva del negocio | Unificación total: lote cuya fecha de expiración coincide con la fecha en curso o es anterior queda bloqueado para venta desde apertura de turno y se canaliza a bajas por vencimiento |
-| 2 | **Alineación de política de contraseñas robustas y recuperación (D-03):** actualización de RN-18 a mínimo 7 caracteres con mayúscula, minúscula y número; bloqueo temporal de cuenta por 15 min ante 5 fallos con código | Alineación en RN-18, HU-AUTH-05, HU-AUTH-06, HU-USR-02 y DOC-PLAN-10 D2 |
+| 2 | **Alineación de política de contraseñas robustas y recuperación (D-03):** actualización de RN-18 a mínimo 7 caracteres con mayúscula, minúscula y número; bloqueo temporal de cuenta por 15 min ante 5 fallos con código | Alineación en RN-18, HU-AUTH-05, HU-AUTH-06 (Cancelada), HU-USR-02 y DOC-PLAN-10 D2 |
 | 3 | **Delimitación de RUC de establecimiento (HU-CONF-02):** precisión de que el minimarket opera como persona jurídica comercial (RUC 20) | Coherencia en HU-CONF-02 CA-2 y Glosario tributario |
 | 4 | **Saneamiento de criterios de aceptación y casos borde:** deduplicación de CA-5 en HU-VEN-06, incorporación de CA-6 con no reutilización de correlativos ni códigos de pago, incorporación de caso vacío en HU-VEN-08 CA-3 y delimitación de alcance de cobro digital en HU-VEN-07 | Erradicación de defectos de edición en HU-VEN-06 y cobertura de casos límite |
 | 5 | **Erradicación definitiva de meta-lenguaje y referencias a ingeniería inversa:** purga de expresiones técnicas de desarrollo, referencias a código y bitácoras intermedias | Garantía de postura ex-ante formal conforme a los estándares de evaluación de Agile Development |
@@ -421,7 +421,7 @@ Las 4 historias con estimación igual a 8 puntos de historia (el tamaño máximo
 | Orden | HU ID | Título Oficial de la Historia de Usuario | Épica | MoSCoW | Puntos | Release | Sprint | Depende de |
 |:---:|---|---|---|---|:---:|:---:|:---:|---|
 | 1 | HU-AUTH-01 | Autenticación – Iniciar sesión | EPIC-SEG | Must have (4) | 5 | REL-1 | SPR-1 | Ninguna |
-| 2 | HU-AUTH-02 | Autenticación – Bloquear cuenta por intentos fallidos | EPIC-SEG | Must have (4) | 3 | REL-1 | SPR-1 | HU-AUTH-01 |
+| 2 | HU-AUTH-02 | Autenticación – Bloquear cuenta por  | EPIC-SEG | Must have (4) | 3 | REL-1 | SPR-1 | HU-AUTH-01 |
 | 3 | HU-AUTH-03 | Autenticación – Cerrar sesión | EPIC-SEG | Must have (4) | 2 | REL-1 | SPR-1 | HU-AUTH-01 |
 | 4 | HU-USR-02 | Usuarios – Crear cuenta de nuevo empleado | EPIC-SEG | Must have (4) | 5 | REL-1 | SPR-1 | HU-AUTH-01 |
 | 5 | HU-CAT-02 | Categorías – Crear nueva categoría de productos | EPIC-CAT | Must have (4) | 2 | REL-1 | SPR-1 | HU-AUTH-01 |
@@ -472,7 +472,7 @@ Las 4 historias con estimación igual a 8 puntos de historia (el tamaño máximo
 | 45 | HU-VEN-07 | Ventas (POS) – Verificar recepción de pago Yape/Plin (IziPay) | EPIC-VEN | Should have (3) | 2 | REL-2 | SPR-2 | HU-VEN-01b |
 | 46 | HU-SOL-04 | Reposición – Rechazar solicitud de reposición | EPIC-INV | Should have (3) | 2 | REL-2 | SPR-2 | HU-SOL-01 |
 | 47 | HU-PROV-04 | Proveedores – Desactivar o reactivar proveedor | EPIC-CAT | Should have (3) | 2 | REL-2 | SPR-2 | HU-PROV-02 |
-| 48 | HU-AUTH-06 | Autenticación – Cambiar contraseña propia | EPIC-SEG | Should have (3) | 3 | REL-3 | SPR-3 | HU-AUTH-01 |
+| 48 | HU-AUTH-06 (Cancelada) | Autenticación – Cambiar contraseña propia | EPIC-SEG | Should have (3) | 3 | REL-3 | SPR-3 | HU-AUTH-01 |
 | 49 | HU-USR-03 | Usuarios – Editar datos de un empleado | EPIC-SEG | Should have (3) | 3 | REL-3 | SPR-3 | HU-USR-02 |
 | 50 | HU-USR-05 | Usuarios – Reactivar cuenta de empleado | EPIC-SEG | Should have (3) | 2 | REL-3 | SPR-3 | HU-USR-04 |
 | 51 | HU-LOG-01 | Supervisión de accesos – Consultar registro de accesos al sistema | EPIC-SEG | Should have (3) | 3 | REL-3 | SPR-3 | HU-AUTH-01 |
@@ -555,8 +555,8 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 
 **Criterios de aceptación:**
 1. **Dado que** el operador es un empleado registrado y mantiene su cuenta en estado activo, **cuando** ingresa su correo electrónico registrado y contraseña válida en el formulario y pulsa el botón «Iniciar Sesión», **entonces** el sistema valida su identidad, establece su sesión de trabajo autorizada y lo redirige automáticamente al panel principal o vista operativa correspondiente a su rol.
-2. **Dado que** el operador introduce un correo no registrado o una contraseña incorrecta, **cuando** solicita iniciar sesión, **entonces** el sistema deniega el acceso, preserva la vista de ingreso y muestra un mensaje de advertencia: «Credenciales inválidas. Por favor verifique sus datos».
-3. **Dado que** la cuenta del empleado ha sido configurada en estado inactivo o suspendido, **cuando** el operador intenta autenticarse con credenciales correctas, **entonces** el sistema rechaza el acceso y despliega una notificación informando que la cuenta se encuentra desactivada y que debe contactar al SuperAdmin.
+2. **Dado que** el operador introduce un correo no registrado o una contraseña incorrecta, **cuando** solicita iniciar sesión, **entonces** el sistema deniega el acceso, preserva la vista de ingreso y muestra un mensaje de advertencia: «Credenciales incorrectas».
+3. **Dado que** la cuenta del empleado ha sido configurada en estado inactivo o suspendido, **cuando** el operador intenta autenticarse con credenciales correctas, **entonces** el sistema rechaza el acceso y muestra el mismo mensaje genérico «Credenciales incorrectas».
 4. **Dado que** el usuario interactúa con la interfaz de ingreso al sistema, **cuando** completa sus datos y visualiza controles, etiquetas y alertas, **entonces** la pantalla satisface integralmente los lineamientos visuales, componentes y microcopy especificados para UI-001 (Inicio de Sesión y Autenticación) en el Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -567,23 +567,23 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 
 ---
 
-### HU-AUTH-02 · Autenticación – Bloquear cuenta por intentos fallidos
+### HU-AUTH-02 · Autenticación – Bloquear cuenta por 
 
 | Identificador | Épica | Prioridad MoSCoW | Estimación | Release | Sprint |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | HU-AUTH-02 | EPIC-SEG | Must have | 3 pts | REL-1 | SPR-1 |
 
 **Como** Administrador del minimarket,  
-**quiero** que el sistema bloquee temporalmente las cuentas de usuario que acumulen reiterados intentos fallidos de contraseña,  
+**quiero** que el sistema bloquee temporalmente las cuentas de usuario que acumulen reiterados  de contraseña,  
 **para** proteger la información comercial y financiera del negocio frente a intentos sistemáticos de adivinación o intentos reiterados no autorizados de acceso en los terminales.
 
 **Justificación de prioridad:** Funcionalidad de seguridad crítica (Must have); salvaguarda imprescindible para evitar accesos no autorizados en terminales compartidos de atención al público o cajas de cobro.
 
 **Criterios de aceptación:**
-1. **Dado que** un usuario incurre en 5 intentos consecutivos fallidos de autenticación sobre una misma cuenta dentro de una ventana de 15 minutos, **cuando** presiona «Iniciar Sesión» en el quinto intento fallido, **entonces** el sistema bloquea preventivamente el acceso a dicha cuenta por un período estricto de 15 minutos continuos y despliega un aviso indicando que la cuenta ha sido suspendida temporalmente por seguridad (RN-17).
+1. **Dado que** un usuario incurre en 5 intentos consecutivos fallidos de autenticación sobre una misma cuenta , **cuando** presiona «Iniciar Sesión» , **entonces** el sistema bloquea preventivamente el acceso a dicha cuenta por un período estricto de 15 minutos continuos y despliega un aviso indicando que la cuenta ha sido suspendida temporalmente por seguridad (RN-17).
 2. **Dado que** una cuenta se encuentra bajo bloqueo preventivo de 15 minutos, **cuando** cualquier operador intenta ingresar credenciales (inclusive si se digita la contraseña correcta), **entonces** el sistema deniega el acceso y muestra un mensaje indicando los minutos restantes de espera antes de permitir un nuevo intento.
-3. **Dado que** el período de suspensión de 15 minutos ha concluido satisfactoriamente, **cuando** el empleado titular introduce nuevamente sus credenciales legítimas, **entonces** el sistema restablece automáticamente el contador de intentos fallidos a cero y concede el acceso regular a la plataforma.
-4. **Dado que** el operador visualiza los avisos de advertencia e inhabilitación temporal en pantalla, **cuando** se suscitan bloqueos o advertencias de intentos fallidos, **entonces** la interfaz presenta los textos, colores de alerta y elementos de ayuda estipulados para UI-001 en el Catálogo de Interfaces (DOC-ANEXO-B).
+3. **Dado que** el período de suspensión de 15 minutos ha concluido satisfactoriamente, **cuando** el empleado titular introduce nuevamente sus credenciales legítimas, **entonces** el sistema restablece automáticamente el contador de  a cero y concede el acceso regular a la plataforma.
+4. **Dado que** el operador visualiza los avisos de advertencia e inhabilitación temporal en pantalla, **cuando** se suscitan bloqueos o advertencias de , **entonces** la interfaz presenta los textos, colores de alerta y elementos de ayuda estipulados para UI-001 en el Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
 - RN-17 (Bloqueo Preventivo por Intentos Fallidos de Autenticación)
@@ -609,7 +609,7 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 1. **Dado que** un empleado mantiene su sesión de trabajo activa en el navegador, **cuando** hace clic sobre la opción «Cerrar Sesión» en la barra de navegación o menú de perfil, **entonces** el sistema culmina la sesión de forma inmediata, revoca la autorización operativa local y redirige al usuario a la pantalla de inicio de sesión.
 2. **Dado que** el empleado ha cerrado su sesión de trabajo, **cuando** él u otra persona intenta ingresar a pantallas internas del sistema mediante los controles de retroceso o avance del navegador web, **entonces** el sistema bloquea la visualización de datos de negocio y exige obligatoriamente un nuevo inicio de sesión formal.
 3. **Dado que** el operador interactúa con la barra superior de control del sistema, **cuando** despliega el menú de usuario y pulsa la opción de desconexión, **entonces** los controles, avisos de confirmación y diseño general cumplen los parámetros descritos en la pantalla UI-003 (Navegación Global y Diálogos) del Catálogo de Interfaces (DOC-ANEXO-B).
-4. **Dado que** un colaborador permanece sin registrar actividad ni interacciones en la plataforma durante un período continuo de inactividad operativa prolongada (time-to-live de sesión de 8 horas correspondiente a una jornada laboral, o desconexión forzada por inactividad prolongada en terminal POS), **cuando** intenta realizar una acción o registrar una transacción comercial, **entonces** el sistema bloquea la operación en curso, preserva el estado de integridad transaccional notificando «Su sesión ha expirado por inactividad» y redirige al colaborador a la pantalla de inicio de sesión UI-001 para su debida reautenticación.
+4. **Dado que** un colaborador permanece sin registrar actividad ni interacciones en la plataforma durante un período continuo de el transcurso de 7 días (time-to-live de sesión de 8 horas correspondiente a una jornada laboral, ), **cuando** intenta realizar una acción o registrar una transacción comercial, **entonces** el sistema bloquea la operación en curso,  notificando «» y redirige al colaborador a la pantalla de inicio de sesión UI-001 para su debida reautenticación.
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -659,7 +659,7 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Criterios de aceptación:**
 1. **Dado que** un empleado no recuerda su contraseña de ingreso, **cuando** introduce su dirección de correo electrónico institucional registrada en la pantalla de recuperación y presiona «Enviar código», **entonces** el sistema genera un código de verificación numérico temporal de 4 dígitos y lo despacha de forma inmediata a la bandeja del usuario con una validez máxima e improrrogable de 15 minutos.
 2. **Dado que** el colaborador ha recibido el código de autorización en su casilla de correo, **cuando** digita dicho código dentro del período de 15 minutos e ingresa su nueva contraseña cumpliendo las políticas de seguridad, **entonces** el sistema valida el código, actualiza la credencial, invalida el código de verificación impidiendo su reutilización (código de un solo uso y de uso único) y confirma que el acceso ha sido restaurado exitosamente, habilitando el ingreso con la nueva clave (RN-18).
-3. **Dado que** han transcurrido más de 15 minutos desde la generación del código de autorización o se acumulan 5 intentos fallidos de validación, **cuando** el usuario intenta utilizar el código expirado o bloqueado, **entonces** el sistema invalida la solicitud, despliega una alerta indicando que el código ya no tiene vigencia por razones de seguridad y orienta al usuario a solicitar una nueva emisión.
+3. **Dado que** han transcurrido más de 15 minutos desde la generación del código de autorización o se acumulan 5  de validación, **cuando** el usuario intenta utilizar el código expirado o bloqueado, **entonces** el sistema invalida la solicitud, despliega una alerta indicando que el código ya no tiene vigencia por razones de seguridad y orienta al usuario a solicitar una nueva emisión.
 4. **Dado que** el usuario tramita el autoservicio de recuperación, **cuando** navega por los formularios de solicitud de código y definición de nueva contraseña, **entonces** la interfaz responde estrictamente a la presentación visual, campos de texto y mensajes detallados en UI-002 (Recuperación de Contraseña) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -672,11 +672,11 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 
 ---
 
-### HU-AUTH-06 · Autenticación – Cambiar contraseña propia
+### HU-AUTH-06 (Cancelada) · Autenticación – Cambiar contraseña propia
 
 | Identificador | Épica | Prioridad MoSCoW | Estimación | Release | Sprint |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| HU-AUTH-06 | EPIC-SEG | Should have | 3 pts | REL-3 | SPR-3 |
+| HU-AUTH-06 (Cancelada) | EPIC-SEG | Should have | 3 pts | REL-3 | SPR-3 |
 
 **Como** usuario con sesión activa en el sistema (cualquier rol asignado),  
 **quiero** cambiar mi contraseña personal de manera voluntaria desde mi entorno de usuario,  
@@ -713,7 +713,7 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 
 **Criterios de aceptación:**
 1. **Dado que** un usuario con permisos de gestión (Administrador o SuperAdmin) ingresa a la sección de colaboradores, **cuando** carga la vista principal del módulo, **entonces** el sistema presenta una grilla detallada con los nombres y apellidos, rol funcional asignado, correo electrónico institucional y estado operativo actual (Activo o Inactivo) de cada empleado.
-2. **Dado que** el minimarket cuenta con un número considerable de trabajadores en su nómina, **cuando** el supervisor introduce un texto en la barra de búsqueda rápida por nombre o correo, **entonces** el sistema filtra los resultados al instante mostrando únicamente los colaboradores cuyas credenciales coincidan con el criterio ingresado.
+2. **Dado que** el minimarket cuenta con un número considerable de trabajadores en su nómina, **cuando** el supervisor selecciona un filtro de rol o de estado, **entonces** el sistema filtra los resultados al instante mostrando únicamente los colaboradores cuyas credenciales coincidan con el criterio ingresado.
 3. **Dado que** el supervisor interactúa con el listado general de personal, **cuando** visualiza la grilla, aplica filtros o navega por los registros, **entonces** la interfaz satisface integralmente los lineamientos de diseño, indicadores de estado y microcopy especificados en UI-004 (Gestión de Usuarios del Sistema) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -762,7 +762,7 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 **Justificación de prioridad:** Funcionalidad recomendada de mantenimiento (Should have); programa su ejecución para el Release 3 para la administración continua de la plantilla de colaboradores, mitigando contingencias operativas menores del inicio del proyecto.
 
 **Criterios de aceptación:**
-1. **Dado que** el SuperAdmin accede a la ficha de un empleado y modifica sus datos o selecciona un nuevo rol operativo, **cuando** guarda satisfactoriamente los cambios, **entonces** el sistema actualiza la ficha del usuario y, a partir de su próximo inicio de sesión, el colaborador asumirá de manera automática todos los privilegios y restricciones correspondientes a su nuevo rol.
+1. **Dado que** el SuperAdmin accede a la ficha de un empleado y modifica sus datos o selecciona un nuevo rol operativo, **cuando** guarda satisfactoriamente los cambios, **entonces** el sistema actualiza la ficha del usuario y, a partir de su siguiente acción en el sistema, el colaborador asumirá de manera automática todos los privilegios y restricciones correspondientes a su nuevo rol.
 2. **Dado que** el SuperAdmin está editando un perfil, **cuando** intenta modificar el correo electrónico asignando una dirección que ya se encuentra registrada para otro empleado, **entonces** el sistema bloquea la actualización y notifica la imposibilidad del cambio por duplicidad en salvaguarda de la regla de identidad unívoca (RN-12).
 3. **Dado que** el SuperAdmin opera sobre la ventana de modificación de colaboradores, **cuando** revisa los campos precargados, controles de rol y botones de guardado, **entonces** la interfaz responde exactamente al diseño, microcopy y flujos estipulados en UI-004 del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -788,7 +788,7 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 
 **Criterios de aceptación:**
 1. **Dado que** un colaborador cesa en sus funciones en el minimarket, **cuando** el SuperAdmin ubica su perfil en la nómina, pulsa «Desactivar» y confirma la instrucción en el diálogo de advertencia, **entonces** el sistema conmuta su estado a Inactivo e interrumpe de forma inmediata cualquier sesión de trabajo que el usuario mantuviese abierta en cualquier terminal del negocio.
-2. **Dado que** la cuenta de un trabajador ha sido dada de baja o desactivada, **cuando** él o un tercero intenta iniciar sesión introduciendo las credenciales habituales, **entonces** el sistema deniega formalmente el acceso y le notifica que su cuenta se encuentra inactiva y debe contactar a la administración.
+2. **Dado que** la cuenta de un trabajador ha sido dada de baja o desactivada, **cuando** él o un tercero intenta iniciar sesión introduciendo las credenciales habituales, **entonces** el sistema deniega formalmente el acceso y muestra el mensaje «Credenciales incorrectas».
 3. **Dado que** el SuperAdmin realiza la suspensión desde el panel de colaboradores, **cuando** acciona el botón y visualiza el cambio de etiqueta de estado y los avisos de confirmación, **entonces** la interfaz satisface los parámetros visuales y de interacción fijados en UI-004 del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -838,7 +838,7 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 
 **Criterios de aceptación:**
 1. **Dado que** el SuperAdmin identifica un comportamiento irregular o un terminal desatendido con sesión abierta, **cuando** pulsa el botón «Forzar cierre de sesión» sobre dicho colaborador en la nómina de usuarios, **entonces** el sistema revoca al instante la autorización operativa de la sesión conectada en ese terminal.
-2. **Dado que** la sesión de un colaborador fue forzada a cerrar por el SuperAdmin, **cuando** dicho colaborador intenta realizar cualquier acción, consulta o registro en su pantalla, **entonces** el sistema interrumpe la navegación y lo redirige de inmediato a la pantalla de inicio de sesión con el mensaje informativo: «Su sesión ha sido finalizada por el Administrador».
+2. **Dado que** la sesión de un colaborador fue forzada a cerrar por el SuperAdmin, **cuando** dicho colaborador intenta realizar cualquier acción, consulta o registro en su pantalla, **entonces** el sistema interrumpe la navegación y lo redirige de inmediato a la pantalla de inicio de sesión con el mensaje informativo: «Un SuperAdmin cerró tu sesión.».
 3. **Dado que** el SuperAdmin efectúa la orden de desconexión remota, **cuando** interactúa con el botón de acción y aprueba la confirmación de seguridad, **entonces** la interfaz expone los elementos de microcopy, avisos y estilos descritos en UI-004 del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -856,14 +856,14 @@ Con el propósito de salvaguardar el principio de separación de funciones y gar
 | HU-LOG-01 | EPIC-SEG | Should have | 3 pts | REL-3 | SPR-3 |
 
 **Como** Administrador o SuperAdmin del minimarket,  
-**quiero** consultar la bitácora cronológica de eventos de acceso al sistema (inicios de sesión, cierres voluntarios y bloqueos preventivos),  
+**quiero** consultar la bitácora cronológica de eventos de acceso al sistema (inicios de sesión y cierres voluntarios),  
 **para** auditar los horarios de conexión del personal, realizar control de presencia y efectuar investigaciones de trazabilidad ante sospechas de irregularidades operativas.
 
 **Justificación de prioridad:** Requisito de gobernanza y control interno (Should have); programado para el Release 3 para consolidar las facultades de supervisión forense y cumplimiento institucional.
 
 **Criterios de aceptación:**
 1. **Dado que** un supervisor autorizado accede a la bitácora de supervisión, **cuando** selecciona un rango de fechas de consulta o filtra por tipo de evento (Inicio de sesión, Cierre de sesión voluntario o Bloqueo por fallos), **entonces** el sistema presenta el listado cronológico de todos los eventos registrados que correspondan a los filtros fijados.
-2. **Dado que** el auditor analiza un suceso de acceso específico en la lista, **cuando** visualiza la fila de detalle, **entonces** el sistema expone con precisión la fecha y hora oficial del suceso, el nombre del colaborador titular, el rol con el que operaba y la descripción textual del resultado de la conexión.
+2. **Dado que** el auditor analiza un suceso de acceso específico en la lista, **cuando** visualiza la fila de detalle, **entonces** el sistema expone con precisión la fecha y hora oficial del suceso, el nombre del colaborador titular, el rol con el que operaba y, cuando corresponde, un detalle del suceso.
 3. **Dado que** el auditor interactúa con el visor de eventos de acceso, **cuando** visualiza la grilla paginada, aplica filtros de búsqueda y revisa los datos históricos, **entonces** la interfaz satisface los componentes, textos informativos y presentación definidos en UI-005 (Supervisión de Logs de Acceso) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -934,7 +934,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad crítica de configuración inicial (Must have); prerrequisito bloqueante para el alta de productos en el sistema, ya que ningún producto puede registrarse sin estar asociado a una categoría válida.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario completa el formulario de registro introduciendo una denominación de categoría inédita, **cuando** presiona el botón «Guardar Categoría», **entonces** el sistema crea la nueva categoría de forma exitosa, la incorpora al catálogo activo y actualiza la lista disponible al instante.
+1. **Dado que** el usuario completa el formulario de registro introduciendo una denominación de categoría inédita, **cuando** presiona el botón «Guardar», **entonces** el sistema crea la nueva categoría de forma exitosa, la incorpora al catálogo activo y actualiza la lista disponible al instante.
 2. **Dado que** el usuario intenta registrar una categoría, **cuando** ingresa un nombre que ya se encuentra registrado previamente en el sistema (sin distinguir mayúsculas de minúsculas), **entonces** el sistema rechaza el guardado y muestra un mensaje de advertencia informando sobre la duplicidad del rubro.
 3. **Dado que** el colaborador interactúa con el formulario de alta, **cuando** introduce datos y valida la operación, **entonces** la interfaz responde estrictamente a la estructura de campos, validaciones y diseño descritos en UI-006 del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -985,7 +985,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** una categoría no posee ningún producto vinculado en el catálogo, **cuando** el Administrador pulsa el botón de eliminación y aprueba el diálogo de confirmación, **entonces** el sistema suprime la categoría de forma permanente y la retira de todas las listas de selección.
-2. **Dado que** una categoría tiene uno o más productos asignados (activos o inactivos), **cuando** el Administrador intenta eliminarla, **entonces** el sistema bloquea terminantemente la acción y despliega un mensaje notificando que no se pueden eliminar categorías con artículos vinculados, instruyendo al usuario a reasignar los productos antes de intentar su borrado.
+2. **Dado que** una categoría tiene uno o más productos asignados (activos o inactivos), **cuando** el Administrador intenta eliminarla, **entonces** el sistema bloquea terminantemente la acción y despliega un mensaje notificando que no se pueden eliminar categorías con artículos vinculados, con el mensaje «No se puede eliminar, tiene productos asociados».
 3. **Dado que** el Administrador ejecuta la acción de retiro, **cuando** atiende los mensajes preventivos y confirma la eliminación, **entonces** la interacción visual satisface las advertencias, colores y flujos definidos en UI-006 del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -1011,8 +1011,8 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Requisito indispensable de aprovisionamiento (Must have); programado para el Release 2 para brindar visibilidad completa a la gestión de reposiciones formalizadas.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil autorizado accede al módulo de proveedores, **cuando** carga la pantalla principal, **entonces** el sistema expone una grilla organizada con el RUC oficial de 11 dígitos, razón social de la empresa proveedora, canal de contacto principal (teléfono o correo electrónico) y estado de habilitación operativa (Activo o Inactivo).
-2. **Dado que** la empresa mantiene relaciones comerciales con múltiples proveedores, **cuando** el operador introduce un criterio de búsqueda por razón social o número de RUC, **entonces** el sistema filtra los registros de inmediato presentando únicamente los proveedores coincidentes.
+1. **Dado que** un colaborador con perfil autorizado accede al módulo de proveedores, **cuando** carga la pantalla principal, **entonces** el sistema expone una grilla mostrando las columnas Nombre, RUC, Contacto, Estado y Acciones.
+2. **Dado que** la empresa mantiene relaciones comerciales con múltiples proveedores, **cuando** el operador introduce un criterio de búsqueda en la barra «Buscar por nombre o RUC...» o usa el filtro «Todos los estados / Activo / Inactivo», **entonces** el sistema filtra los registros de inmediato presentando únicamente los proveedores coincidentes.
 3. **Dado que** el operador interactúa con el directorio de proveedores, **cuando** visualiza la grilla, aplica filtros o revisa los indicadores de estado, **entonces** la interfaz satisface íntegramente las pautas visuales y microcopy descritos en UI-008 (Directorio de Proveedores) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
@@ -1037,7 +1037,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 
 **Criterios de aceptación:**
 1. **Dado que** el usuario digita un número de RUC de 11 dígitos numéricos correspondiente a una empresa formal (excluyendo números que inicien con 10), **cuando** solicita la comprobación tributaria en el formulario, **entonces** el sistema realiza la consulta oficial de padrón, verifica que el contribuyente figure en estado activo y condición de habido, y autorrellena de manera automática e inmodificable la razón social registrada ante la autoridad tributaria.
-2. **Dado que** los datos fiscales han sido validados satisfactoriamente y el usuario completa la información de contacto comercial, **cuando** presiona el botón «Guardar Proveedor», **entonces** el sistema registra la ficha del proveedor en estado Activo y la deja inmediatamente habilitada para operaciones de compra y recepción.
+2. **Dado que** los datos fiscales han sido validados satisfactoriamente y el usuario completa la información de contacto comercial, **cuando** presiona el botón «Guardar», **entonces** el sistema registra la ficha del proveedor en estado Activo y la deja inmediatamente habilitada para operaciones de compra y recepción.
 3. **Dado que** el usuario ingresa un número de RUC que ya pertenece a otro proveedor registrado, un RUC con prefijo 10 o un documento tributario que no se encuentre en condición activa y habida, **cuando** intenta procesar el registro, **entonces** el sistema rechaza la operación e indica claramente la causal de rechazo impidiendo la creación de fichas inconsistentes.
 4. **Dado que** el usuario opera sobre el formulario de alta de proveedores, **cuando** visualiza los campos, etiquetas de validación y confirmaciones, **entonces** la pantalla satisface integralmente los estándares de presentación y diseño de UI-008 del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -1060,7 +1060,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad recomendada de mantenimiento (Should have); programada para el Release 3 para la administración continua de la cartera de proveedores comerciales, permitiendo subsanar variaciones de números de teléfono, correos o nombres comerciales sin asistencia técnica.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil autorizado accede a la ficha de un proveedor existente, **cuando** actualiza los datos del canal de contacto (número telefónico o correo electrónico) y pulsa «Guardar Cambios», **entonces** el sistema actualiza de inmediato el registro en el directorio comercial y refleja la nueva información en las consultas operativas.
+1. **Dado que** un colaborador con perfil autorizado accede a la ficha de un proveedor existente, **cuando** actualiza los datos del canal de contacto (número telefónico o correo electrónico) y pulsa «Guardar», **entonces** el sistema actualiza de inmediato el registro en el directorio comercial y refleja la nueva información en las consultas operativas.
 2. **Dado que** el colaborador intenta modificar el RUC de una empresa proveedora, **cuando** ingresa una numeración que no cumple con el formato reglamentario de 11 dígitos numéricos o que coincide con el RUC de otro proveedor ya existente, **entonces** el sistema bloquea la actualización y emite una alerta indicando el error de formato o la colisión de identidad tributaria.
 3. **Dado que** el colaborador opera sobre el formulario de edición de proveedores, **cuando** visualiza los campos precargados, controles de guardado y avisos de confirmación, **entonces** la interfaz satisface integralmente los estándares visuales, microcopy e indicadores de estado detallados en UI-008 (Directorio de Proveedores) del Catálogo de Interfaces (DOC-ANEXO-B).
 
@@ -1112,9 +1112,9 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad analítica y de fidelización (Should have); programada para el Release 3 para enriquecer la toma de decisiones comerciales una vez que el flujo principal de ventas y caja se encuentre consolidado.
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil autorizado (Administrador o Gerente) ingresa a la sección de clientes, **cuando** el sistema carga la pantalla principal del módulo, **entonces** expone una grilla con los nombres y apellidos o razón social, número de documento de identidad (DNI de 8 dígitos), correo electrónico de contacto y el importe monetario total de compras acumuladas por cada cliente.
-2. **Dado que** la empresa dispone de una cartera extensa de compradores, **cuando** el supervisor ingresa un texto en la barra de búsqueda rápida por nombre o número de documento, **entonces** el sistema filtra la lista al instante presentando únicamente las coincidencias pertinentes.
-3. **Dado que** el supervisor interactúa con el visor de compradores, **cuando** visualiza la grilla, aplica filtros de búsqueda o revisa los acumulados comerciales, **entonces** la pantalla cumple rigurosamente las pautas de presentación, paginación y microcopy definidas en UI-009 (Directorio de Clientes) del Catálogo de Interfaces (DOC-ANEXO-B).
+1. **Dado que** un colaborador con perfil autorizado (Administrador o Gerente) accede a la pantalla de clientes mediante su dirección directa (sin entrada en el menú lateral), **cuando** el sistema carga la pantalla principal del módulo, **entonces** expone una grilla con los nombres y apellidos o razón social, número de documento de identidad (DNI de 8 dígitos), correo electrónico de contacto y el importe monetario total de compras acumuladas por cada cliente.
+2. **Dado que** la empresa dispone de una cartera extensa de compradores, **cuando** el supervisor ingresa un texto en la barra de búsqueda rápida por nombre o número de documento (o correo, solo Administrador), **entonces** el sistema filtra la lista al instante presentando únicamente las coincidencias pertinentes.
+3. **Dado que** el supervisor interactúa con el visor de compradores, **cuando** visualiza la grilla, aplica filtros de búsqueda o revisa los acumulados comerciales, **entonces** la pantalla cumple rigurosamente las pautas de presentación y microcopy definidas en UI-009 (Directorio de Clientes) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -1188,9 +1188,9 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad núcleo esencial para el producto mínimo viable (Must have); consulta obligatoria para la gestión de existencias y control físico en almacén. En mostrador, el personal de ventas consulta productos exclusivamente a través del terminal POS (`HU-VEN-01`).
 
 **Criterios de aceptación:**
-1. **Dado que** un colaborador con perfil autorizado (Almacenero o Administrador) ingresa al módulo de catálogo maestro, **cuando** carga la vista principal, **entonces** el sistema presenta la relación íntegra de artículos registrados mostrando su código de barras comercial, denominación del producto, marca del fabricante, categoría asignada, precio de venta al público, costo promedio de adquisición referencial y stock total disponible.
-2. **Dado que** el minimarket mantiene cientos de artículos en su catálogo comercial, **cuando** el usuario introduce un texto en la barra de búsqueda rápida por nombre o código de barras, **entonces** el sistema filtra los resultados al instante presentando las coincidencias pertinentes.
-3. **Dado que** el usuario consulta el inventario del catálogo, **cuando** interactúa con las filas de la grilla, buscadores y controles de visualización, **entonces** la pantalla satisface integralmente los componentes visuales, indicadores de estado y microcopy de UI-007 (Catálogo de Productos y Alertas) del Catálogo de Interfaces (DOC-ANEXO-B).
+1. **Dado que** un colaborador con perfil autorizado (Almacenero o Administrador) ingresa al módulo de catálogo maestro, **cuando** carga la vista principal, **entonces** el sistema presenta la relación íntegra de artículos registrados mostrando su Nombre, Marca, Categoría, Precio, Stock, Stock Mín., Vencimiento, Estado y Acciones.
+2. **Dado que** el minimarket mantiene cientos de artículos en su catálogo comercial, **cuando** el usuario introduce un texto en la barra de búsqueda rápida por nombre o marca, o usa los filtros de categorías, estados o alertas (Crítico, Agotado, Vencido, etc.), **entonces** el sistema filtra los resultados al instante presentando las coincidencias pertinentes.
+3. **Dado que** el usuario consulta el inventario del catálogo, **cuando** interactúa con las filas de la grilla (incluyendo opciones como Editar, Dar de baja, Solicitar reposición, Ver lotes y Desactivar), buscadores y controles, **entonces** la pantalla satisface integralmente los componentes visuales, indicadores de estado y microcopy de UI-007 (Catálogo de Productos y Alertas) del Catálogo de Interfaces (DOC-ANEXO-B).
 
 **Reglas de negocio aplicables:** 
 - N/A
@@ -1213,7 +1213,7 @@ Documentos relacionados: DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, DOC-PLAN-08, 
 **Justificación de prioridad:** Funcionalidad crítica de aprovisionamiento (Must have); bloqueador operativo directo: si un producto no existe formalmente en el catálogo maestro, el almacenero no puede registrar entradas de mercadería ni generar inventario en bodega.
 
 **Criterios de aceptación:**
-1. **Dado que** el usuario completa el formulario de registro ingresando código de barras comercial, nombre descriptivo, marca, categoría reglamentaria y precio de venta unitario, **cuando** presiona el botón «Guardar Producto», **entonces** el sistema crea la ficha del artículo en estado Activo con stock físico en cero y costo de adquisición inicial en cero (el cual se actualizará automáticamente conforme ingresen lotes reales al almacén).
+1. **Dado que** el usuario completa el formulario de registro ingresando código de barras comercial, nombre descriptivo, marca, categoría reglamentaria y precio de venta unitario, **cuando** presiona el botón «Guardar», **entonces** el sistema crea la ficha del artículo estableciendo su estado inicial como Activo, pidiendo categoría obligatoriamente, permitiendo marcar la casilla de vencimiento, con un recuadro para indicar que el stock se carga vía Inventario.
 2. **Dado que** el usuario introduce un código de barras que ya se encuentra asignado a otro producto registrado en el minimarket, **cuando** intenta procesar el alta, **entonces** el sistema deniega el guardado y emite un mensaje de error notificando la duplicidad del código comercial.
 3. **Dado que** el usuario diligencia la ficha técnica del artículo, **cuando** revisa los parámetros de control, **entonces** el sistema inicializa el umbral de stock mínimo en el valor predeterminado estándar de 10 unidades en modo de solo lectura (ajustable posteriormente durante la edición de la ficha) y permite marcar si el producto maneja fecha de caducidad para activar el control preventivo de alertas (RN-06).
 4. **Dado que** el usuario interactúa con la ventana de registro de productos, **cuando** completa los campos requeridos y confirma la operación, **entonces** la pantalla satisface rigurosamente los lineamientos de diseño, validaciones numéricas y formato definidos en UI-007 del Catálogo de Interfaces (DOC-ANEXO-B).
@@ -2600,7 +2600,7 @@ Estructura de trazabilidad horizontal por épicas funcionales y vertical por hor
 - **Alcance Funcional:** 22 Historias de Usuario, todas de prioridad Must have (89 puntos de historia).
 - **Esfuerzo Operativo Asociado:** 178.0 horas de trabajo efectivo distribuidas en 113 tareas técnicas (104.50 h de construcción y 73.50 h de verificación QA independiente).
 - **Criterios de Salida (Definition of Done del Release):**
-  1. Inicio de sesión funcional con control de acceso por roles y bloqueo tras 5 intentos fallidos consecutivos por 15 minutos (`HU-AUTH-01`, `HU-AUTH-02`).
+  1. Inicio de sesión funcional con control de acceso por roles y bloqueo tras 5  consecutivos por 15 minutos (`HU-AUTH-01`, `HU-AUTH-02`).
   2. Catálogos operativos de categorías, productos con control de perecibles y stock mínimo, y proveedores (`HU-CAT-02`, `HU-CAT-01`, `HU-PROD-02`, `HU-PROD-01`, `HU-PROV-02`).
   3. Módulo de inventario registrando entradas directas de existencias iniciales, mermas físicas y ajustes por conteo con trazabilidad de lotes y fechas de vencimiento (`HU-INV-01`, `HU-INV-02`, `HU-INV-03`).
   4. Flujo de caja con apertura de turno obligatoria antes de vender (fondo mínimo S/ 500.00, RN-10), cuadre de caja y cierre con resumen (`HU-CAJA-01`, `HU-CAJA-02`, `HU-CAJA-05`).
@@ -2639,7 +2639,7 @@ Estructura de trazabilidad horizontal por épicas funcionales y vertical por hor
 - **Esfuerzo Operativo Asociado:** 144.0 horas de trabajo efectivo distribuidas en 135 tareas técnicas (85.75 h de construcción y 58.25 h de verificación QA independiente).
 - **Criterios de Salida (Definition of Done del Release):**
   1. Registro inmutable de supervisión para eventos de autenticación exitosos y fallidos (`HU-LOG-01`).
-  2. Gestión de perfil personal, edición de catálogos y reactivación de empleados suspendidos (`HU-AUTH-06`, `HU-CAT-03`, `HU-CAT-04`, `HU-CLI-01`, `HU-CLI-03`, `HU-PROD-04`, `HU-PROD-05`, `HU-PROV-03`, `HU-USR-03`, `HU-USR-05`).
+  2. Gestión de perfil personal, edición de catálogos y reactivación de empleados suspendidos (`HU-AUTH-06 (Cancelada)`, `HU-CAT-03`, `HU-CAT-04`, `HU-CLI-01`, `HU-CLI-03`, `HU-PROD-04`, `HU-PROD-05`, `HU-PROV-03`, `HU-USR-03`, `HU-USR-05`).
   3. Agilización del punto de venta y catálogo mediante integración con lector óptico de código de barras (`HU-VEN-04`, `HU-PROD-03`).
   4. Trazabilidad histórica completa de movimientos de almacén: entradas, bajas por merma y ajustes físicos (`HU-INV-04`, `HU-INV-05`, `HU-INV-06`).
   5. Descarga e impresión de comprobantes de pago en PDF y reenvío por correo electrónico (`HU-VEN-03`), junto con la especificación para exportación del historial a formato estructurado (`HU-VEN-08`).
@@ -2913,7 +2913,7 @@ El Sprint Backlog desagrega el Product Backlog del "Sistema de Gestión Integral
 | ID de HU | Título de la Historia de Usuario | MoSCoW | Pts | Depende de | Constructor Principal | Verificador QA |
 |---|---|:---:|:---:|---|---|---|
 | **HU-AUTH-01** | Autenticación – Iniciar sesión | Must have (4) | 5 | Ninguna | Des.5 Colonia | Des.2 Nolasco |
-| **HU-AUTH-02** | Autenticación – Bloquear cuenta por intentos fallidos | Must have (4) | 3 | HU-AUTH-01 | Des.1 Velasquez | Des.6 Angeles |
+| **HU-AUTH-02** | Autenticación – Bloquear cuenta por  | Must have (4) | 3 | HU-AUTH-01 | Des.1 Velasquez | Des.6 Angeles |
 | **HU-AUTH-03** | Autenticación – Cerrar sesión | Must have (4) | 2 | HU-AUTH-01 | Des.3 Castillo | Des.5 Colonia |
 | **HU-CAJA-01** | Caja – Abrir turno de caja | Must have (4) | 5 | HU-AUTH-01 | Des.2 Nolasco | Des.5 Colonia |
 | **HU-CAT-02** | Categorías – Crear nueva categoría de productos | Must have (4) | 2 | HU-AUTH-01 | Des.6 Angeles | Des.3 Castillo |
@@ -3124,7 +3124,7 @@ Formato: día de cierre (horas efectivas usadas ese día). Escenarios: **base**;
 
 | ID de HU | Título de la Historia de Usuario | MoSCoW | Pts | Depende de | Constructor Principal | Verificador QA |
 |---|---|:---:|:---:|---|---|---|
-| **HU-AUTH-06** | Autenticación – Cambiar contraseña propia | Should have (3) | 3 | HU-AUTH-01 | Des.2 Nolasco | Des.4 Alcalde |
+| **HU-AUTH-06 (Cancelada)** | Autenticación – Cambiar contraseña propia | Should have (3) | 3 | HU-AUTH-01 | Des.2 Nolasco | Des.4 Alcalde |
 | **HU-LOG-01** | Trazabilidad – Consultar registro de accesos al sistema | Should have (3) | 3 | HU-AUTH-01 | Des.1 Velasquez | Des.3 Castillo |
 | **HU-CAT-03** | Categorías – Editar nombre de categoría | Should have (3) | 1 | HU-CAT-02 | Des.1 Velasquez | Des.4 Alcalde |
 | **HU-PROV-03** | Proveedores – Editar datos de un proveedor | Should have (3) | 2 | HU-PROV-02 | Des.2 Nolasco | Des.4 Alcalde |
@@ -3216,7 +3216,7 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 
 **Subtotal HU-AUTH-01:** 7.00 h Construcción, 3.00 h Verificación. Total: 10.00 h.
 
-### HU-AUTH-02: Autenticación – Bloquear cuenta por intentos fallidos
+### HU-AUTH-02: Autenticación – Bloquear cuenta por 
 **Puntos:** 3 · **Prioridad:** Must have (4) · **Constructor Principal:** Des.1 Velasquez · **Verificador QA:** Des.6 Angeles
 
 | ID | Tarea | Tipo | Estado | Responsable | Tiempo (h) |
@@ -3822,18 +3822,18 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 
 **Sprint 3 · Release 3** · 27 HU · 72 pts · 144 h
 
-### HU-AUTH-06: Autenticación – Cambiar contraseña propia
+### HU-AUTH-06 (Cancelada): Autenticación – Cambiar contraseña propia
 **Puntos:** 3 · **Prioridad:** Should have (3) · **Constructor Principal:** Des.2 Nolasco · **Verificador QA:** Des.4 Alcalde
 
 | ID | Tarea | Tipo | Estado | Responsable | Tiempo (h) |
 |---|---|---|---|---|---|
-| TAR-HU-AUTH-06-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-AUTH-06-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-AUTH-06-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
-| TAR-HU-AUTH-06-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-AUTH-06-08 | Verificación funcional y pase web | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-AUTH-06 (Cancelada)-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.00 |
+| TAR-HU-AUTH-06 (Cancelada)-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.50 |
+| TAR-HU-AUTH-06 (Cancelada)-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-AUTH-06 (Cancelada)-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.00 |
+| TAR-HU-AUTH-06 (Cancelada)-08 | Verificación funcional y pase web | Test | Pend. | Des.4 - Alcalde | 1.00 |
 
-**Subtotal HU-AUTH-06:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
+**Subtotal HU-AUTH-06 (Cancelada):** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
 ### HU-LOG-01: Trazabilidad – Consultar registro de accesos al sistema
 **Puntos:** 3 · **Prioridad:** Should have (3) · **Constructor Principal:** Des.1 Velasquez · **Verificador QA:** Des.3 Castillo
@@ -4229,7 +4229,7 @@ A continuación se establecen las 21 reglas de negocio mandatarias que norman la
 | **RN-03** | Prohibición de Comercialización de Productos Vencidos | El sistema bloqueará de forma absoluta en el terminal de punto de venta (POS) la selección, adición al carrito y venta de cualquier unidad perteneciente a un lote cuya fecha de caducidad haya expirado (un lote cuya fecha de caducidad coincide con la fecha en curso o es anterior queda bloqueado para la venta en el punto de venta desde la apertura del turno y debe canalizarse a bajas por vencimiento). Los lotes vencidos quedan excluidos de forma automática del stock comercial disponible para la venta. | Vendedor | HU-VEN-01c, HU-PROD-06 |
 | **RN-04** | Registro Obligatorio y Justificado de Mermas | Toda baja de mercadería del inventario por vencimiento, rotura, merma física o deterioro exigirá el ingreso obligatorio de un motivo justificativo. El sistema descontará de manera inmediata las unidades del stock registrado, sin requerir autorizaciones adicionales durante la operación de retiro físico en el almacén. | Almacenero, Administrador | HU-INV-02 |
 | **RN-05** | Restricción de Bajas según Estado de Caducidad | Para registrar una baja de mercadería bajo la causal de 'Vencimiento', el lote de producto seleccionado deberá haber superado su fecha de caducidad a la fecha de la transacción (un lote cuya fecha de caducidad coincide con la fecha en curso o es anterior queda bloqueado para la venta en el punto de venta desde la apertura del turno y debe canalizarse a bajas por vencimiento). Si la baja se registra por cualquier otra causal (daño físico, rotura o desmedro), el sistema validará que el lote no se encuentre vencido, canalizando la pérdida por su concepto respectivo con trazabilidad puntual de lote (RN-20). | Almacenero | HU-INV-02 |
-| **RN-06** | Alerta Preventiva de Stock Mínimo | El sistema emitirá alertas visuales preventivas destacadas en el panel principal (Dashboard), en los reportes de inventario y en el catálogo general cada vez que el stock disponible de un producto sea igual o inferior al umbral de stock mínimo configurado en su registro maestro. | Administrador, Gerente | HU-DASH-03, HU-REP-05, HU-PROD-02 |
+| **RN-06** | Alerta Preventiva de Stock Mínimo | El sistema emitirá alertas visuales preventivas destacadas en el panel principal (Dashboard), en los reportes de inventario y en el catálogo general cada vez que el stock disponible de un producto sea igual o inferior al umbral de stock mínimo configurado en su registro maestro. El sistema asignará por defecto un stock mínimo de 5 unidades si el usuario lo deja en blanco. | Administrador, Gerente | HU-DASH-03, HU-REP-05, HU-PROD-02 |
 | **RN-07** | Segregación y Privacidad de Ventas por Turno | En el terminal de punto de venta (POS), el vendedor visualizará exclusivamente las ventas y comprobantes emitidos bajo su propio usuario durante su turno de caja activo. La consulta del consolidado histórico de ventas de todos los colaboradores queda reservada a los roles de Administrador y Gerente. | Vendedor | HU-VEN-05 |
 | **RN-08** | Restricción Temporal para la Anulación de Ventas | Una venta solo podrá ser anulada si el turno de caja en el cual fue realizada y cobrada permanece en estado 'Abierto'. Si el turno de caja ya fue cerrado o liquidado formalmente, el sistema impedirá su anulación directa en el mostrador para preservar la integridad del cuadre financiero. | Administrador, Gerente | HU-VEN-06 |
 | **RN-09** | Destino Operativo de Mercadería Devuelta | Al procesar la anulación de una venta con devolución física de productos, el usuario supervisor facultado (Administrador o Gerente) deberá seleccionar el destino de la mercadería: reingreso inmediato al stock comercial disponible para la venta, o derivación formal e inmediata al registro de mermas y bajas si el producto fue devuelto en estado deteriorado o abierto. | Administrador, Gerente | HU-VEN-06 |
@@ -4240,8 +4240,8 @@ A continuación se establecen las 21 reglas de negocio mandatarias que norman la
 | **RN-14** | Actualización Automática de la Valorización de Inventario | Cada vez que se registre el ingreso de mercadería al almacén con un precio de compra específico, el sistema recalculará automáticamente el costo promedio ponderado del producto, manteniendo actualizada la valorización del inventario del minimarket y la base de costeo para los reportes de margen de ganancia comercial. | Almacenero | HU-INV-01, HU-REP-07, HU-SOL-05 |
 | **RN-15** | Medio Exclusivo para Movimientos Manuales de Caja | Los registros de movimiento manual de entrada o salida en el turno de caja operarán única y exclusivamente sobre dinero en efectivo en el cajón físico de mostrador. Queda prohibido registrar movimientos manuales de caja bajo modalidades electrónicas o billeteras digitales. | Vendedor | HU-CAJA-03 |
 | **RN-16** | Flexibilidad en la Selección de Proveedores para Reposición | Al momento de revisar y aprobar una solicitud de reposición de mercadería, el Gerente o Administrador podrá reasignar o modificar el proveedor sugerido originalmente por el personal de almacén, optimizando las condiciones de compra comercial antes de autorizar la recepción de los productos. | Gerente, Administrador | HU-SOL-03 |
-| **RN-17** | Bloqueo Preventivo por Intentos Fallidos de Autenticación | El sistema suspenderá temporalmente el acceso a una cuenta de usuario si se acumulan 5 intentos fallidos consecutivos de contraseña en una ventana de 15 minutos, desplegando un aviso de seguridad y bloqueando nuevos intentos durante dicho lapso de 15 minutos para mitigar intentos reiterados no autorizados de acceso a las cuentas. | Todos los roles | HU-AUTH-02 |
-| **RN-18** | Vigencia y Formato de Código de Verificación Temporal | Para el restablecimiento no asistido de contraseñas olvidadas, el sistema emitirá a la dirección de correo del colaborador un código numérico temporal de exactamente 4 dígitos con una vigencia de 15 minutos y de uso único; acumular 5 intentos fallidos con el código activa un bloqueo temporal automático de la cuenta por 15 minutos. La nueva contraseña debe tener al menos 7 caracteres combinando mayúsculas, minúsculas y dígitos. | Todos los roles | HU-AUTH-05, HU-AUTH-06, HU-USR-02 |
+| **RN-17** | Bloqueo Preventivo por Intentos Fallidos de Autenticación | El sistema bloqueará la cuenta por 15 minutos si acumula 5 intentos fallidos consecutivos. Al intentar ingresar nuevamente, se mostrará el mensaje «Cuenta bloqueada temporalmente. Intente en 15 minutos.» para mitigar intentos reiterados no autorizados de acceso a las cuentas. | Todos los roles | HU-AUTH-02 |
+| **RN-18** | Vigencia y Formato de Código de Verificación Temporal | Para el restablecimiento no asistido de contraseñas olvidadas, el sistema emitirá a la dirección de correo del colaborador un código numérico temporal de exactamente 4 dígitos con una vigencia de 15 minutos y de uso único; acumular 5  con el código activa un bloqueo temporal automático de la cuenta por 15 minutos. La nueva contraseña debe tener al menos 7 caracteres combinando mayúsculas, minúsculas y dígitos. | Todos los roles | HU-AUTH-05, HU-AUTH-06 (Cancelada), HU-USR-02 |
 | **RN-19** | Despacho Preferente por Caducidad (Método FEFO) | La venta y salida comercial de mercadería en el terminal de punto de venta (POS) priorizará de forma obligatoria y automatizada los lotes con fecha de expiración más próxima (First Expired, First Out - FEFO). Un lote cuya fecha de caducidad coincide con la fecha en curso o es anterior queda bloqueado para la venta en el punto de venta desde la apertura del turno y debe canalizarse a bajas por vencimiento, garantizando que el sistema despache primero el lote vigente que vence antes (método FEFO). | Vendedor, Almacenero | HU-VEN-01c, HU-PROD-06, HU-INV-01 |
 | **RN-20** | Trazabilidad y Justificación Obligatoria en Bajas por Deterioro | Toda baja de inventario originada por daño físico, rotura o avería exigirá obligatoriamente seleccionar el lote específico afectado para no distorsionar las partidas en buen estado, declarar una justificación formal y registrar la identidad del operador responsable para el control de pérdidas. | Almacenero, Administrador | HU-INV-02 |
 | **RN-21** | Emisión de Boleta a Consumidor Anónimo (Público General) | En operaciones comerciales minoristas en mostrador donde el importe total de la venta sea de hasta S/ 700.00 inclusive (monto total ≤ S/ 700.00), el sistema permitirá emitir la Boleta de Venta asignada al receptor «Público General» sin exigir el registro obligatorio de DNI. Si el importe total supera los S/ 700.00 (> S/ 700.00), el sistema exigirá obligatoriamente capturar un DNI válido de 8 dígitos para proceder con la emisión del comprobante, conforme al Reglamento de Comprobantes de Pago de SUNAT. | Vendedor | HU-VEN-02, HU-VEN-01b |
@@ -4348,9 +4348,9 @@ El propósito central radica en explicitar las reglas operativas, delimitaciones
 - **Reglas de negocio asociadas:** Gobernanza de seguridad de cuentas y trazabilidad de accesos.
 
 ### D2: Política de contraseñas y recuperación mediante código de verificación temporal de 4 dígitos
-- **Declaración:** Para la recuperación no asistida de credenciales de acceso, el sistema generará un código de autorización numérico temporal de 4 dígitos (rango 1000 a 9999) con una vigencia estricta de 15 minutos, remitido a la casilla de correo electrónico del colaborador solicitante. Como mecanismo de protección contra intentos no autorizados de adivinación, se fija un bloqueo temporal automático de la cuenta por 15 minutos tras acumularse 5 intentos fallidos consecutivos en el ingreso del código de autorización.
+- **Declaración:** Para la recuperación no asistida de credenciales de acceso, el sistema generará un código de autorización numérico temporal de 4 dígitos (rango 1000 a 9999) con una vigencia estricta de 15 minutos, remitido a la casilla de correo electrónico del colaborador solicitante. Como mecanismo de protección contra intentos no autorizados de adivinación, se fija un bloqueo temporal automático de la cuenta por 15 minutos tras acumularse 5  consecutivos en el ingreso del código de autorización.
 - **Justificación de negocio:** Brindar un balance óptimo entre agilidad operativa en mostrador para la recuperación rápida de acceso por parte de personal de tienda y salvaguarda robusta contra accesos indebidos.
-- **Historias de usuario vinculadas:** `HU-AUTH-05`, `HU-AUTH-06`.
+- **Historias de usuario vinculadas:** `HU-AUTH-05`, `HU-AUTH-06 (Cancelada)`.
 - **Reglas de negocio asociadas:** RN-12 (Identidad unívoca de empleados).
 
 ### D3: Manejo de catálogos y consultas ágiles en mostrador
@@ -4578,7 +4578,7 @@ Los conteos representan referencias descriptivas en el Anexo B que detallan cada
 | HU-VEN-07 | UI-014, UI-015 | CA-UI (criterio final de interfaz) | Con especificación completa en terminal POS y consulta en Historial |
 | HU-SOL-04 | UI-013 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-PROV-04 | UI-008 | CA-UI (criterio final de interfaz) | Con especificación completa |
-| HU-AUTH-06 | UI-003 | CA-UI (criterio final de interfaz) | Diálogo modal emergente de cambio de contraseña accesible desde la barra superior (Decisión formal D7) |
+| HU-AUTH-06 (Cancelada) | UI-003 | CA-UI (criterio final de interfaz) | Diálogo modal emergente de cambio de contraseña accesible desde la barra superior (Decisión formal D7) |
 | HU-USR-03 | UI-004 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-USR-05 | UI-004 | CA-UI (criterio final de interfaz) | Con especificación completa |
 | HU-LOG-01 | UI-005 | CA-UI (criterio final de interfaz) | Con especificación completa |
@@ -4636,7 +4636,7 @@ Los conteos representan referencias descriptivas en el Anexo B que detallan cada
 
 Las 20 pantallas especificadas en el Anexo B cubren el 100 % de las interacciones visuales requeridas por las 74 historias de usuario del Product Backlog. Se ratifican los siguientes acuerdos operativos:
 
-1. **Gestión de credenciales propia:** La actualización de clave por el colaborador activo (HU-AUTH-06) opera mediante el diálogo modal emergente "Cambiar contraseña" integrado en la barra de navegación superior (UI-003, Decisión formal D7), exigiendo la clave actual y validando la robustez de la nueva clave (mínimo 7 caracteres con mayúscula, minúscula y número) sin requerir una vista de perfil dedicada.
+1. **Gestión de credenciales propia:** La actualización de clave por el colaborador activo (HU-AUTH-06 (Cancelada)) opera mediante el diálogo modal emergente "Cambiar contraseña" integrado en la barra de navegación superior (UI-003, Decisión formal D7), exigiendo la clave actual y validando la robustez de la nueva clave (mínimo 7 caracteres con mayúscula, minúscula y número) sin requerir una vista de perfil dedicada.
 2. **Aviso de sesión desplazada:** La notificación informativa ante un inicio de sesión concurrente en otro equipo (HU-AUTH-04) se presenta mediante el banner superior destacado en UI-001 conforme a la Decisión D1.
 3. **Validación de pagos móviles:** El registro del código de autorización de 6 dígitos emitido por el terminal de cobro para billeteras digitales Yape/Plin (IziPay) se encuentra plenamente formalizado en el Punto de Venta (UI-014) y en el Historial de Ventas (UI-015) conforme a la Decisión D8.
 4. **Supervisión de compras pendientes:** La visualización de solicitudes de reposición en estado pendiente se integra de forma interactiva en el panel gerencial (UI-018) permitiendo la revisión inmediata del stock crítico.
@@ -4734,7 +4734,7 @@ El presente compendio reúne, clasifica y resuelve formalmente la totalidad de d
 - **Dilema Operativo:**  
   Los enlaces largos son difíciles de manipular en terminales de caja o teléfonos de mostrador; los códigos breves requieren un tiempo de caducidad estricto para evitar intentos no autorizados.
 - **Resolución Oficial Adoptada (v4.8):**  
-  **Código de verificación temporal de 4 dígitos numéricos con expiración de 15 minutos y longitud mínima de contraseña de 8 caracteres.** Se unificó en `HU-AUTH-05` un código de verificación de 4 dígitos numéricos, limitando los intentos fallidos a un máximo de 5 antes de invalidar la solicitud y exigir asistencia gerencial. Asimismo, toda contraseña de usuario debe contener al menos 8 caracteres combinando mayúsculas, minúsculas y números.
+  **Código de verificación temporal de 4 dígitos numéricos con expiración de 15 minutos y longitud mínima de contraseña de 8 caracteres.** Se unificó en `HU-AUTH-05` un código de verificación de 4 dígitos numéricos, limitando los  a un máximo de 5 antes de invalidar la solicitud y exigir asistencia gerencial. Asimismo, toda contraseña de usuario debe contener al menos 8 caracteres combinando mayúsculas, minúsculas y números.
 
 ---
 
@@ -4991,7 +4991,7 @@ Razón oficial: Pts × (S/ 22,500.00 ÷ 251 pts) = Pts × S/ 89.6414/pt. Orden: 
 | Objetivo | Épica | ID de HU | Título | Pts | Release | Sprint | Horas (2 × pts) | Costo asignado (S/) |
 |---|---|---|---|:---:|:---:|:---:|:---:|:---:|
 | OBJ-01 | EPIC-SEG | HU-AUTH-01 | Autenticación – Iniciar sesión | 5 | REL-1 | SPR-1 | 10 h | S/ 448.21 |
-| OBJ-01 | EPIC-SEG | HU-AUTH-02 | Autenticación – Bloquear cuenta por intentos fallidos | 3 | REL-1 | SPR-1 | 6 h | S/ 268.92 |
+| OBJ-01 | EPIC-SEG | HU-AUTH-02 | Autenticación – Bloquear cuenta por  | 3 | REL-1 | SPR-1 | 6 h | S/ 268.92 |
 | OBJ-01 | EPIC-SEG | HU-AUTH-03 | Autenticación – Cerrar sesión | 2 | REL-1 | SPR-1 | 4 h | S/ 179.28 |
 | OBJ-01 | EPIC-SEG | HU-USR-02 | Usuarios – Crear cuenta de nuevo empleado | 5 | REL-1 | SPR-1 | 10 h | S/ 448.21 |
 | OBJ-01 | EPIC-SEG | HU-AUTH-04 | Autenticación – Garantizar sesión única por usuario | 8 | REL-2 | SPR-2 | 16 h | S/ 717.13 |
@@ -4999,7 +4999,7 @@ Razón oficial: Pts × (S/ 22,500.00 ÷ 251 pts) = Pts × S/ 89.6414/pt. Orden: 
 | OBJ-01 | EPIC-SEG | HU-USR-04 | Usuarios – Desactivar cuenta de empleado | 3 | REL-2 | SPR-2 | 6 h | S/ 268.92 |
 | OBJ-01 | EPIC-SEG | HU-AUTH-05 | Autenticación – Recuperar contraseña por correo | 5 | REL-2 | SPR-2 | 10 h | S/ 448.21 |
 | OBJ-01 | EPIC-SEG | HU-USR-06 | Usuarios – Forzar cierre de sesión remoto | 3 | REL-2 | SPR-2 | 6 h | S/ 268.92 |
-| OBJ-01 | EPIC-SEG | HU-AUTH-06 | Autenticación – Cambiar contraseña propia | 3 | REL-3 | SPR-3 | 6 h | S/ 268.92 |
+| OBJ-01 | EPIC-SEG | HU-AUTH-06 (Cancelada) | Autenticación – Cambiar contraseña propia | 3 | REL-3 | SPR-3 | 6 h | S/ 268.92 |
 | OBJ-01 | EPIC-SEG | HU-USR-03 | Usuarios – Editar datos de un empleado | 3 | REL-3 | SPR-3 | 6 h | S/ 268.92 |
 | OBJ-01 | EPIC-SEG | HU-USR-05 | Usuarios – Reactivar cuenta de empleado | 2 | REL-3 | SPR-3 | 4 h | S/ 179.28 |
 | OBJ-01 | EPIC-SEG | HU-LOG-01 | Trazabilidad – Consultar registro de accesos al sistema | 3 | REL-3 | SPR-3 | 6 h | S/ 268.92 |
@@ -5177,8 +5177,8 @@ para ingresar de forma segura y ser redirigido a mi módulo de trabajo asignado.
     - `"Un SuperAdmin cerró tu sesión."` (emitido ante cierre forzado administrativo).
 - **Mensajes de Validación y Error**:
   - **Mensajes de Bloqueo por Intentos Fallidos (HU-AUTH-02):**
-    - Si el usuario acumula 5 intentos fallidos consecutivos de contraseña, el sistema bloquea el acceso temporalmente y despliega un banner rojo estructurado en alerta en fondo rojo claro y texto en tono rojo oscuro con el mensaje exacto:
-      `"Cuenta suspendida temporalmente por 15 minutos debido a múltiples intentos fallidos."`
+    - Si el usuario acumula 5  consecutivos de contraseña, el sistema bloquea el acceso temporalmente y despliega un banner rojo estructurado en alerta en fondo rojo claro y texto en tono rojo oscuro con el mensaje exacto:
+      `"Cuenta suspendida temporalmente por 15 minutos debido a múltiples ."`
     - Si el usuario intenta autenticarse durante la suspensión, se exhibe el tiempo restante:
       `"Cuenta suspendida. Intenta nuevamente en {minutosRestantes} minuto(s)."`
   - **Mensaje de Cuenta Desactivada (HU-AUTH-01 / HU-USR-04):**
@@ -7037,7 +7037,7 @@ Escenario: Confirmación preventiva al modificar el RUC de la empresa
 | **RN-UI-14: Formato de Serie SUNAT (1 Letra + 3 Dígitos)** | Valida máscara estándar SUNAT (ej. B001, F001) forzando mayúsculas en boletas y facturas | Pantalla UI-020 (Configuración Fiscal) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-15: Confirmación de Titularidad en RUC Empresa** | Despliega modal de advertencia ante cambios de RUC antes de permitir sobreescribir la configuración | Pantalla UI-020 (Configuración Fiscal) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-16: Sincronización Reactiva de Configuración Fiscal** | Notifica en tiempo real a las pestañas y terminales POS abiertas al actualizar IGV o series | Pantalla UI-020 (Configuración Fiscal) | Operación garantizada bajo estándar de interfaz |
-| **RN-UI-17: Bloqueo de Acceso por Intentos Fallidos** | Despliega alerta en caja roja con contador regresivo de 15 minutos e inhabilita el botón de acceso tras 5 intentos fallidos | Pantalla UI-001 (Inicio de Sesión) | Operación garantizada bajo estándar de interfaz |
+| **RN-UI-17: Bloqueo de Acceso por Intentos Fallidos** | Despliega alerta en caja roja con contador regresivo de 15 minutos e inhabilita el botón de acceso tras 5  | Pantalla UI-001 (Inicio de Sesión) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-18: Código de Verificación OTP de 4 Dígitos** | Restringe el campo de código de seguridad a exactamente 4 dígitos numéricos y muestra contador de expiración de 15 minutos | Pantalla UI-002 (Recuperación de Acceso) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-19: Despacho Preferente por Caducidad (FEFO)** | Asigna y descuenta automáticamente los lotes con vencimiento más próximo al añadir artículos al carrito de venta | Pantalla UI-014 (Terminal POS) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-20: Trazabilidad Obligatoria en Bajas por Deterioro** | Exige la selección de lote específico y motivo obligatorio para mermas por daño físico o rotura | Pantalla UI-010 / UI-011 (Gestión de Inventario) | Operación garantizada bajo estándar de interfaz |
@@ -7147,4 +7147,5 @@ paquete_v5.2_oficial/
 Para facilitar la revisión integral y continua del expediente sin necesidad de abrir individualmente cada archivo, se incluye el archivo maestro:  
 👉 **`PLANIFICACION_SCRUM_V5.2_CONSOLIDADO_OFICIAL.md`**  
 Dicho archivo contiene la compilación íntegra y secuencial de los 20 documentos del expediente, permitiendo una revisión exhaustiva de consistencia cruzada en un único documento estructurado.
+
 

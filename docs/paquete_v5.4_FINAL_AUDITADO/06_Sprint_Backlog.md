@@ -41,7 +41,7 @@ El Sprint Backlog desagrega el Product Backlog del "Sistema de Gestión Integral
 | ID de HU | Título de la Historia de Usuario | MoSCoW | Pts | Depende de | Constructor Principal | Verificador QA |
 |---|---|:---:|:---:|---|---|---|
 | **HU-AUTH-01** | Autenticación – Iniciar sesión | Must have (4) | 5 | Ninguna | Des.5 Colonia | Des.2 Nolasco |
-| **HU-AUTH-02** | Autenticación – Bloquear cuenta por intentos fallidos | Must have (4) | 3 | HU-AUTH-01 | Des.1 Velasquez | Des.6 Angeles |
+| **HU-AUTH-02** | Autenticación – Bloquear cuenta por  | Must have (4) | 3 | HU-AUTH-01 | Des.1 Velasquez | Des.6 Angeles |
 | **HU-AUTH-03** | Autenticación – Cerrar sesión | Must have (4) | 2 | HU-AUTH-01 | Des.3 Castillo | Des.5 Colonia |
 | **HU-CAJA-01** | Caja – Abrir turno de caja | Must have (4) | 5 | HU-AUTH-01 | Des.2 Nolasco | Des.5 Colonia |
 | **HU-CAT-02** | Categorías – Crear nueva categoría de productos | Must have (4) | 2 | HU-AUTH-01 | Des.6 Angeles | Des.3 Castillo |
@@ -252,7 +252,7 @@ Formato: día de cierre (horas efectivas usadas ese día). Escenarios: **base**;
 
 | ID de HU | Título de la Historia de Usuario | MoSCoW | Pts | Depende de | Constructor Principal | Verificador QA |
 |---|---|:---:|:---:|---|---|---|
-| **HU-AUTH-06** | Autenticación – Cambiar contraseña propia | Should have (3) | 3 | HU-AUTH-01 | Des.2 Nolasco | Des.4 Alcalde |
+| **HU-AUTH-06 (Cancelada)** | Autenticación – Cambiar contraseña propia | Should have (3) | 3 | HU-AUTH-01 | Des.2 Nolasco | Des.4 Alcalde |
 | **HU-LOG-01** | Trazabilidad – Consultar registro de accesos al sistema | Should have (3) | 3 | HU-AUTH-01 | Des.1 Velasquez | Des.3 Castillo |
 | **HU-CAT-03** | Categorías – Editar nombre de categoría | Should have (3) | 1 | HU-CAT-02 | Des.1 Velasquez | Des.4 Alcalde |
 | **HU-PROV-03** | Proveedores – Editar datos de un proveedor | Should have (3) | 2 | HU-PROV-02 | Des.2 Nolasco | Des.4 Alcalde |

@@ -47,7 +47,7 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 
 **Subtotal HU-AUTH-01:** 7.00 h Construcción, 3.00 h Verificación. Total: 10.00 h.
 
-### HU-AUTH-02: Autenticación – Bloquear cuenta por intentos fallidos
+### HU-AUTH-02: Autenticación – Bloquear cuenta por 
 **Puntos:** 3 · **Prioridad:** Must have (4) · **Constructor Principal:** Des.1 Velasquez · **Verificador QA:** Des.6 Angeles
 
 | ID | Tarea | Tipo | Estado | Responsable | Tiempo (h) |
@@ -653,18 +653,18 @@ Documentos relacionados: DOC-PLAN-00, DOC-PLAN-01, DOC-PLAN-02, DOC-PLAN-03-00, 
 
 **Sprint 3 · Release 3** · 27 HU · 72 pts · 144 h
 
-### HU-AUTH-06: Autenticación – Cambiar contraseña propia
+### HU-AUTH-06 (Cancelada): Autenticación – Cambiar contraseña propia
 **Puntos:** 3 · **Prioridad:** Should have (3) · **Constructor Principal:** Des.2 Nolasco · **Verificador QA:** Des.4 Alcalde
 
 | ID | Tarea | Tipo | Estado | Responsable | Tiempo (h) |
 |---|---|---|---|---|---|
-| TAR-HU-AUTH-06-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-AUTH-06-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.50 |
-| TAR-HU-AUTH-06-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
-| TAR-HU-AUTH-06-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.00 |
-| TAR-HU-AUTH-06-08 | Verificación funcional y pase web | Test | Pend. | Des.4 - Alcalde | 1.00 |
+| TAR-HU-AUTH-06 (Cancelada)-04 | Desarrollar interfaces | Diseño/Cod. | Pend. | Des.2 - Nolasco | 1.00 |
+| TAR-HU-AUTH-06 (Cancelada)-05 | Codificar | Codificación | Pend. | Des.2 - Nolasco | 1.50 |
+| TAR-HU-AUTH-06 (Cancelada)-06 | Pruebas de unidad e integración | Test | Pend. | Des.4 - Alcalde | 1.50 |
+| TAR-HU-AUTH-06 (Cancelada)-07 | Depuración | Test | Pend. | Des.2 - Nolasco | 1.00 |
+| TAR-HU-AUTH-06 (Cancelada)-08 | Verificación funcional y pase web | Test | Pend. | Des.4 - Alcalde | 1.00 |
 
-**Subtotal HU-AUTH-06:** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
+**Subtotal HU-AUTH-06 (Cancelada):** 3.50 h Construcción, 2.50 h Verificación. Total: 6.00 h.
 
 ### HU-LOG-01: Trazabilidad – Consultar registro de accesos al sistema
 **Puntos:** 3 · **Prioridad:** Should have (3) · **Constructor Principal:** Des.1 Velasquez · **Verificador QA:** Des.3 Castillo

@@ -88,8 +88,8 @@ para ingresar de forma segura y ser redirigido a mi módulo de trabajo asignado.
     - `"Un SuperAdmin cerró tu sesión."` (emitido ante cierre forzado administrativo).
 - **Mensajes de Validación y Error**:
   - **Mensajes de Bloqueo por Intentos Fallidos (HU-AUTH-02):**
-    - Si el usuario acumula 5 intentos fallidos consecutivos de contraseña, el sistema bloquea el acceso temporalmente y despliega un banner rojo estructurado en alerta en fondo rojo claro y texto en tono rojo oscuro con el mensaje exacto:
-      `"Cuenta suspendida temporalmente por 15 minutos debido a múltiples intentos fallidos."`
+    - Si el usuario acumula 5  consecutivos de contraseña, el sistema bloquea el acceso temporalmente y despliega un banner rojo estructurado en alerta en fondo rojo claro y texto en tono rojo oscuro con el mensaje exacto:
+      `"Cuenta suspendida temporalmente por 15 minutos debido a múltiples ."`
     - Si el usuario intenta autenticarse durante la suspensión, se exhibe el tiempo restante:
       `"Cuenta suspendida. Intenta nuevamente en {minutosRestantes} minuto(s)."`
   - **Mensaje de Cuenta Desactivada (HU-AUTH-01 / HU-USR-04):**
@@ -1948,7 +1948,7 @@ Escenario: Confirmación preventiva al modificar el RUC de la empresa
 | **RN-UI-14: Formato de Serie SUNAT (1 Letra + 3 Dígitos)** | Valida máscara estándar SUNAT (ej. B001, F001) forzando mayúsculas en boletas y facturas | Pantalla UI-020 (Configuración Fiscal) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-15: Confirmación de Titularidad en RUC Empresa** | Despliega modal de advertencia ante cambios de RUC antes de permitir sobreescribir la configuración | Pantalla UI-020 (Configuración Fiscal) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-16: Sincronización Reactiva de Configuración Fiscal** | Notifica en tiempo real a las pestañas y terminales POS abiertas al actualizar IGV o series | Pantalla UI-020 (Configuración Fiscal) | Operación garantizada bajo estándar de interfaz |
-| **RN-UI-17: Bloqueo de Acceso por Intentos Fallidos** | Despliega alerta en caja roja con contador regresivo de 15 minutos e inhabilita el botón de acceso tras 5 intentos fallidos | Pantalla UI-001 (Inicio de Sesión) | Operación garantizada bajo estándar de interfaz |
+| **RN-UI-17: Bloqueo de Acceso por Intentos Fallidos** | Despliega alerta en caja roja con contador regresivo de 15 minutos e inhabilita el botón de acceso tras 5  | Pantalla UI-001 (Inicio de Sesión) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-18: Código de Verificación OTP de 4 Dígitos** | Restringe el campo de código de seguridad a exactamente 4 dígitos numéricos y muestra contador de expiración de 15 minutos | Pantalla UI-002 (Recuperación de Acceso) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-19: Despacho Preferente por Caducidad (FEFO)** | Asigna y descuenta automáticamente los lotes con vencimiento más próximo al añadir artículos al carrito de venta | Pantalla UI-014 (Terminal POS) | Operación garantizada bajo estándar de interfaz |
 | **RN-UI-20: Trazabilidad Obligatoria en Bajas por Deterioro** | Exige la selección de lote específico y motivo obligatorio para mermas por daño físico o rotura | Pantalla UI-010 / UI-011 (Gestión de Inventario) | Operación garantizada bajo estándar de interfaz |

@@ -35,7 +35,7 @@ Estructura de trazabilidad horizontal por épicas funcionales y vertical por hor
 - **Alcance Funcional:** 22 Historias de Usuario, todas de prioridad Must have (89 puntos de historia).
 - **Esfuerzo Operativo Asociado:** 178.0 horas de trabajo efectivo distribuidas en 113 tareas técnicas (104.50 h de construcción y 73.50 h de verificación QA independiente).
 - **Criterios de Salida (Definition of Done del Release):**
-  1. Inicio de sesión funcional con control de acceso por roles y bloqueo tras 5 intentos fallidos consecutivos por 15 minutos (`HU-AUTH-01`, `HU-AUTH-02`).
+  1. Inicio de sesión funcional con control de acceso por roles y bloqueo tras 5  consecutivos por 15 minutos (`HU-AUTH-01`, `HU-AUTH-02`).
   2. Catálogos operativos de categorías, productos con control de perecibles y stock mínimo, y proveedores (`HU-CAT-02`, `HU-CAT-01`, `HU-PROD-02`, `HU-PROD-01`, `HU-PROV-02`).
   3. Módulo de inventario registrando entradas directas de existencias iniciales, mermas físicas y ajustes por conteo con trazabilidad de lotes y fechas de vencimiento (`HU-INV-01`, `HU-INV-02`, `HU-INV-03`).
   4. Flujo de caja con apertura de turno obligatoria antes de vender (fondo mínimo S/ 500.00, RN-10), cuadre de caja y cierre con resumen (`HU-CAJA-01`, `HU-CAJA-02`, `HU-CAJA-05`).
@@ -74,7 +74,7 @@ Estructura de trazabilidad horizontal por épicas funcionales y vertical por hor
 - **Esfuerzo Operativo Asociado:** 144.0 horas de trabajo efectivo distribuidas en 135 tareas técnicas (85.75 h de construcción y 58.25 h de verificación QA independiente).
 - **Criterios de Salida (Definition of Done del Release):**
   1. Registro inmutable de supervisión para eventos de autenticación exitosos y fallidos (`HU-LOG-01`).
-  2. Gestión de perfil personal, edición de catálogos y reactivación de empleados suspendidos (`HU-AUTH-06`, `HU-CAT-03`, `HU-CAT-04`, `HU-CLI-01`, `HU-CLI-03`, `HU-PROD-04`, `HU-PROD-05`, `HU-PROV-03`, `HU-USR-03`, `HU-USR-05`).
+  2. Gestión de perfil personal, edición de catálogos y reactivación de empleados suspendidos (`HU-AUTH-06 (Cancelada)`, `HU-CAT-03`, `HU-CAT-04`, `HU-CLI-01`, `HU-CLI-03`, `HU-PROD-04`, `HU-PROD-05`, `HU-PROV-03`, `HU-USR-03`, `HU-USR-05`).
   3. Agilización del punto de venta y catálogo mediante integración con lector óptico de código de barras (`HU-VEN-04`, `HU-PROD-03`).
   4. Trazabilidad histórica completa de movimientos de almacén: entradas, bajas por merma y ajustes físicos (`HU-INV-04`, `HU-INV-05`, `HU-INV-06`).
   5. Descarga e impresión de comprobantes de pago en PDF y reenvío por correo electrónico (`HU-VEN-03`), junto con la especificación para exportación del historial a formato estructurado (`HU-VEN-08`).
